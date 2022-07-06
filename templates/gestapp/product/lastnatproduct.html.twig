@@ -6,7 +6,7 @@
                 <img class="img-fluid" src="{{vich_uploader_asset(product)}}" alt="{{product.name}}" style="max-height: 304px; min-height:304px;">
             </div>
             <a class="btn btn-change mt-2 w-100" href="{{path('op_gestapp_product_show', {'id': product.id})}}">
-                <small class="small_police">Ref : {{ product.ref}}<br>{{product.name}}</small>
+                <small class="small_police">{{product.name}}</small>
             </a>
         </div>
         {%endfor%}
