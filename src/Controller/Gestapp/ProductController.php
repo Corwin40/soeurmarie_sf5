@@ -83,6 +83,21 @@ class ProductController extends AbstractController
     }
 
     /**
+     * @Route("/gestapp/product/duplicate/{id}", name="op_gestapp_product_duplicate", methods={"GET","POST"})
+     */
+    public function duplicate(Request $request, Product $product, EntityManagerInterface $em): Response
+    {
+        $productduplicate = clone $product;
+        $productduplicate->setName('Copie');
+        $em->persist($productduplicate);
+        $em->flush();
+
+        return $this->redirectToRoute('op_gestapp_product_edit', [
+            'id' => $productduplicate->getId()
+        ]);
+    }
+
+    /**
      * @Route("/webbapp/product/{id}", name="op_gestapp_product_show", methods={"GET"})
      * @param Product $product
      * @param Request $request
