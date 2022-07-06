@@ -44,7 +44,7 @@ class ProductController extends AbstractController
         $products = $paginator->paginate(
             $data,
             $request->query->getInt('page', 1),
-            300
+            18
         );
 
         return $this->render('gestapp/product/index.html.twig', [
