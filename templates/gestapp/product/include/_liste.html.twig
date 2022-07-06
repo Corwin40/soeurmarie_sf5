@@ -21,19 +21,19 @@
             <div class="card-footer">
                 <div class="d-flex flex-row justify-content-between">
                     {% if product.isOnLine == 0 %}
-                        <p class="card-text"><a class="js-online" href="{{ path('op_gestapp_product_online', {'id':product.id}) }}"><i class="fas fa-toggle-off text-danger"></i></a></p>
+                        <p class="card-text"><a class="js-online" href="{{ path('op_gestapp_product_online', {'id':product.id}) }}"><i class="fas fa-toggle-off text-light"></i></a></p>
                     {% else %}
                         <p class="card-text"><a class="js-online" href="{{ path('op_gestapp_product_online', {'id':product.id}) }}"><i class="fas fa-toggle-on text-success"></i></a></p>
                     {% endif %}
                     {% if product.isStar == 0 %}
-                        <p class="card-text"><a class="js-star" href="{{ path('op_gestapp_product_star', {'id': product.id }) }}"><i class="far fa-star text-warning"></i></a></p>
+                        <p class="card-text"><a class="js-star" href="{{ path('op_gestapp_product_star', {'id': product.id }) }}"><i class="far fa-star text-light"></i></a></p>
                     {% else %}
-                        <p class="card-text"><a class="js-star" href="{{ path('op_gestapp_product_star', {'id': product.id }) }}"><i class="fas fa-star text-warning"></i></a></p>
+                        <p class="card-text"><a class="js-star" href="{{ path('op_gestapp_product_star', {'id': product.id }) }}"><i class="fas fa-star text-light"></i></a></p>
                     {% endif %}
                     <p class="card-text">
-                        <a class="js-edit-product" href="{{ path('op_gestapp_product_edit', {'id': product.id}) }}"><i class="far fa-edit"></i></a>&nbsp;&nbsp;
-                        <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ product.id }}">
-                            <i class="bi bi-eraser text-danger"></i>
+                        <a class="js-edit-product" href="{{ path('op_gestapp_product_edit', {'id': product.id}) }}"><i class="far fa-edit text-light"></i></a>&nbsp;&nbsp;
+                        <a href="#" class="js-modalSuppr text-light" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ product.id }}">
+                            <i class="bi bi-eraser text-light"></i>
                         </a>
                     </p>
                 </div>

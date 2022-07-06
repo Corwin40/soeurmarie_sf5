@@ -24,7 +24,7 @@ ol, ul, dl {
 }
 //*** ------------- Product card in admin ---------------- ***//
 #product .card {
-	border: 1px solid #9ACAF4;
+	border: 1px solid $op-primary;
 }
 #product .card > .card-body {
 	min-height: 210px;
@@ -37,8 +37,8 @@ ol, ul, dl {
 	border-radius: 0 0 0 0;
 }
 #product .card > .card-footer {
-	background-color: #9ACAF4;
-	border-top: 1px solid #9ACAF4;
+	background-color: $op-primary;
+	border-top: 1px solid $op-primary;
 }
 
 #product .card > .card-footer p {
