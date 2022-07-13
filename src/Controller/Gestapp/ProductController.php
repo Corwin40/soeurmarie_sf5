@@ -567,4 +567,16 @@ class ProductController extends AbstractController
             'idnat' => $idnat
         ]);
     }
+
+    /**
+     * Affiche les produits favoris
+     * @Route("/gestapp/product/favories", name="op_gestapp_product_favories", methods={"POST"})
+     */
+    public function FavoriesProducts(EntityManagerInterface $entityManager)
+    {
+        $products = $entityManager->getRepository(Product::class)->favoriesproducts();
+        return $this->render('gestapp/product/favories.html.twig', [
+            "products" => $products
+        ]);
+    }
 }

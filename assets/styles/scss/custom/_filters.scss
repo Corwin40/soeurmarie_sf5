@@ -1,22 +1,38 @@
-#filters .card-header {
-  background-color: $sm-primary-color;
-  color: #FFFFFF;
+#filters{
+  .card{
+    border: $op-primary solid 1px;
+    .card-header {
+      background-color: $sm-primary-color;
+      color: #FFFFFF;
+    }
+  }
 }
 
-.page-item.active .page-link {
-  z-index: 3;
-  color: #fff;
-  background-color: $sm-primary-color;
-  border-color: $sm-primary-color;
+.pagination{
+  .page-item{
+    a{
+      color: $op-primary;
+    }
+    .page-link {
+      border: $op-primary solid 1px;
+
+    }
+    .page-link:hover {
+      z-index: 2;
+      color: $sm-primary-color;
+      text-decoration: none;
+      background-color: #a9c4ef;
+      border-color: $sm-primary-color;
+    }
+  }
+  .page-item.active{
+    .page-link {
+      z-index: 3;
+      color: #fff;
+      background-color: $sm-primary-color;
+      border-color: $sm-primary-color;
+    }
+  }
 }
 
-.page-link {
-  color: $sm-primary-color;
-}
-.page-link:hover {
-  z-index: 2;
-  color: $sm-primary-color;
-  text-decoration: none;
-  background-color: #d4e0ec;
-  border-color: #dee2e6;
-}
+

@@ -227,7 +227,7 @@ class CartController extends AbstractController
      * Liste les produits inclus dans le panier
      * @Route("/webapp/cart/showcartcount/{id}", name="op_gestapp_cart_showcartcount")
      */
-    public function showcartcount($id, Request $request, EntityManagerInterface $em)
+    public function showcartcount($id, Request $request, EntityManagerInterface $em, CartService $cartService)
     {
         $detailedCart = $this->cartService->getDetailedCartItem();
         $product = $this->productRepository->find($id);
@@ -243,7 +243,8 @@ class CartController extends AbstractController
                 'product' => $product,
                 'session' => $session,
                 'customizes' => $productCustomize
-            ])
+            ]),
+            'lipanier' => $this->renderView('include/_panier.html.twig', ['cartService'=> $cartService])
         ], 200);
     }
 

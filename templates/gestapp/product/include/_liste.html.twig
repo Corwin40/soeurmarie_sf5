@@ -23,7 +23,7 @@
                     {% if product.isOnLine == 0 %}
                         <p class="card-text"><a class="js-online" href="{{ path('op_gestapp_product_online', {'id':product.id}) }}"><i class="fas fa-toggle-off text-light"></i></a></p>
                     {% else %}
-                        <p class="card-text"><a class="js-online" href="{{ path('op_gestapp_product_online', {'id':product.id}) }}"><i class="fas fa-toggle-on text-success"></i></a></p>
+                        <p class="card-text"><a class="js-online" href="{{ path('op_gestapp_product_online', {'id':product.id}) }}"><i class="fas fa-toggle-on text-light"></i></a></p>
                     {% endif %}
                     {% if product.isStar == 0 %}
                         <p class="card-text"><a class="js-star" href="{{ path('op_gestapp_product_star', {'id': product.id }) }}"><i class="far fa-star text-light"></i></a></p>

@@ -322,4 +322,19 @@ class ProductRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+
+    /**
+     * Liste les derniers produits d'une nature.
+     * @return Product[] Returns an array of Product objects
+     */
+    public function favoriesproducts()
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.isStar = 1')
+            ->orderBy('p.id', 'DESC')
+            ->setMaxResults(4)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

@@ -17,11 +17,11 @@
                     .then(function(response) {
                         if(icone.classList.contains('fa-toggle-off')) {
                             icone.classList.replace('fa-toggle-off', 'fa-toggle-on');
-                            icone.classList.replace('text-light', 'text-success');
+                            icone.classList.replace('text-light', 'text-light');
                         }
                         else {
                             icone.classList.replace('fa-toggle-on', 'fa-toggle-off');
-                            icone.classList.replace('text-success', 'text-light');
+                            icone.classList.replace('text-light', 'text-light');
                         }
                     });
             }
@@ -136,7 +136,7 @@
                         <div class="navigation">
                             {{ knp_pagination_render(products, 'include/pagination.html.twig') }}
                         </div>
-                        <div class="row" id="liste">
+                        <div class="row g-1" id="liste">
                             {{ include('gestapp/product/include/_liste.html.twig') }}
                         </div>
                         <div class="navigation">
@@ -159,6 +159,5 @@
             </div>
         </div>
     </section>
-
 </div>
 {% endblock %}

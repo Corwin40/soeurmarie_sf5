@@ -58,11 +58,8 @@
                             {% endif %}
                         </li>
                     {% endfor %}
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="panier" href="{{ path('op_webapp_cart_showcart')}}">
-                            <i class="fas fa-shopping-cart"></i>
-                            Panier ({{ cartService.detailedCartItem|length }})
-                        </a>
+                    <li id="li_panier" class="nav-item">
+                    {{ include('include/_panier.html.twig')}}
                     </li>
                     {% if app.user %}
                     <li class="nav-item dropdown">
