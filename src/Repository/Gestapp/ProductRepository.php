@@ -323,6 +323,10 @@ class ProductRepository extends ServiceEntityRepository
             ;
     }
 
+    public function searchProduct($word){
+        
+    }
+
     /**
      * Liste les derniers produits d'une nature.
      * @return Product[] Returns an array of Product objects

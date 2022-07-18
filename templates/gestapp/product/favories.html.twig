@@ -17,8 +17,8 @@
         {% endfor %}
     </div>
     {% else %}
-    <div class="row justify-content-center">
-        <div class="flickity-button-white" data-flickity='{"resize":false, "pageDots": false,"cellAlign": "left", "wrapAround": true, "imagesLoaded": true}'>
+    <div class="row">
+        <div class="flickity-button-white" data-flickity='{"resize":false, "pageDots": false,"cellAlign": "right", "wrapAround": true, "imagesLoaded": true, "autoPlay": 3000}'>
             {% for product in products %}
                 <div class="col-12 col-md-6 col-xl-3 col-xxl-3">
                     <div class="card">

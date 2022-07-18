@@ -8,6 +8,7 @@ use App\Entity\Gestapp\ProductCategory;
 use App\Entity\Gestapp\ProductCustomize;
 use App\Entity\Gestapp\ProductNature;
 use App\Form\Gestapp\ProductType;
+use App\Form\Gestapp\SearchProductType;
 use App\Repository\Gestapp\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -47,8 +48,21 @@ class ProductController extends AbstractController
             18
         );
 
+        $form = $this->createForm(SearchProductType::class);
+        $search = $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $data = $productRepository->findAll();
+            $products = $paginator->paginate(
+                $data,
+                $request->query->getInt('page', 1),
+                18
+            );
+        }
+
         return $this->render('gestapp/product/index.html.twig', [
             'products' => $products,
+            'form' => $form->createView(),
             'natures' => $natures,
             'categories' => $categories
         ]);

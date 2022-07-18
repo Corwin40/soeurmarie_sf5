@@ -15,6 +15,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Entity(repositoryClass=ProductRepository::class)
  * @ORM\HasLifecycleCallbacks()
  * @Vich\Uploadable()
+ * @ORM\Table(name="product", indexes={@ORM\Index(columns={"name","description"}, flags={"fulltext"})})
  */
 class Product
 {

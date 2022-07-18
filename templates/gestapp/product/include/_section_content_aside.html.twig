@@ -11,34 +11,11 @@
 <div class="card">
     <div class="card-body">
         <h4>
-            {% if app.request.get('_route') == 'op_gestapp_product_index'%}
+            {% if app.request.get('_route') == 'op_gestapp_product_index' %}
                 <a href="{{ path('op_admin_dashboard_index') }}"><i class="fas fa-chevron-circle-left"></i> Retour</a>
             {% else %}
                 <a href="{{ path('op_gestapp_product_index') }}"><i class="fas fa-chevron-circle-left"></i> Retour</a>
             {% endif %}
         </h4>
     </div>
-</div>
-
-<div class="card">
-    <div class="card-header">
-        <h4 class="card-text">Filtres</h4>
-    </div>
-    <ul class="list-group list-group-flush">
-        {% for nature in natures %}
-        <li class="list-group-item">
-            <a class="btn d-inline-flex align-items-center rounded" data-bs-toggle="collapse" data-bs-target="#components-collapse" aria-expanded="false" aria-current="false">
-                {{ nature.name }}
-            </a>
-            {% for categorie in categories|filter(categorie => categorie.nature == nature.name) %}
-            <div class="collapse" id="components-collapse" style="">
-                <ul class="list-unstyled fw-normal pb-1 small">
-                    <input type="checkbox" name="categories[]" id="cat{{ categorie.id }}" value="{{ categorie.id }}">
-                    <label for="cat{{ categorie.id }}">{{ categorie.name }}</label>
-                </ul>
-            </div>
-            {% endfor %}
-        </li>
-        {% endfor %}
-    </ul>
 </div>

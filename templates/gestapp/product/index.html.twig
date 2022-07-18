@@ -131,8 +131,16 @@
             <div class="col-10">
                 <div class="card">
                     <div class="card-body">
-                        <h4>Catalogue des produits</h4>
-                        <p>Créer, Modifier ou supprimer des articles du site</p>
+                        <div>
+                            <div>
+                                <h4>Catalogue des produits</h4>
+                                <p>Créer, Modifier ou supprimer des articles du site</p>
+                            </div>
+                            <div>
+                                {{form(form)}}
+                            </div>
+                        </div>
+
                         <div class="navigation">
                             {{ knp_pagination_render(products, 'include/pagination.html.twig') }}
                         </div>
