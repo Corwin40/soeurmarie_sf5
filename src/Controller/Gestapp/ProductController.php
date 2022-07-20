@@ -34,13 +34,10 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/gestapp/product/", name="op_gestapp_product_index", methods={"GET"})
+     * @Route("/gestapp/product/", name="op_gestapp_product_index", methods={"GET", "POST"})
      */
     public function index(ProductRepository $productRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $natures = $this->getDoctrine()->getRepository(ProductNature::class)->findAll();
-        $categories = $this->getDoctrine()->getRepository(ProductCategory::class)->findAll();
-
         $data = $productRepository->findAll();
         $products = $paginator->paginate(
             $data,
@@ -48,11 +45,14 @@ class ProductController extends AbstractController
             18
         );
 
-        $form = $this->createForm(SearchProductType::class);
+        $form = $this->createForm(SearchProductType::class, [
+            'action' => $this->generateUrl('op_gestapp_product_index'),
+            'method' => 'POST'
+        ]);
         $search = $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $data = $productRepository->findAll();
+            $data = $productRepository->searchProduct($search->get('word')->getData());
             $products = $paginator->paginate(
                 $data,
                 $request->query->getInt('page', 1),
@@ -63,8 +63,6 @@ class ProductController extends AbstractController
         return $this->render('gestapp/product/index.html.twig', [
             'products' => $products,
             'form' => $form->createView(),
-            'natures' => $natures,
-            'categories' => $categories
         ]);
     }
 

@@ -324,7 +324,15 @@ class ProductRepository extends ServiceEntityRepository
     }
 
     public function searchProduct($word){
-        
+        $query = $this->createQueryBuilder('p');
+        //$query->where('p.isOnLine = 1');
+        if($word != null){
+            $query
+                ->andWhere('MATCH_AGAINST(p.name, p.description) AGAINST (:word boolean)>0')
+                ->setParameter('word', $word)
+            ;
+        }
+        return $query->getQuery()->getResult();
     }
 
     /**
