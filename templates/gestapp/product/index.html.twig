@@ -36,11 +36,11 @@
                     .then(function(response) {
                         if(icone.classList.contains('far')) {
                             icone.classList.replace('far', 'fas');
-                            icone.classList.replace('text-danger', 'text-success');
+                            icone.classList.replace('text-light', 'text-success');
                         }
                         else {
                             icone.classList.replace('fas', 'far');
-                            icone.classList.replace('text-success', 'text-danger');
+                            icone.classList.replace('text-success', 'text-light');
                         }
                         // partie de code pour afficher le toast d'alerte
                         var option = {

@@ -1,6 +1,12 @@
 $op-primary: darken(#428bca, 20%);
 $op-blue: rgba(28,113,216,1);
 $admin-color : linear-gradient(90deg, rgba(28,113,216,1) 0%, rgba(48,200,119,1) 100%);
+$sm-primary-color: #142864;
+$sm-secondary-color: #f56d0c;
+$sm-bluebridge: #A9C4EF;
+$primary: darken(#428bca, 20%);
+
+
 //*** ------------- Import Variables of bootstrap ---------------- ***//
 @import "node_modules/bootstrap/scss/bootstrap";
 @import "node_modules/bootstrap/scss/variables";

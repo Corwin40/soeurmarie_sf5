@@ -4,12 +4,17 @@
             <div class="col-md-3 col-sm-3 col-xl-3">
                 <div class="row d-flex justify-content-center">
                     <div id="overlay_logo" class="col-8 my-4">
-                        <img class="img-fluid" src="{{ asset('images/home_front/LOGO-fondblanc.png') }}">
+                        <img class="img-fluid" src="{{ vich_uploader_asset(parameter, 'logoFile') }}">
                     </div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-3">
                 <h3>Plan du site</h3>
+                <ul>
+                    {% for page in pages %}
+                        <li><a href="../page/{{ page.slug }}">{{ page.name }}</a></li>
+                    {% endfor %}
+                </ul>
                 <p>
                     <a>- Accueil</a><br>
                     <a>- Boutique</a><br>
@@ -23,7 +28,7 @@
 
             </div>
             <div class="col-md-3 col-sm-3">
-                <h3>Contacts</h3>
+                <h3>Contact</h3>
                 <p>Soeur Marie<br>MARIA BAMBINA<br>8 rue du Midi<br>65100 LOURDES</p>
                 <p>soeur.marie@cartesdeprière.fr</p>
             </div>

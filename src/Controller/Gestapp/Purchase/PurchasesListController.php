@@ -222,7 +222,7 @@ class PurchasesListController extends abstractController
 
         return new PdfResponse(
             $knpSnappyPdf->getOutputFromHtml($html),
-            'filesss.pdf'
+            'files.pdf'
         );
 
         //return $this->render('pdf/purchases/onePurchaseFromCustomer.html.twig', [

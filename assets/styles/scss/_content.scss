@@ -32,6 +32,9 @@ ol, ul, dl {
 	display: grid;
 	grid-template-rows: auto 1fr auto;
 }
+#product .card > .card-body {
+
+}
 
 #product .card-footer:last-child {
 	border-radius: 0 0 0 0;

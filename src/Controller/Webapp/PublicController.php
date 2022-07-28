@@ -136,7 +136,22 @@ class PublicController extends AbstractController
     }
 
     /**
-     * Affiche l'espace clientel
+     * @Route ("/webapp/public/footer/", name="op_webapp_public_blocfooter")
+     */
+    public function BlocFooter(PageRepository $pageRepository, Request $request): Response
+    {
+        // préparation des éléments d'interactivité du menu
+        $parameter = $this->getDoctrine()->getRepository(Parameter::class)->findFirstReccurence();
+        $pages = $pageRepository->listpage();
+
+        return $this->render('include/footer_webapp.html.twig', [
+            'parameter' => $parameter,
+            'pages' => $pages,
+        ]);
+    }
+
+    /**
+     * Affiche l'espace clientelle
      * @Route ("/webapp/public/dashboard/client", name="op_webapp_public_dashboard_client", methods={"GET"})
      */
     public function clientDashboard(){

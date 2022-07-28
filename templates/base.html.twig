@@ -34,7 +34,7 @@
     </main>
     <footer>
         {% block footer %}
-            {{ include('include/footer_webapp.html.twig') }}
+            {{ render(controller('App\\Controller\\Webapp\\PublicController::BlocFooter'))}}
         {% endblock %}
     </footer>
 </body>
