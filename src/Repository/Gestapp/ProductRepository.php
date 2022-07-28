@@ -328,7 +328,7 @@ class ProductRepository extends ServiceEntityRepository
         //$query->where('p.isOnLine = 1');
         if($word != null){
             $query
-                ->andWhere('MATCH_AGAINST(p.name, p.description) AGAINST (:word boolean)>0')
+                ->andWhere('MATCH_AGAINST(p.name, p.description, p.ref) AGAINST (:word boolean)>0')
                 ->setParameter('word', $word)
             ;
         }
