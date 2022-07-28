@@ -139,10 +139,13 @@
                             <div class="col-4">
                                 {{form_start(form)}}
                                 {# Bannière sur la vignette du bien #}
-                                <div class="row mb-1 g-1">
-                                    {{ form_label(form.word, '', {'label_attr': {'class':'col-sm-2  form-label'}}) }}
+                                <div class="row mb-1 g-1 justify-content-end">
                                     <div class="col-4">
-                                        {{ form_widget(form.word) }}
+                                        {{ form_widget(form.word, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                                        {{ form_widget(form.rechercher) }}
+                                    </div>
+                                    <div class="col-4">
+
                                     </div>
                                 </div>
                                 {{form_end(form)}}
