@@ -20,7 +20,11 @@ class SearchProductType extends AbstractType
                     'placeholder' => 'Entrez votre recherche'
                 ]
             ])
-            ->add('rechercher', SubmitType::class)
+            ->add('rechercher', SubmitType::class, [
+                'attr' => [
+                    'class' => 'btn btn-sm btn-secondary',
+                ]
+            ])
         ;
     }
 

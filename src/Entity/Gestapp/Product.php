@@ -15,7 +15,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Entity(repositoryClass=ProductRepository::class)
  * @ORM\HasLifecycleCallbacks()
  * @Vich\Uploadable()
- * @ORM\Table(name="product", indexes={@ORM\Index(columns={"name","description"}, flags={"fulltext"})})
+ * @ORM\Table(name="product", indexes={@ORM\Index(columns={"name","description","ref"}, flags={"fulltext"})})
  */
 class Product
 {
@@ -156,6 +156,7 @@ class Product
 
     /**
      * @ORM\ManyToMany(targetEntity=ProductCategory::class)
+     *
      */
     private $otherCategory;
 
@@ -426,7 +427,7 @@ class Product
 
     public function setRef(string $ref): self
     {
-        $this->ref = $ref;
+        $this->ref = strtoupper($ref);
 
         return $this;
     }

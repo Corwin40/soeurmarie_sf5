@@ -107,6 +107,7 @@ class ProductType extends AbstractType
                     return $er->createQueryBuilder('pc')
                         ->orderBy('pc.name', 'ASC');
                 },
+                'required' => false,
                 'multiple' => true,
                 'choice_label' => 'name',
                 'label' => 'Autres évènements',

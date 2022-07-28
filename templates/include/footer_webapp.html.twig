@@ -12,17 +12,9 @@
                 <h3>Plan du site</h3>
                 <ul>
                     {% for page in pages %}
-                        <li><a href="../page/{{ page.slug }}">{{ page.name }}</a></li>
+                        <li><a href="{{ path('op_webapp_page_slug', {'slug':page.slug}) }}">{{ page.name }}</a></li>
                     {% endfor %}
                 </ul>
-                <p>
-                    <a>- Accueil</a><br>
-                    <a>- Boutique</a><br>
-                    <a>- Contact</a><br>
-                    <a>- Mention légales</a><br>
-                    <a>- Politique de confidentialité</a><br>
-                    <a>- Conditions générales de Ventes</a>
-                </p>
             </div>
             <div class="col-md-3 col-sm-3">
 
