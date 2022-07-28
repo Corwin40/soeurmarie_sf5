@@ -120,6 +120,7 @@ class ProductController extends AbstractController
         $session = $request->getSession()->get('name_uuid');
         // On teste si le panier existe en session
         $cart = $request->getSession()->get('cart');
+
         if($cart){
             //dd($cart);
             // récupération des items du panier
@@ -139,8 +140,6 @@ class ProductController extends AbstractController
                 $em->persist($productCustomize);
                 $em->flush();
 
-                //dd($productCustomize);
-
                 return $this->render('gestapp/product/show.html.twig', [
                     'product' => $product,
                     'session' => $session,
@@ -159,10 +158,6 @@ class ProductController extends AbstractController
                 'customizes' => $productCustomize
             ]);
         }
-
-        //dd($format);
-        //$productCustomize->setFormat();
-        //$em->flush();
 
         return $this->render('gestapp/product/show.html.twig', [
             'product' => $product,

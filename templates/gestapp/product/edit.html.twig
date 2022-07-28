@@ -124,6 +124,69 @@
                     console.error(error);
                 });
 
+            // TomSelect
+            // ---------------------------------------
+            // Select Producteur
+            new TomSelect("#product_producer",{
+                plugins: ['remove_button'],
+                create: true,
+                onItemAdd:function(){
+                    this.setTextboxValue('');
+                    this.refreshOptions();
+                },
+                render:{
+                    option:function(data,escape){
+                        return '<div class="d-flex"><span>' + escape(data.data) + '</span><span class="ms-auto text-muted">' + escape(data.value) + '</span></div>';
+                    },
+                    item:function(data,escape){
+                        return '<div>' + escape(data.data) + '</div>';
+                    }
+                }
+            });
+
+            // TomSelect
+            // ---------------------------------------
+            // Select Nature
+            new TomSelect("#product_productNature",{
+                plugins: ['remove_button'],
+                create: true,
+                onItemAdd:function(){
+                    this.setTextboxValue('');
+                    this.refreshOptions();
+                },
+                render:{
+                    option:function(data,escape){
+                        return '<div class="d-flex"><span>' + escape(data.data) + '</span><span class="ms-auto text-muted">' + escape(data.value) + '</span></div>';
+                    },
+                    item:function(data,escape){
+                        return '<div>' + escape(data.data) + '</div>';
+                    }
+                }
+            });
+
+            // TomSelect
+            // ---------------------------------------
+            // Select Nature
+            new TomSelect("#product_productCategory",{
+                plugins: ['remove_button', 'dropdown_input'],
+                create: true,
+                onItemAdd:function(){
+                    this.setTextboxValue('');
+                    this.refreshOptions();
+                },
+                render:{
+                    option:function(data,escape){
+                        return '<div class="d-flex"><span>' + escape(data.data) + '</span><span class="ms-auto text-muted">' + escape(data.value) + '</span></div>';
+                    },
+                    item:function(data,escape){
+                        return '<div>' + escape(data.data) + '</div>';
+                    }
+                }
+            });
+
+            // TomSelect
+            // ---------------------------------------
+            // Select Format multiple
             new TomSelect("#product_formats",{
                 plugins: ['remove_button'],
                 create: true,
@@ -140,6 +203,10 @@
                     }
                 }
             });
+
+            // TomSelect
+            // ---------------------------------------
+            // Select autre catégorie
             new TomSelect("#product_otherCategory",{
                 plugins: ['remove_button'],
                 create: true,
@@ -156,6 +223,8 @@
                     }
                 }
             });
+
+
         }
     </script>
 {%  endblock %}

@@ -3,6 +3,7 @@
 namespace App\Form\Gestapp;
 
 use App\Entity\Gestapp\Product;
+use App\Entity\Admin\Member;
 use App\Entity\Gestapp\ProductCategory;
 use App\Entity\Gestapp\productFormat;
 use App\Entity\Gestapp\ProductNature;
@@ -49,16 +50,21 @@ class ProductType extends AbstractType
                 'query_builder' => function (ProductNatureRepository $productNatureRepository) {
                     return $productNatureRepository->createQueryBuilder('pn')->orderBy('pn.name', 'ASC');
                 },
+                'choice_attr' => function (ProductNature $product, $key, $index) {
+                    return ['data-data' => $product->getName()];
+                }
             ])
             ->add('productCategory',EntityType::class, [
                 'placeholder' => 'Choisir une categorie',
                 'class' => ProductCategory::class,
-                'disabled'=> true,
                 'required' => false,
                 'choice_label' => 'name',
                 'query_builder' => function (ProductCategoryRepository $productCategoryRepository) {
                     return $productCategoryRepository->createQueryBuilder('pc')->orderBy('pc.name', 'ASC');
                 },
+                'choice_attr' => function (ProductCategory $product, $key, $index) {
+                    return ['data-data' => $product->getName()];
+                }
             ])
             ->add('productUnit', EntityType::class, [
                 'placeholder' => 'Choisir une unité de tarif',
@@ -74,14 +80,16 @@ class ProductType extends AbstractType
             ->add('quantity')
             ->add('isDisponible')
             ->add('producer', EntityType::class, [
-                'class' => \App\Entity\Admin\Member::class,
+                'class' => Member::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('m')
-                        ->where('m.type = :type')
-                        ->setParameter('type', 'producteur')
-                        ->orderBy('m.id', 'ASC');
+                        ->orderBy('m.firstName', 'ASC');
                 },
-                'choice_label' => 'structure',
+                'choice_label' => 'firstName',
+                'label' => 'Producteur',
+                'choice_attr' => function (Member $product, $key, $index) {
+                    return ['data-data' => $product->getFirstName() . " " . $product->getLastName()];
+                }
             ])
             ->add('tva', ChoiceType::class, [
                 'choices'  => [
@@ -95,9 +103,16 @@ class ProductType extends AbstractType
             ->add('isPersonalisable')
             ->add('otherCategory',EntityType::class, [
                 'class' => ProductCategory::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('pc')
+                        ->orderBy('pc.name', 'ASC');
+                },
                 'multiple' => true,
-                'required' => false,
-
+                'choice_label' => 'name',
+                'label' => 'Autres évènements',
+                'choice_attr' => function (ProductCategory $product, $key, $index) {
+                    return ['data-data' => $product->getName()];
+                }
             ])
             ->add('formats',EntityType::class, [
                 'class' => productFormat::class,
@@ -106,29 +121,6 @@ class ProductType extends AbstractType
                     return $formats ? ['data-data' => $formats->getName()] : [];
                 }),
             ])
-            ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event){
-                $nature = $event->getData()->getProductNature() ?? null;
-
-                if($nature)
-                {
-                    //dd($nature);
-                    $event->getForm()->remove('productCategory');
-                    $event->getForm()->add('productCategory',EntityType::class, [
-                        'placeholder' => 'Choisir une categorie',
-                        'class' => ProductCategory::class,
-                        'choice_label' => 'name',
-                        'query_builder' => function (ProductCategoryRepository $productCategoryRepository) use ($nature) {
-                            return $productCategoryRepository
-                                ->createQueryBuilder('pc')
-                                ->join('pc.Nature', 'pn')
-                                ->andWhere('pn.id = :nature')
-                                ->setParameter('nature', $nature)
-                                ->orderBy('pc.name', 'ASC');
-                        },
-                    ]);
-                }
-
-            })
         ;
     }
 

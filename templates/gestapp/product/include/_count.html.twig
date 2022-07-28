@@ -22,7 +22,7 @@ Ajout du produit au panier et personnalisation
                 <form id="CustomizeProduct" action="{{ path('op_gestapp_product_customize_edit', {'id':i.product.id}) }}">
                     <div class="row g-1 align-items-center">
 
-                        <label for="name" class="col-sm-3 col-form-label">Personnalisation :</label>
+                        <label for="name" class="col-sm-3 col-form-label">Format :</label>
                         <div class="col-sm-3">
                             <select class="form-select form-select-sm" name="format" id="formatedit">
                             {% for f in i.product.formats %}
@@ -32,7 +32,7 @@ Ajout du produit au panier et personnalisation
                         </div>
                         {% if i.product.isPersonalisable == 1 %}
                         <div class="col-sm-4">
-                            <input id="name" name="name" type="text" class="form-control form-control-sm" placeholder="Personnalisez votre produit ...">
+                            <input id="name" name="name" type="text" class="form-control form-control-sm" placeholder="Personnalisez votre produit, prénom, occasion...">
                         </div>
                         {% endif %}
                         <input id="sessid" name="sessid" type="hidden" value="{{ session }}">

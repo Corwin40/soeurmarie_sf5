@@ -48,7 +48,7 @@
                             {{ form_label(form.producer, 'Producteur', {'label_attr': {'class':'form-label'}}) }}
                         </div>
                         <div class="col-6">
-                            {{ form_widget(form.producer, {'attr': {'class': 'form-select form-select-sm'}}) }}
+                            {{ form_widget(form.producer) }}
                         </div>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
                             {{ form_label(form.productNature, 'Nature', {'label_attr': {'class':'form-label'}}) }}
                         </div>
                         <div class="col-3">
-                            {{ form_widget(form.productNature, {'attr': {'class': 'form-select form-select-sm selectNat'}}) }}
+                            {{ form_widget(form.productNature) }}
                         </div>
                         <div class="col-1">
                             <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#addProductNature"><i class="bi bi-plus-circle"></i></button>
@@ -70,13 +70,23 @@
                             {{ form_label(form.productCategory, 'Catégorie', {'label_attr': {'class':'form-label'}}) }}
                         </div>
                         <div class="col-3">
-                            {{ form_widget(form.productCategory, {'attr': {'class': 'form-select form-select-sm selectCat'}}) }}
+                            {{ form_widget(form.productCategory) }}
                         </div>
                         <div class="col-1">
                             <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#addProductCategory"><i class="bi bi-plus-circle"></i></button>
                         </div>
                     </div>
-
+                    <hr>
+                    <p>Disponibilté du produit pour d'autre évènements</p>
+                    <div class="row mb-1 mt-1 g-1">
+                        <div class="col-2">
+                            {{ form_label(form.otherCategory, 'Evenements', {'label_attr': {'class':'form-label'}}) }}
+                        </div>
+                        <div class="col-10">
+                            {{ form_widget(form.otherCategory, {'attr': {'class': ''}}) }}
+                        </div>
+                    </div>
+                    <hr>
                     <div class="row mb-1 mt-1 g-1">
                         <div class="col-2">
                             {{ form_label(form.formats, 'formats', {'label_attr': {'class':'form-label'}}) }}

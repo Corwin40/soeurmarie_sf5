@@ -29,6 +29,8 @@
                     .post(urladdcart)
                     .then(function(response) {
                         const liste = document.getElementById('count').innerHTML=response.data.count;
+                        const lipanier = document.getElementById('li_panier').innerHTML = response.data.lipanier
+
                         // mise en place des évènements sur la page
                         document.querySelectorAll('a.jsonAddCart').forEach(function (link) {
                             link.addEventListener('click', BtnAddCart);
@@ -53,7 +55,6 @@
                     .then(function(response) {
                         // Rafraichissement du tableau "liste"
                         const count = document.getElementById('count').innerHTML=response.data.count;
-                        const lipanier = document.getElementById('li_panier').innerHTML = response.data.lipanier
                         // Remise en place des évènements sur la page
                         document.querySelectorAll('a.jsonAddCart').forEach(function (link){
                             link.addEventListener('click', BtnAddCart);
@@ -78,6 +79,7 @@
                     .then(function(response) {
                         // Rafraichissement du tableau "liste"
                         const liste = document.getElementById('count').innerHTML = response.data.count;
+                        const lipanier = document.getElementById('li_panier').innerHTML = response.data.lipanier
                         // Remise en place des évènements sur la page
                         document.querySelectorAll('a.jsonAddCart').forEach(function (link){
                             link.addEventListener('click', BtnAddCart);
@@ -168,11 +170,21 @@
                         <div id="options" class="mb-2">
                             <div class="row">
                                 <div class="col-4">
-                                    <p><b>{{ product.price|number_format(2, ',', ' ') }} €</b></p>
+                                    <p>A partir de : <b>{{ product.price|number_format(2, ',', ' ') }} €</b></p>
                                 </div>
                                 <div class="col-8">
-                                    <p class="text-end">Ce produit est disponible : {{ product.isDisponible ? '<i class="bi bi-check2-circle text-success"></i>' : '<i class="bi bi-x-circle text-error"></i>' }}</p>
+                                    <p class="text-end">Disponible à la vente: {{ product.isDisponible ? '<i class="bi bi-check2-circle text-success"></i>' : '<i class="bi bi-x-circle text-error"></i>' }}</p>
                                 </div>
+                                {% if product.otherCategory|length > 0 %}
+                                <div class="col-12 mt-1">
+                                    <p>
+                                        Vous pouvez sélectionner ce produit pour les évènements suivants :<br>
+                                        {% for otherCategory in product.otherCategory %}
+                                        <b>{{ otherCategory.name }}</b>
+                                        {% endfor %}
+                                    </p>
+                                </div>
+                                {% endif %}
                             </div>
                         </div>
                         <div id="count" class="mb-2">
