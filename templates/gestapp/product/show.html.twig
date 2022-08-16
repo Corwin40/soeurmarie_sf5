@@ -143,8 +143,11 @@
                         <div id="content" class="mb-2">
                             <p><strong>Informations</strong></p>
                             {{ product.description|raw }}
+                            {% if product.details is null %}
+                            {% else %}
                             <p><strong>Détails :</strong></p>
                             {{ product.details|raw }}
+                            {% endif %}
                             <p class="mt-2 mb-2">
                                 <strong>Format disponible :</strong>
                             </p>

@@ -55,9 +55,12 @@
                             <p class="product-subtitle text-end">{{ product.price|number_format(2, ',', ' ') }}€ </p>
                         </div>
                     </div>
+                    {% if product.nameCategory is null %}
+                    {% else %}
                     <div>
-                        <btn class="btn btn-sm btn-outline-sm">{{ product.nameCategory }}</btn>
+                        <button class="btn btn-sm btn-outline-sm">{{ product.nameCategory }}</button>
                     </div>
+                    {% endif %}
                 </div>
                 <!-- Meta -->
                 <div class="card-meta">
