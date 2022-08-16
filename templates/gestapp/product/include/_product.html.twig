@@ -41,9 +41,6 @@
                 <!-- Body -->
                 <div class="card-body" href="{{ path('op_gestapp_product_show', {'id': product.id}) }}">
                     <!-- Heading -->
-                    <div>
-                        <btn class="btn btn-sm btn-outline-sm">{{ product.nameNature }}</btn>
-                    </div>
                     <h3 class="product-title">{{ product.name }}</h3>
 
                     <div class="mb-0 text-muted" style="font-size: 11px">
@@ -57,6 +54,9 @@
                         <div class="col-6">
                             <p class="product-subtitle text-end">{{ product.price|number_format(2, ',', ' ') }}€ </p>
                         </div>
+                    </div>
+                    <div>
+                        <btn class="btn btn-sm btn-outline-sm">{{ product.nameCategory }}</btn>
                     </div>
                 </div>
                 <!-- Meta -->

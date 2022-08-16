@@ -15,6 +15,15 @@
 
 }
 
+#SoeurMarie_back{
+  #page-title{
+    .h1_span{
+      font-family: 'Monserrat-light';
+      font-size: 1.5rem;
+    }
+  }
+}
+
 #lastproductnature{
   small {
     font-size: 1.8rem !important;
@@ -41,32 +50,31 @@
   background-color: #d4e0ec;
 }
 
-#productCard .product-title {
-  font-family: "Tangerine", cursive;
-  margin-top: 0.2rem;
-  color: $sm-primary-color;
-  font-size: 2rem;
-  line-height: 1;
-}
-
-#productCard .product-subtitle {
-  margin-top: 0;
-  margin-bottom: 0;
-  color: $sm-primary-color;
-  line-height: 1.2;
-}
-
-#productCard .btn-outline-sm{
-  color: $sm-secondary-color;
-  border-color: $sm-secondary-color !important;
-  font-size: 0.6rem;
-}
-
-#productCard .btn-outline-sm:hover{
-  background-color: $sm-secondary-color !important;
-  color: #FFFFFF !important;
-  border-color: $sm-secondary-color;
-  font-size: 0.6rem;
+#productCard {
+  .product-title {
+    font-family: "Tangerine", cursive;
+    margin-top: 0.2rem;
+    color: $sm-primary-color;
+    font-size: 2rem;
+    line-height: 1;
+  }
+  .product-subtitle {
+    margin-top: 0;
+    margin-bottom: 0;
+    color: $sm-primary-color;
+    line-height: 1.2;
+  }
+  .btn-outline-sm{
+    color: $sm-secondary-color;
+    border-color: $sm-secondary-color !important;
+    font-size: 0.6rem;
+  }
+  .btn-outline-sm:hover{
+    background-color: $sm-secondary-color !important;
+    color: #FFFFFF !important;
+    border-color: $sm-secondary-color;
+    font-size: 0.6rem;
+  }
 }
 
 /*** Effets de style sur la pages des cartes - bleu léger- ***/

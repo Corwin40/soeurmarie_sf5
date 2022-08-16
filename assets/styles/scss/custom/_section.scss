@@ -1,40 +1,5 @@
 //*** ------------- section accueil Calligraphies ---------------- ***//
 
-
-.op-section .btn {
-  border-color: $sm-primary-color !important;
-  color: $sm-primary-color;
-  font-family: 'Monserrat-light';
-  font-size: 1.3rem;
-  transition: all 0.3s;
-  position: relative;
-  overflow: hidden;
-  border-radius: 3px 3px 3px 3px;
-  background-color: transparent;
-  margin-bottom: 0.2rem;
-  margin-top: 0;
-}
-
-.op-section .btn::before {
-  content: '';
-  position: absolute;
-  height: 100%;
-  top: 0;
-  left: 0;
-  width: 0%;
-  z-index: -1;
-  transition: all 0.3s;
-  background-color: #142864;
-}
-  
-.op-section .btn:hover {
-  color: #ffffff;
-}
-  
-.op-section .btn:hover::before {
-  width: 100%;
-}
-
 #SoeurMarie_back{
   background-image: linear-gradient($sm-bluebridge,20%,#fff);
 }
@@ -42,16 +7,148 @@
 
 #Calligraphies{
   background-image: linear-gradient($sm-bluebridge,20%,#fff);
+  .op-section .btn {
+    border-color: $sm-primary-color !important;
+    color: $sm-primary-color;
+    font-family: 'Monserrat-light';
+    font-size: 1.3rem;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    border-radius: 3px 3px 3px 3px;
+    background-color: transparent;
+    margin-bottom: 0.2rem;
+    margin-top: 0;
+  }
+
+  .op-section .btn::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    width: 0%;
+    z-index: -1;
+    transition: all 0.3s;
+    background-color: #142864;
+  }
+
+  .op-section .btn:hover {
+    color: #ffffff;
+  }
+
+  .op-section .btn:hover::before {
+    width: 100%;
+  }
 }
 
 #Aquarelles{
   background-image: linear-gradient($sm-bluebridge,20%,#fff);
+  .op-section .btn {
+    border-color: $sm-primary-color !important;
+    color: $sm-primary-color;
+    font-family: 'Monserrat-light';
+    font-size: 1.3rem;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    border-radius: 3px 3px 3px 3px;
+    background-color: transparent;
+    margin-bottom: 0.2rem;
+    margin-top: 0;
+  }
+
+  .op-section .btn::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    width: 0%;
+    z-index: -1;
+    transition: all 0.3s;
+    background-color: #142864;
+  }
+
+  .op-section .btn:hover {
+    color: #ffffff;
+  }
+
+  .op-section .btn:hover::before {
+    width: 100%;
+  }
 }
 
 #Sanctuaires{
   background-image: linear-gradient($sm-bluebridge,20%,#fff);
+  .op-section .btn {
+    border-color: $sm-primary-color !important;
+    color: $sm-primary-color;
+    font-family: 'Monserrat-light';
+    font-size: 1.3rem;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    border-radius: 3px 3px 3px 3px;
+    background-color: transparent;
+    margin-bottom: 0.2rem;
+    margin-top: 0;
+  }
+
+  .op-section .btn::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    width: 0%;
+    z-index: -1;
+    transition: all 0.3s;
+    background-color: #142864;
+  }
+
+  .op-section .btn:hover {
+    color: #ffffff;
+  }
+
+  .op-section .btn:hover::before {
+    width: 100%;
+  }
 }
 
 #Artisanats{
   background-image: linear-gradient($sm-bluebridge,20%,#fff);
+  .op-section .btn {
+    border-color: $sm-primary-color !important;
+    color: $sm-primary-color;
+    font-family: 'Monserrat-light';
+    font-size: 1.3rem;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    border-radius: 3px 3px 3px 3px;
+    background-color: transparent;
+    margin-bottom: 0.2rem;
+    margin-top: 0;
+  }
+
+  .op-section .btn::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    width: 0%;
+    z-index: -1;
+    transition: all 0.3s;
+    background-color: #142864;
+  }
+
+  .op-section .btn:hover {
+    color: #ffffff;
+  }
+
+  .op-section .btn:hover::before {
+    width: 100%;
+  }
 }
