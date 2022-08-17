@@ -245,6 +245,7 @@ class ProductRepository extends ServiceEntityRepository
             ->leftJoin('pr.structure', 's')
             ->leftJoin('p.productNature', 'n')
             ->leftJoin('p.ProductCategory', 'c')
+            ->join('p.otherCategory', 'o')
             ->Select('
                 p.id AS id,
                 p.name AS name, 
