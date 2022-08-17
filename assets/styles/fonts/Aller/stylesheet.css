@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'Aller';
+    src: url('Aller.eot');
+    src: url('Aller.eot?#iefix') format('embedded-opentype'),
+        url('Aller.woff2') format('woff2'),
+        url('Aller.woff') format('woff'),
+        url('Aller.svg#Aller') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+

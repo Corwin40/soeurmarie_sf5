@@ -123,6 +123,7 @@ class ProductRepository extends ServiceEntityRepository
             ->leftJoin('p.producer', 'pr')
             ->leftJoin('pr.structure', 's')
             ->leftJoin('p.productNature', 'n')
+            ->leftJoin('p.ProductCategory', 'c')
             ->leftJoin('p.productUnit', 'pu')
             ->Select('
                 p.id AS id,
@@ -136,6 +137,7 @@ class ProductRepository extends ServiceEntityRepository
                 n.id AS idNature,
                 p.ref AS ref,
                 n.name AS nameNature,
+                c.name AS nameCategory,
                 p.isDisponible,
                 p.isStar,
                 p.isOnLine,
