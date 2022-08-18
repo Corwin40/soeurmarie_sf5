@@ -316,7 +316,7 @@ class ProductController extends AbstractController
 
         $nature = $this->getDoctrine()->getRepository(ProductNature::class)->find($idnat);
         $categories = $this->getDoctrine()->getRepository(ProductCategory::class)->findBy(array('Nature'=> $idnat));
-        
+
 
         $products = $paginator->paginate(
             $data,
