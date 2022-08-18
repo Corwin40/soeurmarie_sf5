@@ -22,7 +22,7 @@ liip_imagine:
                     # size of the water mark relative to the input image
                     size: 0.2
                     # set the position of the watermark
-                    position: bottomcenter
+                    position: bottom
         product_image_cart:
             quality: 75
             filters:
