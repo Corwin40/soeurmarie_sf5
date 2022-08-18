@@ -3,7 +3,7 @@
 #productCard{
   display: grid;
   grid-template-rows: auto auto 1fr auto;
-  min-height: 500px;
+  min-height: 350px;
   border-color: $op-primary;
   hr{
     color: $op-primary !important;

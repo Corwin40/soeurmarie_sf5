@@ -4,7 +4,7 @@
             Il y a actuellement {{ products.getTotalItemCount }} produits listés.
         </div>
     </div>
-    <div class="col-12 col-lg-6">
+    <div class="col-12 col-lg-12 pe-0">
         <div class="navigation">
             {{ knp_pagination_render(products, 'include/pagination.html.twig', {}, {
                 'align': 'right',
@@ -42,11 +42,12 @@
                 <div class="card-body" href="{{ path('op_gestapp_product_show', {'id': product.id}) }}">
                     <!-- Heading -->
                     <h3 class="product-title">{{ product.name }}</h3>
-
+                    {#
                     <div class="mb-0 text-muted" style="font-size: 11px">
                         <!-- Text -->
                         {{ product.description|u.truncate(70, ' ...')|raw }}
                     </div>
+                    #}
                     <div class="row align-items-center mt-1 mb-1" style="font-size: 11px">
                         <div class="col-6">
                             <p class="product-subtitle"> Réf : {{ product.ref }}</p>
@@ -55,12 +56,14 @@
                             <p class="product-subtitle text-end">{{ product.price|number_format(2, ',', ' ') }}€ </p>
                         </div>
                     </div>
+                    {#
                     {% if product.nameCategory is null %}
                     {% else %}
                     <div>
                         <p><span class="badge bg-secondary">{{ product.nameCategory }}</span></p>
                     </div>
                     {% endif %}
+                    #}
                 </div>
                 <!-- Meta -->
                 <div class="card-meta">
@@ -89,7 +92,7 @@
     {% endfor %}
 </div>
 <div class="row mt-1">
-    <div class="col-12">
+    <div class="col-12 col-lg-12 pe-0">
         <div class="navigation">
             {{ knp_pagination_render(products, 'include/pagination.html.twig', {}, {
                 'align': 'right',
