@@ -307,15 +307,16 @@ class ProductController extends AbstractController
 
 
     /**
-     * Espace E-Commerce : Liste les produits sur les natures
+     * Espace E-Commerce : Liste les produits selon la nature de ces derniers
      * @Route("/gestapp/product/oneNat/{idnat}", name="op_gestapp_product_onecat", methods={"POST"})
      */
-    public function ListOneNatProduct(Request $request, PaginatorInterface $paginator, $idnat)
+    public function ListOneNatProduct(Request $request, PaginatorInterface $paginator, $idnat, EntityManagerInterface $em)
     {
         $data = $this->getDoctrine()->getRepository(Product::class)->oneNature($idnat);
 
         $nature = $this->getDoctrine()->getRepository(ProductNature::class)->find($idnat);
         $categories = $this->getDoctrine()->getRepository(ProductCategory::class)->findBy(array('Nature'=> $idnat));
+        
 
         $products = $paginator->paginate(
             $data,
@@ -369,7 +370,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * Espace E-Commerce : Liste les produits sur les catégories
+     * Espace E-Commerce : Liste les produits selon la catégorie de ces derniers
      * @Route("/gestapp/product/oneCat/{idcat}", name="op_gestapp_product_onecat", methods={"POST"})
      */
     public function ListOneCatProduct(Request $request, PaginatorInterface $paginator, $idcat)
