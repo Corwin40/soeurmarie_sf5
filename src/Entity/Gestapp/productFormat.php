@@ -59,24 +59,24 @@ class productFormat
         return $this;
     }
 
-    public function getHeight(): ?int
+    public function getHeight(): ?string
     {
         return $this->height;
     }
 
-    public function setHeight(?int $height): self
+    public function setHeight(?string $height): self
     {
         $this->height = $height;
 
         return $this;
     }
 
-    public function getLength(): ?int
+    public function getLength(): ?string
     {
         return $this->length;
     }
 
-    public function setLength(?int $length): self
+    public function setLength(?string $length): self
     {
         $this->length = $length;
 
@@ -95,11 +95,6 @@ class productFormat
         return $this;
     }
 
-    public function __toString()
-    {
-        return $this->name;
-    }
-
     public function getPriceformat(): ?string
     {
         return $this->priceformat;
@@ -110,5 +105,10 @@ class productFormat
         $this->priceformat = $priceformat;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 }

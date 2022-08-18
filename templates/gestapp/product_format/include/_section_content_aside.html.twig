@@ -1,0 +1,17 @@
+<div class="card">
+    <div class="card-body">
+        <h4><a href="{{ path('op_gestapp_product_format_new') }}"><i class="far fa-plus-square"></i> Nouveau format</a></h4>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h4>
+            {% if app.request.get('_route') == 'op_gestapp_product_index' %}
+                <a href="{{ path('op_admin_dashboard_index') }}"><i class="fas fa-chevron-circle-left"></i> Retour</a>
+            {% else %}
+                <a href="{{ path('op_gestapp_product_format_index') }}"><i class="fas fa-chevron-circle-left"></i> Retour</a>
+            {% endif %}
+        </h4>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th>Format</th>
+        <th class="text-center">Hauteur</th>
+        <th class="text-center">Largeur</th>
+        <th class="text-center">Poids</th>
+        <th class="text-center">Prix</th>
+        <th>actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for product_format in product_formats %}
+        <tr>
+            <td>{{ product_format.name }}</td>
+            <td class="text-center">{{ product_format.height }}</td>
+            <td class="text-center">{{ product_format.length }}</td>
+            <td class="text-center">{{ product_format.weight }}</td>
+            <td class="text-center">{{ product_format.priceformat }}</td>
+            <td>
+                <a href="{{ path('op_gestapp_product_format_edit', {'id': product_format.id}) }}"><i class="far fa-edit"></i></a>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="7">Pas de formats enregistrés en base de données</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

@@ -1,0 +1,48 @@
+{{ form_start(form) }}
+
+    <div class="card-body">
+        <div class="row mb-1 mt-1 g-1">
+            <div class="col-2">
+                {{ form_label(form.name, 'Format', {'label_attr': {'class':'form-label'}}) }}
+            </div>
+            <div class="col-2">
+                {{ form_widget(form.name, {'attr': {'class': 'form-control form-control-sm'}}) }}
+            </div>
+        </div>
+        <div class="row mb-1 mt-1 g-1">
+            <div class="col-2">
+                {{ form_label(form.height, 'Hauteur', {'label_attr': {'class':'form-label'}}) }}
+            </div>
+            <div class="col-2">
+                {{ form_widget(form.height, {'attr': {'class': 'form-control form-control-sm'}}) }}
+            </div>
+        </div>
+        <div class="row mb-1 mt-1 g-1">
+            <div class="col-2">
+                {{ form_label(form.length, 'Largeur', {'label_attr': {'class':'form-label'}}) }}
+            </div>
+            <div class="col-2">
+                {{ form_widget(form.length, {'attr': {'class': 'form-control form-control-sm'}}) }}
+            </div>
+        </div>
+        <div class="row mb-1 mt-1 g-1">
+            <div class="col-2">
+                {{ form_label(form.weight, 'Poids', {'label_attr': {'class':'form-label'}}) }}
+            </div>
+            <div class="col-2">
+                {{ form_widget(form.weight, {'attr': {'class': 'form-control form-control-sm'}}) }}
+            </div>
+        </div>
+        <div class="row mb-1 mt-1 g-1">
+            <div class="col-2">
+                {{ form_label(form.priceformat, 'Prix', {'label_attr': {'class':'form-label'}}) }}
+            </div>
+            <div class="col-2">
+                {{ form_widget(form.priceformat, {'attr': {'class': 'form-control form-control-sm'}}) }}
+            </div>
+        </div>
+        <button class="btn btn-sm btn-primary">{{ button_label|default('Ajouter') }}</button>
+    </div>
+
+
+{{ form_end(form) }}

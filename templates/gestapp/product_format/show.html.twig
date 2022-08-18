@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}productFormat{% endblock %}
+
+{% block body %}
+    <h1>productFormat</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ product_format.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ product_format.name }}</td>
+            </tr>
+            <tr>
+                <th>Height</th>
+                <td>{{ product_format.height }}</td>
+            </tr>
+            <tr>
+                <th>Length</th>
+                <td>{{ product_format.length }}</td>
+            </tr>
+            <tr>
+                <th>Weight</th>
+                <td>{{ product_format.weight }}</td>
+            </tr>
+            <tr>
+                <th>Priceformat</th>
+                <td>{{ product_format.priceformat }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('op_gestapp_product_format_index') }}">back to list</a>
+
+    <a href="{{ path('op_gestapp_product_format_edit', {'id': product_format.id}) }}">edit</a>
+
+    {{ include('gestapp/product_format/_delete_form.html.twig') }}
+{% endblock %}
