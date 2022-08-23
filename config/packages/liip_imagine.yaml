@@ -18,11 +18,11 @@ liip_imagine:
                     mode: outbond
                 watermark_image:
                     # path to the watermark file (prepended with "%kernel.project_dir%")
-                    image: assets/styles/images/png/favicon.png
+                    image: assets/styles/images/png/watermark.png
                     # size of the water mark relative to the input image
-                    size: 0.2
+                    size: 1
                     # set the position of the watermark
-                    position: bottom
+                    position: center
         product_image_cart:
             quality: 75
             filters:
