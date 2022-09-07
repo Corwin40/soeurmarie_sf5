@@ -146,7 +146,6 @@ class ProductController extends AbstractController
                     'items' => $detailedCart,
                     'customizes' => $productCustomize
                 ]);
-
             }
 
 

@@ -5,13 +5,13 @@ liip_imagine:
 
     filter_sets:
         article_front_image:
-            quality: 75
+            quality: 300
             filters:
                 thumbnail:
                     size: [ 416, 260 ]
                     mode: outbond
         product_image_card:
-            quality: 75
+            quality: 300
             filters:
                 thumbnail:
                     size: [ 320, 320 ]
@@ -24,31 +24,31 @@ liip_imagine:
                     # set the position of the watermark
                 #    position: center
         product_image_cart:
-            quality: 75
+            quality: 300
             filters:
                 thumbnail:
                     size: [ 60, 60 ]
                     mode: outbond
         avatar_image:
-            quality: 75
+            quality: 300
             filters:
                 thumbnail:
                     size: [ 200, 200 ]
                     mode: outbond
         avatar_front:
-            quality: 75
+            quality: 300
             filters:
                 thumbnail:
                     size: [106, 106]
                     mode: outbond
         logostruct_image:
-            quality: 75
+            quality: 300
             filters:
                 thumbnail:
                     size: [ 286, 180 ]
                     mode: outbond
         illustration_structure:
-            quality: 75
+            quality: 300
             filters:
                 thumbnail:
                     size: [ 398, 238 ]
@@ -58,13 +58,13 @@ liip_imagine:
                     position : center
                     color : '#cdb55f'
         prez_event:
-            quality: 150
+            quality: 300
             filters:
                 thumbnail:
                     size: [ 800, 500 ]
                     mode: outbond
         history_event:
-            quality: 150
+            quality: 300
             filters:
                 thumbnail:
                     size: [ 194, 130 ]
