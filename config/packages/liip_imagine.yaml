@@ -5,13 +5,13 @@ liip_imagine:
 
     filter_sets:
         article_front_image:
-            quality: 300
+            quality: 75
             filters:
                 thumbnail:
                     size: [ 416, 260 ]
                     mode: outbond
         product_image_card:
-            quality: 300
+            quality: 75
             filters:
                 thumbnail:
                     size: [ 320, 320 ]
@@ -23,21 +23,8 @@ liip_imagine:
                 #    size: 1
                     # set the position of the watermark
                 #    position: center
-        product_image:
-            quality: 300
-            filters:
-                thumbnail:
-                    size: [ 416, 592 ]
-                    mode: outbond
-                    #watermark_image:
-                    # path to the watermark file (prepended with "%kernel.project_dir%")
-                    #    image: assets/styles/images/png/watermark.png
-                    # size of the water mark relative to the input image
-                    #    size: 1
-                    # set the position of the watermark
-                #    position: center
         product_image_cart:
-            quality: 300
+            quality: 75
             filters:
                 thumbnail:
                     size: [ 60, 60 ]

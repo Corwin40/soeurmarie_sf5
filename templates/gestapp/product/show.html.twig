@@ -134,7 +134,7 @@
                             {% if product.productName is null %}
                                 <img class="img-fluid" src="{{ asset('images/jpg/Fond_product.jpg') }}" alt="image_replace">
                             {% else %}
-                                <img class="card-img-top" src="{{ vich_uploader_asset(product) | imagine_filter('product_image') }}" alt="{{ product.productName }}">
+                                <img class="card-img-top" src="{{ vich_uploader_asset(product) | imagine_filter('product_image_card') }}" alt="{{ product.productName }}">
                             {% endif %}
                         </div>
 
