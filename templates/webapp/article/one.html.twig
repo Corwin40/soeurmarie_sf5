@@ -30,7 +30,7 @@
             </div>
         {% elseif article.articleFrontName is not null and article.articleFrontPosition == 'right' %}
             <div class="row">
-                <div class="col-9">
+                <div class="col-12 col-md-6 col-lg-9 col-xl-9 col-xxl-9">
                     {% if article.isReadMore == 1 %}
                         {{ article.content|u.truncate(600, ' ...')|markdown_to_html }}
                     {% else %}
@@ -40,7 +40,7 @@
                         <a class="btn btn-change" href="/page/{{ article.linkPage|lower }}">{{article.linktext}}</a>
                     {% endif %}
                 </div>
-                <div class="col-3">
+                <div class="col-12 col-md-6 col-lg-3 col-xl-3 col-xxl-3">
                     <div class="position-relative">
                         <!-- Image -->
                         <img src="{{ vich_uploader_asset(article, 'articleFrontFile', 'App\\Entity\\Webapp\\article') }}" alt="{{ article.articleFrontName }}" class="img-fluid d-block">
@@ -55,7 +55,7 @@
             </div>
         {% elseif article.articleFrontName is not null and article.articleFrontPosition == 'left' %}
             <div class="row">
-                <div class="col-3">
+                <div class="col-12 col-md-6 col-lg-3 col-xl-3 col-xxl-3">
                     <div class="position-relative">
                         <!-- Image -->
                         <img src="{{ vich_uploader_asset(article, 'articleFrontFile', 'App\\Entity\\Webapp\\article') }}" alt="{{ article.articleFrontName }}" class="img-fluid d-block">
@@ -67,7 +67,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-9">
+                <div class="col-12 col-md-6 col-lg-9 col-xl-9 col-xxl-9">
                     {% if article.isReadMore == 1 %}
                         {{ article.content|u.truncate(600, ' ...')|markdown_to_html }}
                     {% else %}
