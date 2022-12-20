@@ -154,7 +154,7 @@ class SectionController extends AbstractController
     /**
      * @Route("/webapp/section/{id}/edit", name="op_webapp_section_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Section $section): Response
+    public function edit(Request $request, Section $section, EntityManagerInterface $em): Response
     {
         $page = $section->getPage();
         $idpage = $page->getId();
@@ -163,7 +163,7 @@ class SectionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $em->flush();
 
             return $this->redirectToRoute('op_webapp_section_edit', [
                 'id' => $section->getId()

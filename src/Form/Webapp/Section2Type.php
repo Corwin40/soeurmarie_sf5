@@ -4,6 +4,7 @@ namespace App\Form\Webapp;
 
 use App\Entity\Webapp\Section;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,9 +15,15 @@ class Section2Type extends AbstractType
         $builder
             ->add('title')
             ->add('description')
-            ->add('attrId')
-            ->add('attrName')
-            ->add('attrClass')
+            ->add('attrId', TextType::class, [
+                'required'=>false,
+            ])
+            ->add('attrName', TextType::class, [
+                'required'=>false,
+            ])
+            ->add('attrClass', TextType::class, [
+                'required'=>false,
+            ])
         ;
     }
 

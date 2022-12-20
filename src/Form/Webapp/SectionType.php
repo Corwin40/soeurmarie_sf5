@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
@@ -21,9 +22,15 @@ class SectionType extends AbstractType
         $builder
             ->add('title')
             ->add('description')
-            ->add('attrId')
-            ->add('attrName')
-            ->add('attrClass')
+            ->add('attrId', TextType::class, [
+                'required'=>false,
+            ])
+            ->add('attrName', TextType::class, [
+                'required'=>false,
+            ])
+            ->add('attrClass', TextType::class, [
+                'required'=>false,
+            ])
             ->add('page')
             ->add('contentType', ChoiceType::class, [
                 'choices'  => [

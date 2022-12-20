@@ -92,7 +92,7 @@
                         {% endif %}
                     </div>
                 </div>
-                <div class="col-12">
+                <div class="col-4">
                     <div class="position-relative">
                         <!-- Image -->
                         <img src="{{ vich_uploader_asset(article, 'articleFrontFile', 'App\\Entity\\Webapp\\article') }}" alt="{{ article.articleFrontName }}" class="img-fluid d-block">
@@ -108,10 +108,10 @@
             </div>
         {% elseif article.articleFrontName is not null and article.articleFrontPosition == 'down' %}
             <div class="row">
-                <div class="col-12">
+                <div class="col-4">
                     <div class="position-relative">
                         <!-- Image -->
-                        <img src="{{ vich_uploader_asset(article, 'articleFrontFile', 'App\\Entity\\Webapp\\article') }}" alt="{{ article.articleFrontName }}" class="img-fluid d-block">
+                        <img class="img-fluid" src="{{ vich_uploader_asset(article, 'articleFrontFile', 'App\\Entity\\Webapp\\article') }}" alt="{{ article.articleFrontName }}">
                         <!-- Shape -->
                         <div class="shape shape-top shape-fluid-x text-white">
                             <svg viewBox="0 0 2880 72" fill="none" xmlns="http://www.w3.org/2000/svg">
