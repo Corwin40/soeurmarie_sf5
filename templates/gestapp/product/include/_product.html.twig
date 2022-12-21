@@ -1,10 +1,10 @@
-<div class="row mt-1">
+<div class="row">
     <div class="col-12 col-lg-6">
         <div class="count">
             Il y a actuellement {{ products.getTotalItemCount }} produits listés.
         </div>
     </div>
-    <div class="col-12 col-lg-12 pe-0">
+    <div class="col-12 col-lg-6 pe-0">
         <div class="navigation">
             {{ knp_pagination_render(products, 'include/pagination.html.twig', {}, {
                 'align': 'right',

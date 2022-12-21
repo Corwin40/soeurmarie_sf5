@@ -181,9 +181,9 @@
                                 {% if product.otherCategory|length > 0 %}
                                 <div class="col-12 mt-1">
                                     <p>
-                                        Vous pouvez sélectionner ce produit pour les évènements suivants :<br>
+                                        Ce produit pourra accompagner les évènements importants de votre vie :<br>
                                         {% for otherCategory in product.otherCategory %}
-                                        <b>{{ otherCategory.name }}</b>
+                                        <span class="badge bg-dark">{{ otherCategory.name }}</span>
                                         {% endfor %}
                                     </p>
                                 </div>
