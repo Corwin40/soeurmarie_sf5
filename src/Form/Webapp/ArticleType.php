@@ -31,10 +31,11 @@ class ArticleType extends AbstractType
                 'choice_label' => 'name',
             ])
             ->add('articleFrontFile', VichImageType::class, [
-            'required' => false,
-            'allow_delete' => true,
-            'delete_label' => 'Supprimer',
-            'download_label' => 'Télecharger',
+                'label' => "Image illustrant l'article",
+                'required' => false,
+                'allow_delete' => true,
+                'delete_label' => 'Supprimer',
+                'download_label' => 'Télecharger',
             ])
             ->add('state', ChoiceType::class, [
                 'choices'  => [
@@ -43,11 +44,12 @@ class ArticleType extends AbstractType
                 ],
             ])
             ->add('articleFrontPosition', ChoiceType::class, [
+                'label' => "Position de l'image suivant le contenu",
                 'choices'  => [
                     'à droite du contenu' => 'right',
                     'à gauche du contenu' => 'left',
-                    'au dessus du contenu' => 'up',
-                    'en dessous du contenu' => 'down',
+                    'au dessus du contenu' => 'down',
+                    'en dessous du contenu' => 'up',
                     'sans texte' => 'none'
                 ],
             ])
