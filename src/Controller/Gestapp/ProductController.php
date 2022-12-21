@@ -372,15 +372,15 @@ class ProductController extends AbstractController
      * Espace E-Commerce : Liste les produits selon la catégorie de ces derniers
      * @Route("/gestapp/product/oneCat/{idcat}", name="op_gestapp_product_onecat", methods={"POST"})
      */
-    public function ListOneCatProduct(Request $request, PaginatorInterface $paginator, $idcat)
+    public function ListOneCatProduct(Request $request, PaginatorInterface $paginator, $idcat, EntityManagerInterface $em)
     {
-        $childs = $this->getDoctrine()->getRepository(ProductCategory::class)->findChilds($idcat);
-        //dd($idcat);
+
+        $childs = $em->getRepository(ProductCategory::class)->findChilds($idcat);
         if (!$childs){
-            $data = $this->getDoctrine()->getRepository(Product::class)->oneCategory($idcat);
+            $data = $em->getRepository(Product::class)->oneCategory($idcat);
         }
         else{
-            $data = $this->getDoctrine()->getRepository(Product::class)->childCategory($childs);
+            $data = $em->getRepository(Product::class)->childCategory($childs);
         }
 
         $products = $paginator->paginate(
@@ -389,7 +389,7 @@ class ProductController extends AbstractController
             8
         );
 
-        $category = $this->getDoctrine()->getRepository(ProductCategory::class)->find($idcat);
+        $category = $em->getRepository(ProductCategory::class)->find($idcat);
 
         return $this->render('gestapp/product/listonecatproduct.html.twig',[
             'products' => $products,

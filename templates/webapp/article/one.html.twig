@@ -87,21 +87,18 @@
                         {% else %}
                             <p class="text-center">{{ article.content|markdown_to_html }}</p>
                         {% endif %}
-                        {% if article.isLink %}
-                            <a class="btn btn-change" href="/page/{{ article.linkPage|lower }}">{{article.linktext}}</a>
-                        {% endif %}
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="position-relative">
                         <!-- Image -->
-                        <img src="{{ vich_uploader_asset(article, 'articleFrontFile', 'App\\Entity\\Webapp\\article') }}" alt="{{ article.articleFrontName }}" class="img-fluid d-block">
-                        <!-- Shape -->
-                        <div class="shape shape-top shape-fluid-x text-white">
-                            <svg viewBox="0 0 2880 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M2880 0H0v54.112h720s289.42 40.248 705 0c416.5-37.733 735 0 735 0h720V0z" fill="currentColor"></path>
-                            </svg>
+                        <img src="{{ vich_uploader_asset(article, 'articleFrontFile', 'App\\Entity\\Webapp\\article') }}" alt="{{ article.articleFrontName }}" class="img-fluid rounded d-block">
+                        <div class="img_border"></div>
+                        {% if article.isLink %}
+                        <div class="img_overlay d-flex align-items-center justify-content-center">
+                            <a class="btn btn-sm btn-card" href="/page/{{ article.linkPage|lower }}">{{article.linktext}}</a>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
 
