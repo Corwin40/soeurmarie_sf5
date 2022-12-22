@@ -12,7 +12,14 @@
     width: 100%;
     margin: 0 0 1rem;
   }
-
+  .bg-sm{
+    background-color: $sm-primary-color !important;
+  }
+  #product-info{
+    #options_evenement{
+      border: 1px solid $sm-primary-color;
+    }
+  }
 }
 
 #SoeurMarie_back{

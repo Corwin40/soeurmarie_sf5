@@ -33,56 +33,64 @@ section{
   border-bottom: 1px solid $sm-primary-color;
 }
 
-#article_content .img_overlay {
-  border: 1px solid $sm-primary-color;
-  border-radius: 5px;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-}
-#article_content .img_border {
-  border: 1px solid $sm-primary-color;
-  border-radius: 5px;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-}
 
-#article_content .btn-card {
-  border-color: #142864 !important;
-  color: #142864;
-  font-family: Monserrat-light;
-  font-size: 1.1rem;
-  transition: all .3s;
-  position: relative;
-  overflow: hidden;
-  border-radius: 3px 3px 3px 3px;
-  background-color: transparent;
-  margin-bottom: .2rem;
-  margin-top: 0;
-  z-index: 4;
-}
 
-#article_content .btn-card:hover {
-  color:#fff;
-}
 
-#article_content .btn-card::before {
-  content: "";
-  position: absolute;
-  height: 100%;
-  top: 0;
-  left: 0;
-  width: 0;
-  z-index: 3;
-  transition: all .3s;
-  background-color: #142864;
-}
 /***---------- MAIN : articles ----------***/
+
+#article_content{
+  .img_overlay {
+    //border: 1px solid $sm-primary-color;
+    border-radius: 5px;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background: hsla(0,0%,97%,.251);
+    opacity: 0;
+  }
+  .img_overlay:hover {
+    opacity:1;
+  }
+  .img_border {
+    border: 1px solid $sm-primary-color;
+    border-radius: 5px;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+  .btn-card {
+    border-color: #142864 !important;
+    color: #142864;
+    font-family: Monserrat-light;
+    font-size: 1.1rem;
+    transition: all .3s;
+    position: relative;
+    overflow: hidden;
+    border-radius: 3px 3px 3px 3px;
+    background-color: transparent;
+    margin-bottom: .2rem;
+    margin-top: 0;
+    z-index: 4;
+  }
+  .btn-card:hover {
+    color:#fff;
+  }
+  .btn-card::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    width: 0;
+    z-index: 3;
+    transition: all .3s;
+    background-color: #142864;
+  }
+}
 
 /***---------- MAIN : calligraphie ----------***/
 @media (max-width:767px) {

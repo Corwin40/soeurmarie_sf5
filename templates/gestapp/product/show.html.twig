@@ -179,11 +179,11 @@
                                     <p class="text-end">Disponible à la vente: {{ product.isDisponible ? '<i class="bi bi-check2-circle text-success"></i>' : '<i class="bi bi-x-circle text-error"></i>' }}</p>
                                 </div>
                                 {% if product.otherCategory|length > 0 %}
-                                <div class="col-12 mt-1">
-                                    <p>
-                                        Ce produit pourra accompagner les évènements importants de votre vie :<br>
+                                <div id="options_evenement" class="col-12 mt-3 p-1">
+                                    <p class="text-center">
+                                        Pour quelle autre occasion vous pouvez offrir cette carte :<br>
                                         {% for otherCategory in product.otherCategory %}
-                                        <span class="badge bg-dark">{{ otherCategory.name }}</span>
+                                        <span class="badge bg-sm">{{ otherCategory.name }}</span>
                                         {% endfor %}
                                     </p>
                                 </div>
