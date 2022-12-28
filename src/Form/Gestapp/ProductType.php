@@ -43,6 +43,12 @@ class ProductType extends AbstractType
                 'delete_label' => 'Supprimer',
                 'download_label' => 'Télecharger',
             ])
+            ->add('versoFile', VichImageType::class, [
+                'required' => false,
+                'allow_delete' => true,
+                'delete_label' => 'Supprimer',
+                'download_label' => 'Télecharger',
+            ])
             ->add('productNature', EntityType::class, [
                 'placeholder' => 'Choisir une nature',
                 'class' => ProductNature::class,

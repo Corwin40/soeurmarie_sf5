@@ -26,6 +26,9 @@
                     {% else %}
                         <img class="card-img-top" src="{{ vich_uploader_asset(product, 'productFile', 'App\\Entity\\gestapp\\Product') | imagine_filter('product_image_card') }}" alt="{{ product.productName }}">
                     {% endif %}
+                    <div class="product_overlay d-flex align-items-center justify-content-center">
+                        {{ render(controller('App\\Controller\\Gestapp\\ProductController::listOthercategories', {'id':product.id})) }}
+                    </div>
                 </a>
 
                 <!-- Shape -->

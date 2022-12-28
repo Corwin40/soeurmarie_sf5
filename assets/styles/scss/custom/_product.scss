@@ -20,6 +20,19 @@
       border: 1px solid $sm-primary-color;
     }
   }
+  .product_overlay{
+    //border-radius: 5px;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background: hsla(0,0%,96.9%,.251);
+    opacity: 0;
+  }
+  .product_overlay:hover {
+    opacity: 1;
+  }
 }
 
 #SoeurMarie_back{

@@ -135,6 +135,29 @@ class Product
     private $productSize;
 
     /**
+     * Insertion de l'image mise en avant liée à un article
+     * NOTE : Il ne s'agit pas d'un champ mappé des métadonnées de l'entité, mais d'une simple propriété.
+     *
+     * @Vich\UploadableField(mapping="verso_image_card", fileNameProperty="versoName", size="versSize")
+     * @var File|null
+     */
+    private $versoFile;
+
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     *
+     * @var string|null
+     */
+    private $versoName;
+
+    /**
+     * @ORM\Column(type="integer",nullable=true)
+     *
+     * @var int|null
+     */
+    private $versoSize;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
@@ -269,6 +292,52 @@ class Product
     {
         return $this->productSize;
     }
+
+
+    /**
+     * Si vous téléchargez manuellement un fichier (c'est-à-dire sans utiliser Symfony Form),
+     * assurez-vous qu'une instance de "UploadedFile" est injectée dans ce paramètre pour déclencher la mise à jour.
+     * Si le paramètre de configuration 'inject_on_load' de ce bundle est défini sur 'true', ce setter doit être
+     * capable d'accepter une instance de 'File' car le bundle en injectera une ici pendant l'hydratation de Doctrine.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $versoFile
+     */
+    public function setVersoFile(?File $versoFile = null): void
+    {
+        $this->versoFile = $versoFile;
+
+        if (null !== $versoFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getVersoFile(): ?File
+    {
+        return $this->versoFile;
+    }
+
+    public function setVersoName(?string $versoName): void
+    {
+        $this->versoName = $versoName;
+    }
+
+    public function getVersoName(): ?string
+    {
+        return $this->versoName;
+    }
+
+    public function setVersoSize(?int $versoSize): void
+    {
+        $this->versoSize = $versoSize;
+    }
+
+    public function getVersoSize(): ?int
+    {
+        return $this->versoSize;
+    }
+
 
     public function getCategory(): ?ProductCategory
     {

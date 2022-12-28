@@ -16,6 +16,13 @@ vich_uploader:
             inject_on_load: false
             delete_on_update: true
             delete_on_remove: true
+        verso_image_card:
+            uri_prefix: /images/product_image_card
+            upload_destination: '%kernel.project_dir%/public/images/product_image_card'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
         avatar_image:
             uri_prefix: /images/avatar_image
             upload_destination: '%kernel.project_dir%/public/images/avatar_image'

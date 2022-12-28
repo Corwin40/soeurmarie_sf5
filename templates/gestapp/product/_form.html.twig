@@ -95,7 +95,7 @@
                             {{ form_widget(form.formats, {'attr': {'class': ''}}) }}
                         </div>
                     </div>
-                    {#
+
                     <div class="row mb-1 mt-1 g-1">
                         <div class="col-2">
                             {{ form_label(form.price, 'Prix', {'label_attr': {'class':'form-label'}}) }}
@@ -110,7 +110,7 @@
                             <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#addProductUnit"><i class="bi bi-plus-circle"></i></button>
                         </div>
                     </div>
-                    #}
+
                     <div class="row mb-1 mt-1 g-1">
                         <div class="col-2">
                             {{ form_label(form.tva, 'Taux de TVA', {'label_attr': {'class':'form-label'}}) }}
@@ -160,11 +160,26 @@
             </div>
         </div>
         <div class="col-6">
-            <h5>Visuel</h5>
-            <hr>
-            <div class="row mb-1 mt-1 g-1">
-                <div class="col-12">
-                    {{ form_widget(form.productFile, {'attr': {'class': 'form-control-file form-control-sm'}}) }}
+            <div class="card text-dark bg-light">
+                <div class="card-body">
+                    <h5>Recto</h5>
+                    <hr>
+                    <div class="row mb-1 mt-1 g-1">
+                        <div class="col-12">
+                            {{ form_widget(form.productFile, {'attr': {'class': 'form-control-file form-control-sm'}}) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card text-dark bg-light">
+                <div class="card-body">
+                    <h5>Verso</h5>
+                    <hr>
+                    <div class="row mb-1 mt-1 g-1">
+                        <div class="col-12">
+                            {{ form_widget(form.versoFile, {'attr': {'class': 'form-control-file form-control-sm'}}) }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -395,8 +395,21 @@ class ProductController extends AbstractController
             'products' => $products,
             'category' => $category,
             'childs' => $childs,
-            'cat' => $idcat->getId(),
+            'cat' => $idcat,
             'natorcat' => 'category'
+        ]);
+    }
+
+    /**
+     * Liste les autres catégorie d'un produit
+     * @Route("/gestapp/product/onethercategories", name="op_gestapp_products_othercategories", methods={"GET"})
+     */
+    public function listOthercategories(Product $product, ProductRepository $productRepository)
+    {
+        //dd($product);
+
+        return $this->render('gestapp/product/listothercategories.html.twig',[
+            'product' => $product,
         ]);
     }
 

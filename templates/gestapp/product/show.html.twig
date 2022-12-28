@@ -137,7 +137,14 @@
                                 <img class="card-img-top" src="{{ vich_uploader_asset(product) }}" alt="{{ product.productName }}">
                             {% endif %}
                         </div>
-
+                        <div class="row mb-1">
+                            <div class="col-3">
+                                {% if product.versoName is null %}
+                                {% else %}
+                                    <img class="img-fluid" src="{{ vich_uploader_asset(product) }}" alt="{{ product.versoName }}">
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
                     <div id="product-info" class="col-12 col-md-8">
                         <div id="content" class="mb-2">
@@ -181,7 +188,7 @@
                                 {% if product.otherCategory|length > 0 %}
                                 <div id="options_evenement" class="col-12 mt-3 p-1">
                                     <p class="text-center">
-                                        Pour quelle autre occasion vous pouvez offrir cette carte :<br>
+                                        A quelle autre occasion vous pouvez offrir cette carte :<br>
                                         {% for otherCategory in product.otherCategory %}
                                         <span class="badge bg-sm">{{ otherCategory.name }}</span>
                                         {% endfor %}
