@@ -20,12 +20,11 @@ class ProductCustomizeController extends AbstractController
      */
     public function new(Request $request, Product $product, EntityManagerInterface $em)
     {
-        // récupération des données du formaulaire ProductCustomize et intégration dans la table
+        // Récupération des données du formulaire ProductCustomize et intégration dans la table
         $datanew = json_decode($request->getContent(), true);
         //dd($datanew);
         $idformat = $datanew['format'];
         $sessid = $this->get('session')->getId();
-
 
         if(isset($datanew['name'])){
             $name = $datanew['name'];
@@ -34,6 +33,7 @@ class ProductCustomizeController extends AbstractController
         }
 
         $format = $em->getRepository(productFormat::class)->find($idformat);
+        //dd($format);
 
         // Alimentation de la table
         $productCustomize = new ProductCustomize();
@@ -42,7 +42,7 @@ class ProductCustomizeController extends AbstractController
         $productCustomize->setFormat($format);
         $productCustomize->setUuid($sessid);
         $productCustomize->setProduct($product);
-
+        //dd($productCustomize);
         $em->persist($productCustomize);
         $em->flush();
 

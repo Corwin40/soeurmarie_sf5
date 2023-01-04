@@ -75,6 +75,8 @@ class CartController extends AbstractController
 
         $detailedCart = $this->cartService->getDetailedCartItem();
 
+        //dd($detailedCart);
+
         foreach ($detailedCart as $d){
             $product = $d->product;
             //dd($product);

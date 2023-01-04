@@ -4,6 +4,7 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{ asset('js/bigpicture/dist/BigPicture.js') }}"></script>
     <script type="text/javascript">
         window.onload = function(){
 
@@ -16,7 +17,7 @@
                 document.getElementById("formatedit").addEventListener("change", customEdit);
             }
 
-            //Construction de la fonction d'envoi du produit dans le panier
+            // Construction de la fonction d'envoi du produit dans le panier
             function BtnAddCart(event){
                 event.preventDefault()
                 const urladdcart = this.href
@@ -132,9 +133,9 @@
                     <div id="product-img" class="col-md-4 col-12">
                         <div class="mb-1">
                             {% if product.productName is null %}
-                                <img class="img-fluid" src="{{ asset('images/jpg/Fond_product.jpg') }}" alt="image_replace">
+                                <img class="img-fluid bp" src="{{ asset('images/jpg/Fond_product.jpg') }}" alt="image_replace">
                             {% else %}
-                                <img class="card-img-top" src="{{ vich_uploader_asset(product) }}" alt="{{ product.productName }}">
+                                <img class="card-img-top bp" src="{{ vich_uploader_asset(product) }}" alt="{{ product.productName }}">
                             {% endif %}
                         </div>
                         <div class="row mb-1">

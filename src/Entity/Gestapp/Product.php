@@ -138,7 +138,7 @@ class Product
      * Insertion de l'image mise en avant liée à un article
      * NOTE : Il ne s'agit pas d'un champ mappé des métadonnées de l'entité, mais d'une simple propriété.
      *
-     * @Vich\UploadableField(mapping="verso_image_card", fileNameProperty="versoName", size="versSize")
+     * @Vich\UploadableField(mapping="verso_image_card", fileNameProperty="versoName", size="versoSize")
      * @var File|null
      */
     private $versoFile;

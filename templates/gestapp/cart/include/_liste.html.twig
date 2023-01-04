@@ -35,6 +35,7 @@
             <tbody>
             {% set sstotal = 0 %}
             {% for c in carts %}
+                {{ dump(c) }}
                 <tr style="background: rgb(249, 249, 251);">
                     {% set qtyPrice = c.productQty * c.customPrice %}
                     {% set sstotal = sstotal + qtyPrice %}
@@ -63,9 +64,9 @@
                                 </select>
                             </div>
 
-                            {% if c.productPerson > 0 %}
+                            {% if c.customName is not empty %}
                             <div class="col-4">
-                                <input id="persona" type="text" class="form-control form-control-sm" placeholder="Inscrivez votre prénom pour personnaliser la carte" value="{{ c.cus }}">
+                                <input id="persona" type="text" class="form-control form-control-sm" placeholder="Inscrivez votre prénom pour personnaliser la carte" value="{{ c.customName }}">
                             </div>
                             {% endif %}
                             <input id="sessid" name="sessid" type="hidden" value="{{ session }}">
