@@ -311,10 +311,10 @@ class ProductController extends AbstractController
      */
     public function ListOneNatProduct(Request $request, PaginatorInterface $paginator, $idnat, EntityManagerInterface $em)
     {
-        $data = $this->getDoctrine()->getRepository(Product::class)->oneNature($idnat);
+        $data = $em->getRepository(Product::class)->oneNature($idnat);
 
-        $nature = $this->getDoctrine()->getRepository(ProductNature::class)->find($idnat);
-        $categories = $this->getDoctrine()->getRepository(ProductCategory::class)->findBy(array('Nature'=> $idnat));
+        $nature = $em->getRepository(ProductNature::class)->find($idnat);
+        $categories = $em->getRepository(ProductCategory::class)->findBy(array('Nature'=> $idnat));
 
 
         $products = $paginator->paginate(
@@ -374,7 +374,7 @@ class ProductController extends AbstractController
      */
     public function ListOneCatProduct(Request $request, PaginatorInterface $paginator, $idcat, EntityManagerInterface $em)
     {
-
+        // on récupère les enfants d'une catégorie parente si elle existe
         $childs = $em->getRepository(ProductCategory::class)->findChilds($idcat);
         if (!$childs){
             $data = $em->getRepository(Product::class)->oneCategory($idcat);
@@ -406,8 +406,6 @@ class ProductController extends AbstractController
      */
     public function listOthercategories(Product $product, ProductRepository $productRepository)
     {
-        //dd($product);
-
         return $this->render('gestapp/product/listothercategories.html.twig',[
             'product' => $product,
         ]);
@@ -453,30 +451,34 @@ class ProductController extends AbstractController
      * Espace E-Commerce : Renvoie les produits filtrés par catégories selon la nature.
      * @Route("/gestapp/product/filterwebapp", name="op_gestapp_products_filterwebapp", methods={"GET","POST"})
      */
-    public function filterWebapp(Request $request, ProductRepository $productRepository,PaginatorInterface $paginator): Response
+    public function filterWebapp(Request $request, ProductRepository $productRepository,PaginatorInterface $paginator, EntityManagerInterface $em): Response
     {
-        // on récupère les éléments nécessaires à la filtration et le renvoie des données en JSON
-        $filters = $request->get("categories");
-        $idcat = $request->get('category');
-        $nature = $request->get('nature');
-        $page = $request->get('page');
+        // on récupère les éléments inclus dans l'url
+        $filters = $request->get("categories");     // Données issu du formulaire filtrant les catégories disponibles
+        $cat = $request->get('category');         // issu de la requete : filtrera les produits selon la catégorie donnée
+        $nature = $request->get('nature');          // issu de la requete : filtrera les produits selon la nature donnée
+        $page = $request->get('page');              // transmet la page pour l'affichage
 
+
+        //dd($idcat);
         if($filters){
             $data = $productRepository->ListFilterscategories($filters);
         }else{
             if($nature){
-                $data = $this->getDoctrine()->getRepository(Product::class)->oneNatureName($nature);
-            }
-            else{
-                $childs = $this->getDoctrine()->getRepository(ProductCategory::class)->findChilds($idcat);
+                $data = $em->getRepository(Product::class)->oneNatureName($nature);
+            }else{
+                $childs = $em->getRepository(ProductCategory::class)->findChilds($cat);
                 if (!$childs){
-                    $data = $this->getDoctrine()->getRepository(Product::class)->oneCategory($idcat);
+                    $category = $em->getRepository(ProductCategory::class)->findOneBy(['name' => $cat]);
+                    $newchilds = $em->getRepository(ProductCategory::class)->findChilds($category->getId());
+                    $data = $em->getRepository(Product::class)->childCategory($newchilds);
                 }
                 else{
-                    $data = $this->getDoctrine()->getRepository(Product::class)->childCategory($childs);
+                    $data = $em->getRepository(Product::class)->childCategory($childs);
                 }
             }
         }
+        // Transmission à la variable produit et à la pagination les élément récupérés dans les requètes data
         $products = $paginator->paginate(
             $data, /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/

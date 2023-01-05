@@ -43,19 +43,19 @@
                 {# Affiche l'intro du site #}
                 {% if section.contentType == 'intro'%}
                     {{ include('webapp/section/include/_sectionIntro.html.twig') }}
-                    {# Affiche un article #}
+                {# Affiche un article #}
                 {% elseif section.contentType == 'One_article' %}
                     {{ render(controller('App\\Controller\\Webapp\\ArticleController::oneArticle', {'id': section.oneArticle })) }}
-                    {# Affiche l'intro du site #}
+                {# Affiche l'intro du site #}
                 {% elseif section.contentType == 'More_article'%}
-                    {# Affiche une catégorie d'articles #}
+                {# Affiche une catégorie d'articles #}
                 {% elseif section.contentType == 'Category'%}
-                    {{ render(controller('App\\Controller\\Webapp\\ArticleController::carousel')) }}
+                {{ render(controller('App\\Controller\\Webapp\\ArticleController::carousel')) }}
                 {% elseif section.contentType == 'One_event'%}
-                    {# Affiche un slide des évènements #}
+                {# Affiche un slide des évènements #}
                 {% elseif section.contentType == 'Events'%}
                     {{ render(controller('App\\Controller\\Gestapp\\EventController::ListAllEventPublish')) }}
-                    {# Affiche l'historique des évènements #}
+                {# Affiche l'historique des évènements #}
                 {% elseif section.contentType == 'HistoryOfEvent'%}
                     {{ render(controller('App\\Controller\\Gestapp\\EventController::historyOfEventPublish')) }}
                 {% elseif section.contentType == 'Member'%}
@@ -68,14 +68,14 @@
                     {{ render(controller('App\\Controller\\Admin\\StatistiqueController::CountUp')) }}
                 {% elseif section.contentType == 'All_products'%}
                     {{ render(controller('App\\Controller\\Gestapp\\ProductController::ListAllProductDispo')) }}
+                {# affiche les produits favoris #}
                 {% elseif section.contentType == 'FavoriesProducts'%}
-                    {# affiche les produits favoris #}
                     {{ render(controller('App\\Controller\\Gestapp\\ProductController::FavoriesProducts')) }}
+                {# affiche les produits d'une nature #}
                 {% elseif section.contentType == 'One_Nat_Product'%}
-                    {# affiche les produits d'une nature #}
                     {{ render(controller('App\\Controller\\Gestapp\\ProductController::ListOneNatProduct', {'idnat':section.oneNatproduct})) }}
+                {# affiche les produits d'une catégorie #}
                 {% elseif section.contentType == 'One_Cat_Product'%}
-                    {# affiche les produits d'une nature #}
                     {{ render(controller('App\\Controller\\Gestapp\\ProductController::ListOneCatProduct', {'idcat':section.oneCatproduct})) }}
                 {% elseif section.contentType == 'Last_Product_Nat'%}
                     {# affiche les produits d'une nature #}

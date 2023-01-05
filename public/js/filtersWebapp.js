@@ -2,7 +2,7 @@ const FiltersForms = document.getElementById('filters');
 document.querySelectorAll('#filters input').forEach(input => {
     input.addEventListener('change', () => {
 
-        // détection si nature ou catégorie et son name
+        // Détection si nature ou catégorie et son name
         const NatorCat = document.getElementById('liste')
         let type = NatorCat.dataset.type
         let name = NatorCat.dataset.name
@@ -11,10 +11,11 @@ document.querySelectorAll('#filters input').forEach(input => {
         const Form = new FormData(FiltersForms);
         // construction de la "QueryString"
         const Params = new URLSearchParams();
-        //alimentation de la "QueryString"
+        // alimentation de la "QueryString"
         Form.forEach((value,key) => {
             Params.append(key, value);
         })
+
         // Construction de l'adresse url pour le controlleur et transmission des paramètres
         const url = '/gestapp/product/filterwebapp';
         axios

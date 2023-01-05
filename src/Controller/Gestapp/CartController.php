@@ -78,14 +78,15 @@ class CartController extends AbstractController
         //dd($detailedCart);
 
         foreach ($detailedCart as $d){
+            // Construction des éléments nécessaire au panier
             $product = $d->product;
-            //dd($product);
-            $customization = $productCustomizeRepository->findOneBy(['product'=> $d->product]);
-            $customidprod = $customization->getUuid();
+            //dd($product->getId());
+            $customization = $productCustomizeRepository->findLastProductCustomize($product->getId());
+            //dd($customization['uuid']);
+            $customidprod = $customization['uuid'];
             //dd($customization->getUuid());
             $uuid = $cartRepository->findOneBy(['uuid'=> $session], ['id'=> 'DESC']);
             //dd($uuid);
-
 
             if(!$uuid){
                 $cart = new Cart();
@@ -96,10 +97,10 @@ class CartController extends AbstractController
                 $cart->setproductCategory($product->getProductCategory());
                 $cart->setProductQty($d->qty);
                 $cart->setProductRef($product->getRef());
-                $cart->setCustomFormat($customization->getFormat()->getName());
-                $cart->setCustomName($customization->getName());
-                $cart->setCustomPrice($customization->getFormat()->getPriceformat());
-                $cart->setCustomWeight($customization->getFormat()->getWeight());
+                $cart->setCustomFormat($customization['format']);
+                $cart->setCustomName($customization['name']);
+                $cart->setCustomPrice($customization['priceformat']);
+                $cart->setCustomWeight($customization['weight']);
                 $cart->setUuid($session);
                 $em->persist($cart);
                 $em->flush();
@@ -115,10 +116,10 @@ class CartController extends AbstractController
                     $cart->setproductCategory($product->getProductCategory());
                     $cart->setProductQty($d->qty);
                     $cart->setProductRef($product->getRef());
-                    $cart->setCustomFormat($customization->getFormat()->getName());
-                    $cart->setCustomName($customization->getName());
-                    $cart->setCustomPrice($customization->getFormat()->getPriceformat());
-                    $cart->setCustomWeight($customization->getFormat()->getWeight());
+                    $cart->setCustomFormat($customization['format']);
+                    $cart->setCustomName($customization['name']);
+                    $cart->setCustomPrice($customization['priceformat']);
+                    $cart->setCustomWeight($customization['weight']);
                     $cart->setUuid($session);
                     $em->persist($cart);
                     $em->flush();

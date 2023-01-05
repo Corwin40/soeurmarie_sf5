@@ -54,12 +54,16 @@
                         <a class="text-start" href="{{ path('op_gestapp_product_show', {'id': c.productid}) }}">{{ c.productName }}</a> - réf : {{ c.productRef }}
                     </td>
                     <td>
-
+                        {% set selected = 'selected' %}
+                        {% set format = c.customFormat %}
+                        {{ dump(selected) }}
                         <form id="CustomizeProduct" action="{{ path('op_gestapp_product_customize_edit', {'id':c.productid}) }}?cart=true" class="row row-cols g-1 align-items-center">
                             <div class="col-8">
                                 <select class="form-select form-select-sm" name="format" id="formatedit">
                                 {% for f in c.product.formats %}
-                                    <option value="{{ f.id }}">{{ f.name }} - {{f.weight}}g</option>
+
+                                    <option value="{{ f.id }}" {{ f.name == format ? 'selected' : '' }}>{{ f.name }} - {{f.weight}}g</option>
+
                                 {% endfor %}
                                 </select>
                             </div>

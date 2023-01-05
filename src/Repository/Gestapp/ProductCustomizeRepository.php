@@ -18,6 +18,32 @@ class ProductCustomizeRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, ProductCustomize::class);
     }
+    public function findLastProductCustomize($idproduct)
+    {
+        return $this->createQueryBuilder('c')
+            ->leftJoin('c.product', 'p')
+            ->leftJoin('c.format', 'f')
+            ->addSelect('
+                p.id as idproduct,
+                p.name as product,
+                f.weight as weight,
+                f.id as idformat,
+                f.priceformat as priceformat,
+                f.length as lenght,
+                f.height as height,
+                f.name as format,
+                c.uuid as uuid,
+                c.name as name,
+                c.id as id                
+            ')
+            ->andWhere('p.id = :idproduct')
+            ->setParameter('idproduct', $idproduct)
+            ->orderBy('c.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
 
     // /**
     //  * @return ProductCustomize[] Returns an array of ProductCustomize objects
