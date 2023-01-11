@@ -46,6 +46,12 @@ Ajout du produit au panier et personnalisation
                     <a type="button" class="js-decrement btn btn-outline-sm" href="{{ path('op_webapp_cart_decrement', {'id': product.id}) }}?showproduct=true"><i class="bi bi-dash-circle"></i></a>
                 </div>
             </div>
+            <div id="alert-commande" class="col-12 mt-2 d-none">
+                <div class="alert alert-warning">
+                    <p>Pour votre information :</p>
+                    <p>Une commande au minimum de 6 signets / marquepage sera exigée à la validation de votre panier.</p>
+                </div>
+            </div>
         </div>
     {% else %}
     {# Le panier est présent mais le produit n'est plus incrédenté #}
@@ -80,7 +86,12 @@ Ajout du produit au panier et personnalisation
             <div class="col-3">
                 <a href="{{ path('op_webapp_cart_add', {'id': product.id}) }}?showproduct=true" class="btn btn-sm btn-outline-sm jsonAddCart"><i class="bi bi-cart-plus"></i> Ajouter au panier</a>
             </div>
-
+            <div id="alert-commande" class="col-12 mt-2 d-none">
+                <div class="alert alert-warning">
+                    <p>Pour votre information :</p>
+                    <p>Une commande au minimum de 6 signets / marquepage sera exigée à la validation de votre panier.</p>
+                </div>
+            </div>
         </div>
     {% endfor %}
 {% else %}
@@ -114,6 +125,12 @@ Ajout du produit au panier et personnalisation
         </div>
         <div class="col-3">
             <a href="{{ path('op_webapp_cart_add', {'id': product.id}) }}?showproduct=true" class="btn btn-sm btn-outline-sm jsonAddCart"><i class="bi bi-cart-plus"></i> Ajouter au panier</a>
+        </div>
+        <div id="alert-commande" class="col-12 mt-2 d-none">
+            <div class="alert alert-warning">
+                <p>Pour votre information :</p>
+                <p>Une commande au minimum de 6 signets / marquepage sera exigée à la validation de votre panier.</p>
+            </div>
         </div>
     </div>
 {% endif %}

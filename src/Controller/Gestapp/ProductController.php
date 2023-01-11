@@ -395,6 +395,7 @@ class ProductController extends AbstractController
             'products' => $products,
             'category' => $category,
             'childs' => $childs,
+            'idcat'=>$idcat,
             'cat' => $idcat,
             'natorcat' => 'category'
         ]);
@@ -470,8 +471,9 @@ class ProductController extends AbstractController
                 $childs = $em->getRepository(ProductCategory::class)->findChilds($cat);
                 if (!$childs){
                     $category = $em->getRepository(ProductCategory::class)->findOneBy(['name' => $cat]);
-                    $newchilds = $em->getRepository(ProductCategory::class)->findChilds($category->getId());
-                    $data = $em->getRepository(Product::class)->childCategory($newchilds);
+                    //$newchilds = $em->getRepository(ProductCategory::class)->findChilds($category->getId());
+                    //$data = $em->getRepository(Product::class)->childCategory($newchilds);
+                    $data = $em->getRepository(Product::class)->oneCategory($category);
                 }
                 else{
                     $data = $em->getRepository(Product::class)->childCategory($childs);
@@ -490,6 +492,7 @@ class ProductController extends AbstractController
                 'message'   => "Ok",
                 'liste' => $this->renderView('gestapp/product/include/_product.html.twig', [
                     'products' => $products,
+                    'childs'=>$childs,
                     'page' => $request->query->getInt('page', 1),
                 ])
             ], 200);
