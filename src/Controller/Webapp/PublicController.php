@@ -4,7 +4,10 @@ namespace App\Controller\Webapp;
 
 use App\Entity\Admin\Parameter;
 use App\Entity\Webapp\Section;
+use App\Form\Gestapp\SearchProductType;
+use App\Repository\Gestapp\ProductRepository;
 use App\Repository\Webapp\PageRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -79,7 +82,7 @@ class PublicController extends AbstractController
         return $this->render('webapp/public/index.html.twig',[
             'parameter' => $parameter,
             'sections' => $sections,
-            'session' =>$session
+            'session' => $session
         ]);
     }
 
@@ -119,7 +122,7 @@ class PublicController extends AbstractController
     /**
      * @Route ("/webapp/public/menus/{route}", name="op_webapp_public_listmenus")
      */
-    public function BlocMenu(PageRepository $pageRepository, Request $request, $route): Response
+    public function BlocMenu(PageRepository $pageRepository, Request $request, $route, ProductRepository $productRepository, PaginatorInterface $paginator): Response
     {
         // on récupère l'utilisateur courant
         $user = $this->getUser();
@@ -128,9 +131,34 @@ class PublicController extends AbstractController
         $parameter = $this->getDoctrine()->getRepository(Parameter::class)->findFirstReccurence();
         $menus = $pageRepository->listMenu();
 
+        // Module de recherche sur le menu
+        $form = $this->createForm(SearchProductType::class, [
+            'action' => $this->generateUrl('op_gestapp_product_index'),
+            'method' => 'POST'
+        ]);
+        $search = $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $data = $productRepository->searchProduct($search->get('word')->getData());
+            $products = $paginator->paginate(
+                $data,
+                $request->query->getInt('page', 1),
+                18
+            );
+
+            return $this->json([
+                'code'          => 200,
+                'message'       => "Votre recherche comporte x résultats.",
+                'count'         => $this->renderView('gestapp/product/include/_count.html.twig', [
+                    'products' => $products,
+                ])
+            ], 200);
+        }
+
         return $this->render('include/navbar_webapp.html.twig', [
             'parameter' => $parameter,
             'menus' => $menus,
+            'form' => $form->createView(),
             'route' => $route
         ]);
     }
