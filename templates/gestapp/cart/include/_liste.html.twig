@@ -35,7 +35,6 @@
             <tbody>
             {% set sstotal = 0 %}
             {% for c in carts %}
-                {{ dump(c) }}
                 <tr style="background: rgb(249, 249, 251);">
                     {% set qtyPrice = c.productQty * c.customPrice %}
                     {% set sstotal = sstotal + qtyPrice %}
@@ -56,7 +55,6 @@
                     <td>
                         {% set selected = 'selected' %}
                         {% set format = c.customFormat %}
-                        {{ dump(selected) }}
                         <form id="CustomizeProduct" action="{{ path('op_gestapp_product_customize_edit', {'id':c.productid}) }}?cart=true" class="row row-cols g-1 align-items-center">
                             <div class="col-8">
                                 <select class="form-select form-select-sm" name="format" id="formatedit">
