@@ -12,10 +12,10 @@
         const btnNextStep = document.getElementById("nextStep");
         const btnPreviousStep = document.getElementById("previousStep");
         listCart.style.display="block";
-        adressCart.style.display="none";
 
         btnNextStep.onclick = function () {
-            adressCart.style.display = "block";
+            adressCart.classList.remove("d-none");
+            adressCart.classList.remove("d-block");
             listCart.style.display = "none";
             btnPreviousStep.removeAttribute("disabled")
             btnNextStep.setAttribute("disabled", true)
@@ -23,7 +23,8 @@
 
         btnPreviousStep.onclick = function () {
             listCart.style.display = "block";
-            adressCart.style.display = "none";
+            adressCart.classList.remove("d-block");
+            adressCart.classList.remove("d-none");
             btnPreviousStep.setAttribute("disabled", true)
             btnNextStep.removeAttribute("disabled")
         };
@@ -72,7 +73,6 @@
                     alertBody.textContent = message;
                     var alertElement = new bootstrap.Alert(alertHTMLElement);
                     alertElement.show();
-
                 });
         }
 
@@ -101,7 +101,6 @@
                     alertBody.textContent = message;
                     var alertElement = new bootstrap.Alert(alertHTMLElement);
                     alertElement.show();
-
                 });
         }
 
@@ -115,7 +114,7 @@
             link.addEventListener('click', onClickBtnDecrement);
         })
 
-        // Création de l'évènemeznt pour la confirmation de la commande
+        // Création de l'évènement pour la confirmation de la commande
         document.querySelectorAll('a.confPurchase').forEach(function (link){
             link.addEventListener('click', BtnConfPurchase);
         })
@@ -166,12 +165,7 @@
             <div id="liste">
                 {{ include('gestapp/cart/include/_liste.html.twig')}}
             </div>
-            {% if carts %}
-                <div class="mb-5 d-flex justify-content-around">
-                    <button id="previousStep" class="btn btn-sm btn-outline-secondary"> << Retour sur l'accueil</button>
-                    <button id="nextStep" class="btn btn-sm btn-outline-secondary">Etape Suivante >> </button>
-                </div>
-            {% endif %}
+
         </div>
     </section>
 </div>

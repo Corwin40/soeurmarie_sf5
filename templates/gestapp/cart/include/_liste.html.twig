@@ -10,6 +10,8 @@
     {% set fp5 = 11.50 %}
     {% set colis = 0 %}
 
+    {% set QtySigMarq = 0 %}
+
 
     {% if carts %}
         {# Sur chaque boucle on filtre les produits possédant une nature défini : aquarelle, calligraphie, sanctuaire #}
@@ -18,9 +20,21 @@
             {% set qtyPricenature = c.productQty * c.customPrice %}
             {% set sstotalnatures = sstotalnatures + qtyPricenature %}
         {% endfor %}
+        {% for c in carts|filter(carts => carts.customIdformat == 1 or carts.customFormat == 7) %}
+            {% set QtySigMarq = QtySigMarq  + c.productQty %}
+        {% endfor %}
     {% endif %}
 
     <section id="listCart">
+        {% if QtySigMarq < 6 %}
+        <div class="row">
+            <div class="col-12">
+                <p class="alert alert-warning">
+                    Votre commande contient {{ QtySigMarq }} signets ou marque-pages.<br>Pour poursuivre la commande, cette dernière doit contenir au minimum 6 de ces produits.
+                </p>
+            </div>
+        </div>
+        {% endif %}
         <table class="table align-middle">
             <thead>
             <tr>
@@ -32,10 +46,10 @@
                 <th></th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="bodyCart">
             {% set sstotal = 0 %}
             {% for c in carts %}
-                <tr style="background: rgb(249, 249, 251);">
+                <tr id="rowCart" style="background: rgb(249, 249, 251);">
                     {% set qtyPrice = c.productQty * c.customPrice %}
                     {% set sstotal = sstotal + qtyPrice %}
                     {% set weight = c.productQty * c.customWeight %}
@@ -224,7 +238,7 @@
 
     {% if app.user %}
     {# Formulaire de commande si connecté #}
-    <section id="adressCart" class="mb-5">
+    <section id="adressCart" class="mb-5 d-none">
         <div class="row">
             <div class="col-6">
                 {# formulaire coordonnées user #}
@@ -328,7 +342,7 @@
     </section>
     {% else %}
     {# En cas d'user non connecté ou non inscrit sur la plateforme #}
-    <section id="adressCart" class="mb-5">
+    <section id="adressCart" class="mb-5 d-none">
         <div class="row mb-2">
         <div class="col-12">
             <p class="text-center">Vous n'êtes pas connecté à la plateforme. Pour finaliser votre commande, veuillez soit vous connecter, soit créer votre compte.
@@ -347,4 +361,10 @@
     {% endif %}
 {% else %}
     <h2>Le panier est vide</h2>
+{% endif %}
+{% if carts %}
+    <div class="mb-5 d-flex justify-content-around">
+        <button id="previousStep" class="btn btn-sm btn-outline-secondary"> << Retour sur l'accueil</button>
+        <button id="nextStep" class="btn btn-sm btn-outline-secondary {% if QtySigMarq < 6 %}disabled{% endif %}">Etape Suivante >> </button>
+    </div>
 {% endif %}

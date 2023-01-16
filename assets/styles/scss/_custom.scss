@@ -88,23 +88,22 @@ section{
   }
   .btn-card:hover {
     color:#fff;
-    background-color: $sm-primary-color;
   }
-  .btn-card::before {
+  .btn-card::after {
     content: "";
     position: absolute;
     height: 100%;
     top: 0;
     left: 0;
     width: 0;
-    z-index: 3;
+    z-index: -1;
     transition: all .3s;
     background-color: #142864;
   }
   .btn-card:hover {
     color:#fff;
   }
-  .btn-change:hover::before {
+  .btn-change:hover::after {
     width: 100%;
   }
 }

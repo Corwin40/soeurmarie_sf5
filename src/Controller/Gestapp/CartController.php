@@ -80,13 +80,9 @@ class CartController extends AbstractController
         foreach ($detailedCart as $d){
             // Construction des éléments nécessaire au panier
             $product = $d->product;
-            //dd($product->getId());
             $customization = $productCustomizeRepository->findLastProductCustomize($product->getId());
-            //dd($customization['uuid']);
             $customidprod = $customization['uuid'];
-            //dd($customization->getUuid());
             $uuid = $cartRepository->findOneBy(['uuid'=> $session], ['id'=> 'DESC']);
-            //dd($uuid);
 
             if(!$uuid){
                 $cart = new Cart();
@@ -97,6 +93,7 @@ class CartController extends AbstractController
                 $cart->setproductCategory($product->getProductCategory());
                 $cart->setProductQty($d->qty);
                 $cart->setProductRef($product->getRef());
+                $cart->setCustomIdformat($customization['idformat']);
                 $cart->setCustomFormat($customization['format']);
                 $cart->setCustomName($customization['name']);
                 $cart->setCustomPrice($customization['priceformat']);
@@ -116,6 +113,7 @@ class CartController extends AbstractController
                     $cart->setproductCategory($product->getProductCategory());
                     $cart->setProductQty($d->qty);
                     $cart->setProductRef($product->getRef());
+                    $cart->setCustomIdformat($customization['idformat']);
                     $cart->setCustomFormat($customization['format']);
                     $cart->setCustomName($customization['name']);
                     $cart->setCustomPrice($customization['priceformat']);
@@ -156,15 +154,14 @@ class CartController extends AbstractController
         $session = $this->get('session')->getId();
 
         $detailedCart = $this->cartService->getDetailedCartItem();
+
         foreach ($detailedCart as $d){
             $product = $d->product;
-            //dd($product);
             $customization = $productCustomizeRepository->findOneBy(['product'=> $d->product]);
+            //dd($customization);
             $customidprod = $customization->getUuid();
-            //dd($customization->getUuid());
-            $uuid = $cartRepository->findOneBy(['uuid'=> $session], ['id'=> 'DESC']);
-            //dd($uuid);
 
+            $uuid = $cartRepository->findOneBy(['uuid'=> $session], ['id'=> 'DESC']);
 
             if(!$uuid){
                 $cart = new Cart();
@@ -175,6 +172,7 @@ class CartController extends AbstractController
                 $cart->setproductCategory($product->getProductCategory());
                 $cart->setProductQty($d->qty);
                 $cart->setProductRef($product->getRef());
+                $cart->setCustomIdformat($customization->getFormat()->getId());
                 $cart->setCustomFormat($customization->getFormat()->getName());
                 $cart->setCustomName($customization->getName());
                 $cart->setCustomPrice($customization->getFormat()->getPriceformat());
@@ -194,6 +192,7 @@ class CartController extends AbstractController
                     $cart->setproductCategory($product->getProductCategory());
                     $cart->setProductQty($d->qty);
                     $cart->setProductRef($product->getRef());
+                    $cart->setCustomIdformat($customization->getFormat()->getId());
                     $cart->setCustomFormat($customization->getFormat()->getName());
                     $cart->setCustomName($customization->getName());
                     $cart->setCustomPrice($customization->getFormat()->getPriceformat());

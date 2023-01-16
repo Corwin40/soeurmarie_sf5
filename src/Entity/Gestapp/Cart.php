@@ -39,6 +39,11 @@ class Cart
     private $productQty;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $customIdformat;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $customFormat;
@@ -137,6 +142,18 @@ class Cart
     public function setProductQty(int $productQty): self
     {
         $this->productQty = $productQty;
+
+        return $this;
+    }
+
+    public function getCustomIdformat(): ?int
+    {
+        return $this->customIdformat;
+    }
+
+    public function setCustomIdformat(int $customIdformat): self
+    {
+        $this->customIdformat = $customIdformat;
 
         return $this;
     }
