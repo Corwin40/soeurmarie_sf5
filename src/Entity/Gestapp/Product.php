@@ -188,6 +188,11 @@ class Product
      */
     private $carts;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $position;
+
     public function __construct()
     {
         $this->purchaseItems = new ArrayCollection();
@@ -671,6 +676,18 @@ class Product
                 $cart->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(?int $position): self
+    {
+        $this->position = $position;
 
         return $this;
     }
