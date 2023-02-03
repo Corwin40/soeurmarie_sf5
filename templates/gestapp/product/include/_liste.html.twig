@@ -1,11 +1,11 @@
 
-{% for product in products|sort((a,b) => a.name <=> b.name) %}
-    <div id="product" class="col-6 col-md-2">
+{% for product in products|sort((a,b) => a.position <=> b.position) %}
+    <div id="{{ product.position }}" class="col-6 col-md-2 product">
         <div class="card">
             {% if product.productName is null %}
                 <img src="{{ asset('images/jpg/Fond_product.jpg') }}" alt="image_replace">
             {% else %}
-                <img src="{{ vich_uploader_asset(product)|imagine_filter('product_image_card') }}" alt="{{ product.productName }}" class="card-img-top" >
+                <img src="{{ asset('images/product_image_card/' ~ product.productName)|imagine_filter('product_image_card') }}" alt="{{ product.productName }}" class="card-img-top" >
             {% endif %}
             <div class="card-body">
                 <h5 class="card-title"><a href="{{ path('op_gestapp_product_edit', {'id': product.id}) }}">{{ product.name }} - {{product.ref}}</a></h5>

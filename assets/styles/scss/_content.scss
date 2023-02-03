@@ -1,3 +1,53 @@
+#content{
+	.accordion-item{
+		.accordion-button{
+			font-size: 1.5rem;
+		}
+		.accordion-collapse{
+			.accordion-body{
+				padding : 0;
+				h4{
+					button{
+						text-transform: uppercase;
+					}
+				}
+				ul{
+					list-style:none;
+					padding-left: 0;
+					li:last-child{
+						border-bottom: none;
+					}
+					li{
+						padding:0 1.25rem;
+						border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+						a{
+							text-decoration: none;
+							text-transform: capitalize;
+							font-size: 1.2rem;
+						}
+						.nolink{
+							text-decoration: none;
+						}
+						ul{
+							list-style:none;
+							padding-left: 0.5rem;
+							li{
+								border-bottom: none;
+								a{
+									text-decoration: none;
+									text-transform: capitalize;
+									font-size: 1rem;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+	}
+}
+
 //*** ------------- Personnalisation Card ---------------- ***//
 
 ol, ul, dl {
@@ -23,28 +73,29 @@ ol, ul, dl {
 	border-top-right-radius: 0;
 }
 //*** ------------- Product card in admin ---------------- ***//
-#product .card {
+.product .card {
 	border: 1px solid $op-blue;
 }
-#product .card > .card-body {
+.product .card > .card-body {
 	min-height: 210px;
 	max-height: 210px;
 	display: grid;
 	grid-template-rows: auto 1fr auto;
 }
-#product .card > .card-body {
+
+.product .card > .card-body {
 
 }
 
-#product .card-footer:last-child {
+.product .card-footer:last-child {
 	border-radius: 0 0 0 0;
 }
-#product .card > .card-footer {
+.product .card > .card-footer {
 	background-color: $op-blue;
 	border-top: 1px solid $op-blue;
 }
 
-#product .card > .card-footer p {
+.product .card > .card-footer p {
 	margin-bottom: 0;
 }
 

@@ -210,6 +210,7 @@ class ProductRepository extends ServiceEntityRepository
             ->leftJoin('p.productUnit', 'pu')
             ->leftJoin('p.productNature', 'n')
             ->Select('
+                
                 p.position as position,
                 p.id AS id,
                 p.name AS name, 
@@ -219,7 +220,7 @@ class ProductRepository extends ServiceEntityRepository
                 pu.name AS productUnit,
                 p.quantity,
                 p.productName AS productName,
-                n.name AS nameNature,
+                n.name AS productNature,
                 c.id AS idCategory,
                 p.ref AS ref,
                 c.name AS nameCategory,

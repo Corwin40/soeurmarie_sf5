@@ -1,0 +1,40 @@
+<div class="accordion" id="accordionExample">
+{%  for nature in natures %}
+    <div class="accordion-item">
+        <h4 class="accordion-header" id="nature-{{ nature.id }}">
+            <button class="accordion-button {% if loop.first %}{% else %}collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ nature.id }}" aria-expanded="{% if loop.first %}true{% else %}false{% endif %}" aria-controls="collapse{{ nature.id }}">
+            {{ nature.name }}
+            </button>
+        </h4>
+        <div id="collapse{{ nature.id }}" class="accordion-collapse collapse {% if loop.first %}show{% else %}{% endif %}" aria-labelledby="nature-{{ nature.id }}" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <ul>
+                {% set parents = [] %}
+                {% for category in categories|filter(category => category.parent is null ) %}
+                    {% set parents = parents|merge([{id: category.id, name : category.name, nature: category.nature}]) %}
+                {% endfor %}
+
+                {% for parent in parents|filter(parent => parent.nature == nature.name) %}
+                    {% set count = 0 %}
+                    {% for category in categories|filter(category => category.parent == parent.name ) %}
+                        {% set count = count + 1 %}
+                    {% endfor %}
+                    <li>
+                        {% if count == 0 %}
+                        <a id="{{ parent.id|upper }}" href="" class="filtercategory">{{ parent.name }}</a>
+                        {% else %}
+                        <a id="{{ parent.id|upper }}" class="nolink">{{ parent.name }}</a>
+                        {% endif%}
+                        <ul>
+                            {% for category in categories|filter(category => category.parent == parent.name ) %}
+                                <li><a id="{{ category.id }}" href="" class="filtercategory">{{ category.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</div>

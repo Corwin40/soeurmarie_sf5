@@ -10,10 +10,10 @@
             // Construction de la fonction OnClickBtnMenu
             function onClickBtnOnLine(event){
                 event.preventDefault();
-                const url = this.href;                                          // variable qui récupère l'url inclus dans le "this"
+                const urlClickBtnOnLine = this.href;                                          // variable qui récupère l'url inclus dans le "this"
                 const icone = this.querySelector('i');                          // variable qui sélectionne l'élément balise <i></i>
                 axios
-                    .post(url)
+                    .post(urlClickBtnOnLine)
                     .then(function(response) {
                         if(icone.classList.contains('fa-toggle-off')) {
                             icone.classList.replace('fa-toggle-off', 'fa-toggle-on');
@@ -29,10 +29,10 @@
             // Construction de la fonction OnClickBtnMenu
             function onClickBtnStar(event){
                 event.preventDefault();
-                const url = this.href;                                          // variable qui récupère l'url inclus dans le "this"
+                const urlClickBtnStar = this.href;                                          // variable qui récupère l'url inclus dans le "this"
                 const icone = this.querySelector('i');                          // variable qui sélectionne l'élément balise <i></i>
                 axios
-                    .post(url)
+                    .post(urlClickBtnStar)
                     .then(function(response) {
                         if(icone.classList.contains('far')) {
                             icone.classList.replace('far', 'fas');
@@ -86,6 +86,27 @@
                     .then(function(response) {
                         // rafraichissement du tableau
                         const liste = document.getElementById('liste').innerHTML = response.data.liste;
+
+                        // Appel de la fonction de mise en ligne du produit lors d'un clic
+                        document.querySelectorAll('a.js-online').forEach(function (link){
+                            link.addEventListener('click', onClickBtnOnLine);
+                        })
+
+                        // Appel de la fonction de mise en vedette du produit lors d'un clic
+                        document.querySelectorAll('a.js-star').forEach(function (link){
+                            link.addEventListener('click', onClickBtnStar);
+                        })
+
+                        // Ajout d'un event sur Bouton de suppression dans la fenêtre modale
+                        document.querySelectorAll('a.js-data-suppr').forEach(function(link){
+                            link.addEventListener('click', onClickBtnDel)
+                        })
+
+                        // Ajout d'un event pour filtrer la liste des produits
+                        document.querySelectorAll('a.filtercategory').forEach(function(link){
+                            link.addEventListener('click', filtercategory)
+                        })
+
                         // préparation du toaster
                         var option = {
                             animation : true,
@@ -102,6 +123,74 @@
                     });
             }
 
+            // ------------------------------------
+            // Génération du Sortable - Déplacement des photos et ordres d'affichages
+            //-------------------------------------
+            const sortablePhoto = document.getElementById("liste")
+            let page = document.getElementById("pagination")
+            new Sortable(sortablePhoto, {
+                animation:150,
+                // Called by any change to the list (add / update / remove)
+                onSort: function (event) {
+                    let cols = sortablePhoto.children
+                    // on boucle sur le résultat des enfants pour envoyer au controller la modification du positionnement des produits de la page
+                    for(i = 0; i < cols.length; i++){
+                        let idcol = cols[i].id
+                        let key = i
+                        console.log(page)
+                        let url = "/gestapp/product/updateposition/" + idcol + "/" + key
+                        axios
+                            .post(url)
+                            .catch(function(error){
+                                console.log(error);
+                            })
+                    }
+                    // initialisation du toaster bootstrap
+                    var toastHTMLElement = document.getElementById("toaster");
+                    var message = "Les produits ont été correctement déplacés";
+                    var toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
+                    toastBody.textContent = message;
+                    var toastElement = new bootstrap.Toast(toastHTMLElement, {animation: true,autohide: true,delay: 3000});
+                    toastElement.show();
+                },
+            })
+
+            // function de filtrage des produits par catégories
+            function filtercategory(event){
+                event.preventDefault()
+                let idcategory = this.id
+                let urlfiltercategory = '/admin/product/oneCat/' + idcategory
+                axios
+                    .get(urlfiltercategory)
+                    .then(function(response){
+                        // rafraichissement du tableau
+                        const liste = document.getElementById('liste').innerHTML = response.data.liste;
+
+                        // Appel de la fonction de mise en ligne du produit lors d'un clic
+                        document.querySelectorAll('a.js-online').forEach(function (link){
+                            link.addEventListener('click', onClickBtnOnLine);
+                        })
+
+                        // Appel de la fonction de mise en vedette du produit lors d'un clic
+                        document.querySelectorAll('a.js-star').forEach(function (link){
+                            link.addEventListener('click', onClickBtnStar);
+                        })
+
+                        // Ajout d'un event sur Bouton de suppression dans la fenêtre modale
+                        document.querySelectorAll('a.js-data-suppr').forEach(function(link){
+                            link.addEventListener('click', onClickBtnDel)
+                        })
+
+                        // Ajout d'un event pour filtrer la liste des produits
+                        document.querySelectorAll('a.filtercategory').forEach(function(link){
+                            link.addEventListener('click', filtercategory)
+                        })
+                    })
+                    .catch(function(error){
+                        console.log(error);
+                    })
+            }
+
             // Appel de la fonction de mise en ligne du produit lors d'un clic
             document.querySelectorAll('a.js-online').forEach(function (link){
                 link.addEventListener('click', onClickBtnOnLine);
@@ -115,6 +204,11 @@
             // Ajout d'un event sur Bouton de suppression dans la fenêtre modale
             document.querySelectorAll('a.js-data-suppr').forEach(function(link){
                 link.addEventListener('click', onClickBtnDel)
+            })
+
+            // Ajout d'un event pour filtrer la liste des produits
+            document.querySelectorAll('a.filtercategory').forEach(function(link){
+                link.addEventListener('click', filtercategory)
             })
         }
     </script>
@@ -136,30 +230,9 @@
                                 <h4>Catalogue des produits</h4>
                                 <p>Créer, Modifier ou supprimer des articles du site</p>
                             </div>
-                            <div class="col-4">
-                                {{form_start(form)}}
-                                {# Bannière sur la vignette du bien #}
-                                <div class="row mb-1 g-1 justify-content-end">
-                                    <div class="col-4">
-                                        {{ form_widget(form.word, {'attr': {'class': 'form-control form-control-sm'}}) }}
-                                        {{ form_widget(form.rechercher) }}
-                                    </div>
-                                    <div class="col-4">
-
-                                    </div>
-                                </div>
-                                {{form_end(form)}}
-                            </div>
-                        </div>
-
-                        <div class="navigation">
-                            {{ knp_pagination_render(products, 'include/pagination.html.twig') }}
                         </div>
                         <div class="row g-1" id="liste">
                             {{ include('gestapp/product/include/_liste.html.twig') }}
-                        </div>
-                        <div class="navigation">
-                            {{ knp_pagination_render(products, 'include/pagination.html.twig') }}
                         </div>
                     </div>
                 </div>

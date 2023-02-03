@@ -105,6 +105,7 @@ class ProductType extends AbstractType
                     'TVA 2.1%' => '2.1',
                     'TVA 0%' => '0',
                 ],
+                'required' => false,
             ])
             ->add('isPersonalisable')
             ->add('otherCategory',EntityType::class, [

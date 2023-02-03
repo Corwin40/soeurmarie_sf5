@@ -38,31 +38,10 @@ class ProductController extends AbstractController
      */
     public function index(ProductRepository $productRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $data = $productRepository->findAll();
-        $products = $paginator->paginate(
-            $data,
-            $request->query->getInt('page', 1),
-            18
-        );
-
-        $form = $this->createForm(SearchProductType::class, [
-            'action' => $this->generateUrl('op_gestapp_product_index'),
-            'method' => 'POST'
-        ]);
-        $search = $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid()){
-            $data = $productRepository->searchProduct($search->get('word')->getData());
-            $products = $paginator->paginate(
-                $data,
-                $request->query->getInt('page', 1),
-                18
-            );
-        }
+        $products = $productRepository->findAll();
 
         return $this->render('gestapp/product/index.html.twig', [
             'products' => $products,
-            'form' => $form->createView(),
         ]);
     }
 
@@ -402,6 +381,24 @@ class ProductController extends AbstractController
     }
 
     /**
+     * Espace Administration : Liste les produits selon la catégorie de ces derniers
+     * @Route("/admin/product/oneCat/{idcat}", name="op_admin_product_onecat", methods={"GET"})
+     */
+    public function ListOneCatProductJson(Request $request, $idcat, EntityManagerInterface $em)
+    {
+        $products = $em->getRepository(Product::class)->oneCategory($idcat);
+        //dd($products);
+
+        return $this->json([
+            'code'      => 200,
+            'message'   => "Ok",
+            'liste' => $this->renderView('gestapp/product/include/_liste.html.twig', [
+                'products' => $products,
+            ])
+        ], 200);
+    }
+
+    /**
      * Liste les autres catégorie d'un produit
      * @Route("/gestapp/product/onethercategories", name="op_gestapp_products_othercategories", methods={"GET"})
      */
@@ -627,5 +624,24 @@ class ProductController extends AbstractController
         return $this->render('gestapp/product/favories.html.twig', [
             "products" => $products
         ]);
+    }
+
+    /**
+     * Mise à jor de la position du produit
+     * @Route("/gestapp/product/updateposition/{idcol}/{key}", name="op_gestapp_product_updateposition", methods={"POST"})
+     */
+    public function updateposition(ProductRepository $productRepository, $idcol, $key)
+    {
+        // récupérer le produit correspondant à l'id
+        $product = $productRepository->find($idcol);
+        $oldPosition = $product->getPosition();
+
+        // Fixation de la nouvelle position
+        $product->setPosition($key);
+
+        return $this->json([
+            'code'=> 200,
+            'message' => "Les produits ont été correctement déplacés."
+        ], 200);
     }
 }

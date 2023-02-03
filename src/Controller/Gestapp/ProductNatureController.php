@@ -7,6 +7,7 @@ use App\Entity\Gestapp\ProductCategory;
 use App\Entity\Gestapp\ProductNature;
 use App\Form\Gestapp\ProductNature1Type;
 use App\Form\Gestapp\ProductNatureType;
+use App\Repository\Gestapp\ProductCategoryRepository;
 use App\Repository\Gestapp\ProductNatureRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -175,5 +176,20 @@ class ProductNatureController extends AbstractController
                 'product_natures' => $productnatures
             ])
         ], 200);
+    }
+
+    /**
+     * @Route("/opadmin/product/listnature", name="op_gestapp_product_category_list", methods={"GET"})
+     */
+    public function listNatures(ProductNatureRepository $productNatureRepository, ProductCategoryRepository $productCategoryRepository)
+    {
+        $natures = $productNatureRepository->findAll();
+
+        $categories = $productCategoryRepository->findAll();
+
+        return $this->render('gestapp/product_nature/listnatures.html.twig',[
+            'natures' => $natures,
+            'categories' => $categories
+        ]);
     }
 }

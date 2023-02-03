@@ -19,3 +19,6 @@
         </h4>
     </div>
 </div>
+{% if app.request.attributes.get('_route') == 'op_gestapp_product_index' %}
+{{ render(controller('App\\Controller\\Gestapp\\ProductNatureController::listNatures')) }}
+{% endif %}

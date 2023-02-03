@@ -133,4 +133,6 @@ class ProductCategoryController extends AbstractController
 
         return $this->redirectToRoute('gestapp_product_category_index');
     }
+
+
 }
