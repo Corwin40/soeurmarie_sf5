@@ -9,6 +9,7 @@ use App\Entity\Gestapp\ProductCustomize;
 use App\Entity\Gestapp\ProductNature;
 use App\Form\Gestapp\ProductType;
 use App\Form\Gestapp\SearchProductType;
+use App\Repository\Gestapp\ProductCategoryRepository;
 use App\Repository\Gestapp\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -630,14 +631,61 @@ class ProductController extends AbstractController
      * Mise à jor de la position du produit
      * @Route("/gestapp/product/updateposition/{idcol}/{key}", name="op_gestapp_product_updateposition", methods={"POST"})
      */
-    public function updateposition(ProductRepository $productRepository, $idcol, $key)
+    public function updateposition(
+        ProductRepository $productRepository,
+        ProductCategoryRepository $productCategoryRepository,
+        $idcol,
+        $key,
+        EntityManagerInterface $em
+    )
     {
         // récupérer le produit correspondant à l'id
-        $product = $productRepository->find($idcol);
-        $oldPosition = $product->getPosition();
+        $product = $productRepository->findOneBy(['position' => $idcol]);
+        //dd($product);
 
+        // on construit la position selon la nature et les catégories
+        $idnature = $product->getProductNature()->getId();
+        //dd($idnature);
+        $idcategory = $product->getProductCategory()->getId();
+        //dd($idcategory);
+        $category = $productCategoryRepository->findOneBy(['id' => $idcategory]);
+        //dd($category);
+           // on cherche à savoir si l'idcategory est parente ou pas d'une autre catégorie
+        $idParent = $category->getParent();
+        //dd($idParent);
+
+        if(!$idParent){
+            $idcat = $category->getId();
+            if(strlen($idcat)<2){
+                $idcat = '0'.$idcat;
+            }
+            if(strlen($key)<2){
+                $key = '0'.$key;
+            }
+            $idsscat = '00';
+            //dd($idcat);
+
+        }else{
+            $idsscat = $category->getId();
+            $idcat = $category->getParent()->getId();
+            if(strlen($idcat)<2){
+                $idcat = '0'.$idcat;
+            }
+            // il te manquait ce champs
+            if(strlen($idsscat)<2){
+                $idsscat = '0'.$idsscat;
+            }
+            if(strlen($key)<2){
+                $key = '0'.$key;
+            }
+        }
+
+        $position = $idnature.$idcat.$idsscat.$key;
+        //dd($position);
         // Fixation de la nouvelle position
-        $product->setPosition($key);
+        $product->setPosition($position);
+        $em->persist($product);
+        $em->flush();
 
         return $this->json([
             'code'=> 200,

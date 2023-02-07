@@ -16,7 +16,7 @@
 </div>
 <div class="row">
 
-    {% for product in products %}
+    {% for product in products|sort((a,b) => a.position <=> b.position) %}
         <div class="col-6 col-lg-3 g-2">
             <!-- Card -->
             <div id="productCard" class="card lift lift-lg mb-6 mb-xl-0 shadow-light-lg">

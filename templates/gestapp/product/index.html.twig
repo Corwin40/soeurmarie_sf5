@@ -127,7 +127,6 @@
             // Génération du Sortable - Déplacement des photos et ordres d'affichages
             //-------------------------------------
             const sortablePhoto = document.getElementById("liste")
-            let page = document.getElementById("pagination")
             new Sortable(sortablePhoto, {
                 animation:150,
                 // Called by any change to the list (add / update / remove)
@@ -136,8 +135,7 @@
                     // on boucle sur le résultat des enfants pour envoyer au controller la modification du positionnement des produits de la page
                     for(i = 0; i < cols.length; i++){
                         let idcol = cols[i].id
-                        let key = i
-                        console.log(page)
+                        let key = i + 1
                         let url = "/gestapp/product/updateposition/" + idcol + "/" + key
                         axios
                             .post(url)
