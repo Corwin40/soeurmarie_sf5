@@ -47,6 +47,23 @@ class ProductController extends AbstractController
     }
 
     /**
+     * @Route("/gestapp/product/json/{idcategory}", name="op_gestapp_product_indexjson", methods={"GET", "POST"})
+     */
+    public function indexjson(ProductRepository $productRepository, PaginatorInterface $paginator, Request $request, $idcategory): Response
+    {
+        $products = $productRepository->findBy(['ProductCategory'=>$idcategory]);
+
+        return $this->json([
+            'code'          => 200,
+            'message'       => "Le produit a été correctement ajouté.",
+            'liste' => $this->renderView('gestapp/product/include/_liste.html.twig', [
+                'products' => $products
+            ])
+        ]);
+    }
+
+
+    /**
      * @Route("/gestapp/product/new", name="op_gestapp_product_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
@@ -208,7 +225,7 @@ class ProductController extends AbstractController
         return $this->redirectToRoute('op_gestapp_product_index');
     }
 
-    
+
 
     /**
      * Permet d'activer ou de désactiver la mise en ligne d'un produit

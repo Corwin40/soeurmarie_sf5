@@ -142,15 +142,42 @@
                             .catch(function(error){
                                 console.log(error);
                             })
+                        let idcategory
                     }
-                    // initialisation du toaster bootstrap
-                    var toastHTMLElement = document.getElementById("toaster");
-                    var message = "Les produits ont été correctement déplacés";
-                    var toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
-                    toastBody.textContent = message;
-                    var toastElement = new bootstrap.Toast(toastHTMLElement, {animation: true,autohide: true,delay: 3000});
-                    toastElement.show();
+                    let category = document.getElementById('category').value
+                    let urlfiltercategory = '/admin/product/oneCat/' + category
+                    axios
+                        .get(urlfiltercategory)
+                        .then(function(response){
+                            // rafraichissement du tableau
+                            const liste = document.getElementById('liste').innerHTML = response.data.liste
+                            const category = document.getElementById('category').value = idcategory
+                            // Appel de la fonction de mise en ligne du produit lors d'un clic
+                            document.querySelectorAll('a.js-online').forEach(function (link){
+                                link.addEventListener('click', onClickBtnOnLine);
+                            })
+
+                            // Appel de la fonction de mise en vedette du produit lors d'un clic
+                            document.querySelectorAll('a.js-star').forEach(function (link){
+                                link.addEventListener('click', onClickBtnStar);
+                            })
+
+                            // Ajout d'un event sur Bouton de suppression dans la fenêtre modale
+                            document.querySelectorAll('a.js-data-suppr').forEach(function(link){
+                                link.addEventListener('click', onClickBtnDel)
+                            })
+
+                            // Ajout d'un event pour filtrer la liste des produits
+                            document.querySelectorAll('a.filtercategory').forEach(function(link){
+                                link.addEventListener('click', filtercategory)
+                            })
+                        })
+                        .catch(function(error){
+                            console.log(error);
+                        })
                 },
+
+
             })
 
             // function de filtrage des produits par catégories
@@ -162,8 +189,8 @@
                     .get(urlfiltercategory)
                     .then(function(response){
                         // rafraichissement du tableau
-                        const liste = document.getElementById('liste').innerHTML = response.data.liste;
-
+                        const liste = document.getElementById('liste').innerHTML = response.data.liste
+                        const category = document.getElementById('category').value = idcategory
                         // Appel de la fonction de mise en ligne du produit lors d'un clic
                         document.querySelectorAll('a.js-online').forEach(function (link){
                             link.addEventListener('click', onClickBtnOnLine);
@@ -227,6 +254,9 @@
                             <div class="col-6">
                                 <h4>Catalogue des produits</h4>
                                 <p>Créer, Modifier ou supprimer des articles du site</p>
+                            </div>
+                            <div class="col-6">
+                                <input id="category" type="hidden" value="">
                             </div>
                         </div>
                         <div class="row g-1" id="liste">
