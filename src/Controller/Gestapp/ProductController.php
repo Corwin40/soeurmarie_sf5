@@ -208,6 +208,8 @@ class ProductController extends AbstractController
         return $this->redirectToRoute('op_gestapp_product_index');
     }
 
+    
+
     /**
      * Permet d'activer ou de désactiver la mise en ligne d'un produit
      * @Route("/gestapp/product/online/{id}/json", name="op_gestapp_product_online")
