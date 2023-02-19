@@ -192,4 +192,35 @@ class PublicController extends AbstractController
             'user' => $user
         ]);
     }
+    /**
+     * Création du formulaire de recherche de cartes depuis le menu
+     * @Route ("/webapp/public/dashboard/search", name="op_webapp_public_dashboard_search", methods={"GET", "POST"})
+     */
+    public function formSearchProducts(ProductRepository $productRepository, Request $request) : response
+    {
+        // mise en place du formulaire de recherche dans le Jumbotron
+        $form = $this->createForm(SearchProductType::class, [
+            'action' => $this->generateUrl('op_webapp_public_dashboard_search'),
+            'method' => 'POST'
+        ]);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+
+            // on recherche les cartes correspondantes
+            $products = $productRepository->SearchProduct($form->get('words')->getData());
+            $page = ['title' => 'Résultats de recherche | Cartes de prière'];
+
+            return $this->render('webapp/page/products/resultsSearchpropertyhome.html.twig',[
+                'products' => $products,
+                'page' => $page
+            ]);
+        }
+
+        return $this->renderForm('include/searchProduct.html.twig', [
+            'form' => $form,
+        ]);
+
+    }
+
 }

@@ -58,6 +58,8 @@
                             {% endif %}
                         </li>
                     {% endfor %}
+                    {# Formulaire de recherche #}
+                    {{ render(controller('App\\Controller\\Webapp\\PublicController::formSearchProducts')) }}
                     <li id="li_panier" class="nav-item">
                     {{ include('include/_panier.html.twig')}}
                     </li>
@@ -76,14 +78,10 @@
                     </li>
                     {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="{{ path('op_admin_dashboard_index')}}"><i class="fas fa-unlock-alt"></i> Mon espace</a>
+                        <a class="nav-link" aria-current="page" href="{{ path('op_admin_dashboard_index')}}"><i class="fa-duotone fa-circle-user"></i> </a>
                     </li>
                     {% endif %}
-                    {{form_start(form, {'attr': {'class':'d-flex'}})}}
-                    {# Bannière sur la vignette du bien #}
-                    {{ form_widget(form.word, {'attr': {'class': 'form-control form-control-sm'}}) }}
-                    {{ form_widget(form.rechercher, {'attr': {'class': 'btn btn-sm btn-ouline-success'}}) }}
-                    {{form_end(form)}}
+
 
                 </ul>
             </div>
