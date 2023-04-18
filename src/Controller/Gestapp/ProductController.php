@@ -39,7 +39,7 @@ class ProductController extends AbstractController
      */
     public function index(ProductRepository $productRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $products = $productRepository->findAll();
+        $products = $productRepository->findBy(['ProductCategory' => 2]);
 
         return $this->render('gestapp/product/index.html.twig', [
             'products' => $products,
@@ -660,47 +660,13 @@ class ProductController extends AbstractController
     {
         // récupérer le produit correspondant à l'id
         $product = $productRepository->findOneBy(['position' => $idcol]);
-        //dd($product);
-
+        // Créer une position - Nat/Cat/pos
         // on construit la position selon la nature et les catégories
         $idnature = $product->getProductNature()->getId();
-        //dd($idnature);
-        $idcategory = $product->getProductCategory()->getId();
-        //dd($idcategory);
-        $category = $productCategoryRepository->findOneBy(['id' => $idcategory]);
-        //dd($category);
-           // on cherche à savoir si l'idcategory est parente ou pas d'une autre catégorie
-        $idParent = $category->getParent();
-        //dd($idParent);
+        $idcat = $product->getProductCategory()->getId();
 
-        if(!$idParent){
-            $idcat = $category->getId();
-            if(strlen($idcat)<2){
-                $idcat = '0'.$idcat;
-            }
-            if(strlen($key)<2){
-                $key = '0'.$key;
-            }
-            $idsscat = '00';
-            //dd($idcat);
 
-        }else{
-            $idsscat = $category->getId();
-            $idcat = $category->getParent()->getId();
-            if(strlen($idcat)<2){
-                $idcat = '0'.$idcat;
-            }
-            // il te manquait ce champs
-            if(strlen($idsscat)<2){
-                $idsscat = '0'.$idsscat;
-            }
-            if(strlen($key)<2){
-                $key = '0'.$key;
-            }
-        }
-
-        $position = $idnature.$idcat.$idsscat.$key;
-        //dd($position);
+        $position = $idnature.'-'.$idcat.'-'.$key;
         // Fixation de la nouvelle position
         $product->setPosition($position);
         $em->persist($product);
