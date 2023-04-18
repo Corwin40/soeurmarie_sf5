@@ -665,7 +665,6 @@ class ProductController extends AbstractController
         $idnature = $product->getProductNature()->getId();
         $idcat = $product->getProductCategory()->getId();
 
-
         $position = $idnature.'-'.$idcat.'-'.$key;
         // Fixation de la nouvelle position
         $product->setPosition($position);
