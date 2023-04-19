@@ -27,7 +27,7 @@
 
 .flickity-prev-next-button.previous {
   left: 0;
-  transform: translate(calc(-50% + #{$grid-gutter-width / 4}), -50%);
+  transform: translate(calc(-50% + #{calc($grid-gutter-width / 4)}), -50%);
 
   @include media-breakpoint-up(lg) {
     transform: translate(-50%, -50%);
@@ -40,7 +40,7 @@
 
 .flickity-prev-next-button.next {
   right: 0;
-  transform: translate(calc(50% - #{$grid-gutter-width / 4}), -50%);
+  transform: translate(calc(50% - #{ calc($grid-gutter-width / 4)}), -50%);
 
   @include media-breakpoint-up(lg) {
     transform: translate(50%, -50%);
@@ -115,6 +115,6 @@
 // Fixing .col gutters because Bootstrap sets it to 0 if they are not direct children of a .row
 
 .flickity-slider > [class^="col"] {
-  padding-left: $grid-gutter-width / 2;
-  padding-right: $grid-gutter-width / 2;
+  padding-left: calc($grid-gutter-width / 2);
+  padding-right: calc($grid-gutter-width / 2);
 }

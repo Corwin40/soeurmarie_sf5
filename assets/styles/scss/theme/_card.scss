@@ -263,20 +263,20 @@ a.card, a.card-body, a.card-footer, a.card-meta {
   .card-bleed {
     width: auto;
     min-width: 100%;
-    margin-right: -$grid-gutter-width / 2;
-    margin-left: -$grid-gutter-width / 2;
+    margin-right: - calc($grid-gutter-width / 2);
+    margin-left: - calc($grid-gutter-width / 2);
     border-radius: 0;
   }
 
   .card-bleed .card-footer,
   .card-bleed .card-header,
   .card-bleed .card-body {
-    padding-right: $grid-gutter-width / 2;
-    padding-left: $grid-gutter-width / 2;
+    padding-right: calc($grid-gutter-width / 2);
+    padding-left: calc($grid-gutter-width / 2);
     border-radius: 0;
   }
 
   .card-bleed .card-list .list-link::before {
-    left: -$grid-gutter-width / 2;
+    left: - calc($grid-gutter-width / 2);
   }
 }
