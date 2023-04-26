@@ -65,6 +65,10 @@
                     document.querySelectorAll('a.js-decrement').forEach(function (link){
                         link.addEventListener('click', onClickBtnDecrement);
                     })
+                    // Appel de la fonction de duplication d'un produit
+                    document.querySelectorAll('a.duplicate').forEach(function (link){
+                        link.addEventListener('click', onClickDuplicate);
+                    })
                     // mise en place de l'alerte
                     var alertHTMLElement = document.getElementById("alertMessage");
                     console.log(alertHTMLElement);
@@ -93,6 +97,10 @@
                     document.querySelectorAll('a.js-decrement').forEach(function (link){
                         link.addEventListener('click', onClickBtnDecrement);
                     })
+                    // Appel de la fonction de duplication d'un produit
+                    document.querySelectorAll('a.duplicate').forEach(function (link){
+                        link.addEventListener('click', onClickDuplicate);
+                    })
                     // mise en place de l'alerte
                     var alertHTMLElement = document.getElementById("alertMessage");
                     console.log(alertHTMLElement);
@@ -117,6 +125,11 @@
         // Création de l'évènement pour la confirmation de la commande
         document.querySelectorAll('a.confPurchase').forEach(function (link){
             link.addEventListener('click', BtnConfPurchase);
+        })
+
+        // Appel de la fonction de duplication d'un produit
+        document.querySelectorAll('a.duplicate').forEach(function (link){
+            link.addEventListener('click', onClickDuplicate);
         })
 
         // Edition d'une personnalisation produit sur "change" Select : formatedit
