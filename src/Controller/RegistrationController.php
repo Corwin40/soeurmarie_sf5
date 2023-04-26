@@ -71,6 +71,38 @@ class RegistrationController extends AbstractController
     }
 
     /**
+     * @Route("/registerCustomer", name="registercustomer")
+     */
+    public function registerCustomer(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    {
+        $user = new member();
+        $user->setType('client');
+        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // encode the plain password
+            $user->setPassword(
+                $passwordEncoder->encodePassword(
+                    $user,
+                    $form->get('password')->getData()
+                )
+            );
+            $user->setIsVerified(1);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('op_admin_security_login');
+        }
+
+        return $this->render('registration/register.html.twig', [
+            'registrationForm' => $form->createView(),
+        ]);
+    }
+
+    /**
      * @Route("/verify/email", name="verify_email")
      */
     public function verifyUserEmail(Request $request, memberRepository $memberRepository): Response
