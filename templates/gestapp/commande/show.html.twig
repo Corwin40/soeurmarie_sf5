@@ -1,0 +1,245 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}OpenGaia | Administration - site{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+
+    {% set qtyItems = 0 %}
+    {% set qtyPrice = 0 %}
+    {% set sstotalnatures = 0 %}
+    {% set qtyWeight = 0 %}
+    {% set fp1 = 1.5 %}
+    {% set fp2 = 2.90 %}
+    {% set fp3 = 5.30 %}
+    {% set fp4 = 7.90 %}
+    {% set fp5 = 11.50 %}
+    {% set colis = 0 %}
+
+    {% if items %}
+        {% for i in items|filter(items => items.product.productNature == 'Aquarelle' or items.product.productNature == 'Calligraphie' or items.product.productNature == 'Sanctuaire') %}
+            {% set qtyItems = qtyItems + i.productQty %}
+            {% set qtyPrice = i.productQty * i.productPrice %}
+            {% set sstotalnatures = sstotalnatures + qtyPrice %}
+            {% set qtyWeight = qtyWeight + (i.productQty * i.format.weight) %}
+        {% endfor %}
+
+        {% if qtyWeight <= 20 %}
+            {% set colis = qtyWeight + 6 %}
+        {% else %}
+            {% set colis = qtyWeight + 12 %}
+        {% endif %}
+    {% endif %}
+
+    <div class="container-fluid">
+        {{ include('gestapp/commande/include/_section_content_header.html.twig') }}
+        <section id="op_admin_content_body">
+            <div class="row g-2">
+                <div class="col-2">
+                    {{ include('gestapp/commande/include/_section_content_aside.html.twig') }}
+                </div>
+                <div class="col-10">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row justify-content-between">
+                                <div class="col-12">
+                                    <h4>Commande n°: #{{purchase.numPurchase}}</h4>
+                                    <hr>
+                                </div>
+                            </div>
+                            <div id="adress_facturation" class="row">
+                                <div class="col-12">
+                                    <h5>Information de contact</h5>
+                                </div>
+                                <div class="col-4">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <p class="mb-0"> <strong>Adresse de facturation</strong></p>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="invoice-details">
+                                                <address class="">
+                                                    <strong>{{ purchase.firstNameF }} {{ purchase.lastNameF }}</strong><br>
+                                                    {{ purchase.addressF }}<br>
+                                                    {% if purchase.complementF %}
+                                                        {{ purchase.complementF }}<br>
+                                                    {% endif %}
+                                                    {{ purchase.zipcodeF }} {{ purchase.cityF }}
+                                                </address>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <p class="mb-0"><strong>Adresse de livraison</strong></p>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="invoice-details">
+                                                <address class="mb-0">
+                                                    <strong>{{ purchase.firstNameL }} {{ purchase.lastNameL }}</strong><br>
+                                                    {{ purchase.addressL }}<br>
+                                                    {% if purchase.complementL %}
+                                                        {{ purchase.complementL }}<br>
+                                                    {% endif %}
+                                                    {{ purchase.zipcodeL }} {{ purchase.cityL }}
+                                                </address>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <h5>Détails de la commande</h5>
+                                </div>
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <!-- Row start -->
+                                            <div class="row gutters">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="table-responsive">
+
+                                                        <table class="table custom-table m-0">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Produit</th>
+                                                                <th>Format</th>
+                                                                <th>Prénom</th>
+                                                                <th>Quantité</th>
+                                                                <th>Prix</th>
+                                                                <th>Poids</th>
+                                                                <th>Somme</th>
+                                                            </tr>
+                                                            </thead>
+
+                                                            <tbody>
+                                                            {% for i in items %}
+                                                                <tr>
+                                                                    <td>{{ i.productName }}</td>
+                                                                    <td>{{ i.format }}</td>
+                                                                    <td>{{ i.CustomerName }}</td>
+                                                                    <td>{{ i.productQty }}</td>
+                                                                    <td>{{ i.productPrice }} €</td>
+                                                                    <td>{{ i.format.weight }} g</td>
+                                                                    <td>{{ i.totalItem|number_format(2, ',', ' ') }} €</td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                            </tbody>
+                                                            <tfooter>
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td>Total</td>
+                                                                    <td></td>
+                                                                    <td>{{ purchase.total|number_format(2, ',', ' ') }} €</td>
+                                                                </tr>
+                                                                {% if qtyItems <= 50 %}
+                                                                    {% set reductotal = 0 %}
+                                                                {% elseif qtyItems > 50 %}
+                                                                    <tr>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+
+                                                                        {% if qtyItems >= 50 and qtyItems <= 99 %}
+                                                                            {% set reductotal = sstotalnatures*0.1 %}
+                                                                            <td>Remise (10%)</td>
+                                                                            <td>
+                                                                                {{ qtyItems }} cartes
+                                                                            </td>
+                                                                            <td>
+                                                                                - {{ reductotal|number_format(2, ',', ' ') }} €
+                                                                            </td>
+                                                                        {% elseif qtyItems >= 100 and qtyItems <= 149 %}
+                                                                            {% set reductotal = sstotalnatures*0.15 %}
+                                                                            <td>Remise (15%)</td>
+                                                                            <td>
+                                                                                {{ qtyItems }} cartes
+                                                                            </td>
+                                                                            <td>
+                                                                                - {{ reductotal|number_format(2, ',', ' ') }} €
+                                                                            </td>
+                                                                        {% elseif qtyItems >= 150 and qtyItems <= 199 %}
+                                                                            {% set reductotal = sstotalnatures*0.20 %}
+                                                                            <td>Remise (20%)</td>
+                                                                            <td>
+                                                                                {{ qtyItems }} cartes
+                                                                            </td>
+                                                                            <td>
+                                                                                - {{ reductotal|number_format(2, ',', ' ') }} €
+                                                                            </td>
+                                                                        {% endif %}
+                                                                    </tr>
+                                                                {% endif %}
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td>Frais de port</td>
+                                                                    <td>poids: {{ colis }}g</td>
+                                                                    <td>
+                                                                        {% if colis <= 20 %}
+                                                                            {{ fp1|number_format(2, ',', ' ') }}€
+                                                                        {% elseif colis > 20 and colis <= 100 %}
+                                                                            {{ fp2|number_format(2, ',', ' ') }}€
+                                                                        {% elseif colis > 100 and colis <= 250 %}
+                                                                            {{ fp3|number_format(2, ',', ' ') }}€
+                                                                        {% elseif colis > 250 and colis <= 500 %}
+                                                                            {{ fp4|number_format(2, ',', ' ') }}€
+                                                                        {% elseif colis > 500 and colis <= 3000 %}
+                                                                            {{ fp5|number_format(2, ',', ' ') }}€
+                                                                        {% endif %}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th></th>
+                                                                    <th></th>
+                                                                    <th></th>
+                                                                    <th></th>
+                                                                    <th>Total de la commande</th>
+                                                                    <th></th>
+                                                                    <th>
+                                                                        {% if colis <= 20 %}
+                                                                            {{ (( purchase.total - reductotal ) + fp1)|number_format(2, ',', ' ') }}€
+                                                                        {% elseif colis > 20 and colis <= 100 %}
+                                                                            {{ (( purchase.total - reductotal ) + fp2)|number_format(2, ',', ' ') }}€
+                                                                        {% elseif colis > 100 and colis <= 250 %}
+                                                                            {{ (( purchase.total - reductotal ) + fp3)|number_format(2, ',', ' ') }}€
+                                                                        {% elseif colis > 250 and colis <= 500 %}
+                                                                            {{ (( purchase.total - reductotal ) + fp4)|number_format(2, ',', ' ') }}€
+                                                                        {% elseif colis > 500 and colis <= 3000 %}
+                                                                            {{ (( purchase.total - reductotal ) + fp5)|number_format(2, ',', ' ') }}€
+                                                                        {% endif %}
+                                                                    </th>
+                                                                </tr>
+                                                            </tfooter>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Row end -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

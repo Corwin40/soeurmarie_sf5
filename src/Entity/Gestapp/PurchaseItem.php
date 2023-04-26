@@ -2,7 +2,7 @@
 
 namespace App\Entity\Gestapp;
 
-use App\Entity\gestapp\Product;
+use App\Entity\Gestapp\Product;
 use App\Repository\Gestapp\PurchaseItemRepository;
 use Doctrine\ORM\Mapping as ORM;
 
