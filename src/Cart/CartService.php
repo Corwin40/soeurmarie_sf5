@@ -40,8 +40,8 @@ class CartService
 
         if(!array_key_exists($item, $cart)){                            // si dans le tableau panier si "Item" n'existe pas,
             $cart[$item]['Item'] = $item;
-            $cart[$item]['Qty'] = 1;                                   // alors le panier ajout 0 en quantité du panier,
             $cart[$item]['Product'] = $id;
+            $cart[$item]['Qty'] = 1;                                   // alors le panier ajout 0 en quantité du panier,
         }
 
         $this->setCart($cart);                                          // on insére en session le panier modifié
@@ -113,12 +113,13 @@ class CartService
         {
             $id = $item['Product'];
             $qty = $item['Qty'];
+            $item = $item['Item'];
             $product = $this->productRepository->find($id);
             if(!$product)
             {
                 continue;
             }
-            $detailedCart[] = new CartItem($product, $qty);
+            $detailedCart[] = new CartItem($product, $qty, $item);
         }
         return $detailedCart;
     }

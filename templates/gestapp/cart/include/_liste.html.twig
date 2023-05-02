@@ -98,7 +98,7 @@
                     </td>
                     <td>{{ qtyPrice|number_format(2, ',', ' ') }} €</td>
                     <td>
-                        <a href="{{ path('op_webapp_cart_delete', {'id': c.productId}) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Supprimer la ligne"><i class="bi bi-bag-x-fill text-danger" style="font-size: 1rem;"></i></a>
+                        <a href="{{ path('op_webapp_cart_delete', {'id': c.productId, 'item': c.item}) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Supprimer la ligne"><i class="bi bi-bag-x-fill text-danger" style="font-size: 1rem;"></i>{{ c.item }}</a>
                         <a href="" class="duplicate" style="font-size: 1rem;" data-bs-toggle="tooltip" data-bs-placement="top" title="Dupliquer votre carte"><i class="fa-duotone fa-clone"></i></a>
                     </td>
                 </tr>

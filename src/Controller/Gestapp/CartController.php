@@ -123,6 +123,7 @@ class CartController extends AbstractController
                 $cart->setCustomName($customization['name']);
                 $cart->setCustomPrice($customization['priceformat']);
                 $cart->setCustomWeight($customization['weight']);
+                $cart->setItem($d->item);
                 $cart->setUuid($session);
                 $em->persist($cart);
                 $em->flush();
@@ -143,6 +144,7 @@ class CartController extends AbstractController
                     $cart->setCustomName($customization['name']);
                     $cart->setCustomPrice($customization['priceformat']);
                     $cart->setCustomWeight($customization['weight']);
+                    $cart->setItem($d->item);
                     $cart->setUuid($session);
                     $em->persist($cart);
                     $em->flush();
@@ -202,6 +204,7 @@ class CartController extends AbstractController
                 $cart->setCustomName($customization->getName());
                 $cart->setCustomPrice($customization->getFormat()->getPriceformat());
                 $cart->setCustomWeight($customization->getFormat()->getWeight());
+                $cart->setItem($d->item);
                 $cart->setUuid($session);
                 $em->persist($cart);
                 $em->flush();
@@ -222,6 +225,7 @@ class CartController extends AbstractController
                     $cart->setCustomName($customization->getName());
                     $cart->setCustomPrice($customization->getFormat()->getPriceformat());
                     $cart->setCustomWeight($customization->getFormat()->getWeight());
+                    $cart->setItem($d->item);
                     $cart->setUuid($session);
                     $em->persist($cart);
                     $em->flush();
@@ -318,9 +322,9 @@ class CartController extends AbstractController
 
     /**
      * Supprime un produit du panier
-     * @Route("/webapp/cart/del/{id}", name="op_webapp_cart_delete", requirements={"id":"\d+"})
+     * @Route("/webapp/cart/del/{id}/{item}", name="op_webapp_cart_delete", requirements={"id":"\d+"})
      */
-    public function deleteProduct($id, ProductRepository $productRepository, CartService $cartService, EntityManagerInterface $em, CartRepository $cartRepository)
+    public function deleteProduct($id, $item, ProductRepository $productRepository, CartService $cartService, EntityManagerInterface $em, CartRepository $cartRepository)
     {
         $product = $productRepository->find($id);
 
@@ -333,13 +337,14 @@ class CartController extends AbstractController
             $em->remove($custom);
             $em->flush();
         }
+
         $carts = $cartRepository->findBy(['productId'=>$id]);
         foreach ($carts as $cart){
             $em->remove($cart);
             $em->flush();
         }
 
-        $this->cartService->remove($id);
+        $this->cartService->remove($item, $id);
         $this->addFlash("success", "le produit a bien été supprimé du panier");
 
         return $this->redirectToRoute("op_webapp_cart_showcart");
