@@ -97,15 +97,7 @@
 
             // Affichage de la condition signet/marque-page minimum 6
             const selectFormat = document.getElementById('format');
-            if (selectFormat.value == 1){
-                console.log('Ok')
-                document.getElementById('alert-commande').classList.remove('d-none')
-            }else if(selectFormat.value == 7){
-                console.log('Ok')
-                document.getElementById('alert-commande').classList.remove('d-none')
-            }else{}
-            selectFormat.addEventListener('change', function(event){
-                console.log(selectFormat.value)
+            if(selectFormat){
                 if (selectFormat.value == 1){
                     console.log('Ok')
                     document.getElementById('alert-commande').classList.remove('d-none')
@@ -113,7 +105,18 @@
                     console.log('Ok')
                     document.getElementById('alert-commande').classList.remove('d-none')
                 }else{}
-            })
+                selectFormat.addEventListener('change', function(event){
+                    console.log(selectFormat.value)
+                    if (selectFormat.value == 1){
+                        console.log('Ok')
+                        document.getElementById('alert-commande').classList.remove('d-none')
+                    }else if(selectFormat.value == 7){
+                        console.log('Ok')
+                        document.getElementById('alert-commande').classList.remove('d-none')
+                    }else{}
+                })
+            }
+
 
             // Appel de la fonction d'incrémentation d'un produit
             document.querySelectorAll('a.jsonAddCart').forEach(function (link){

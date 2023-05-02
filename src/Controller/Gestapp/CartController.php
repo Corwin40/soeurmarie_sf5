@@ -41,9 +41,34 @@ class CartController extends AbstractController
         if(!$product){
             throw $this->createNotFoundException("Le produit portant l'identifiant $id n'existe pas.");
         }
+        //dd($product);
+        $cart = $this->cartService->getCart();
+        //dd($cart);
+        if(count($cart) == 0){
+            $item = 0;
+            //dd($id);
+            $this->cartService->add($item, $id);
+        } else {
+            $item = 0;
+            $exist = 0;
+            foreach ($cart as $c){
+                //dd($c['Product']);
+                if($c['Product'] == $id){
+                    $exist = 1;
+                    $item = $c['Item'];
+                }
+            }
+            //dd($exist, $item);
+            if($exist == 0){
+                $item = array_key_last($cart)+1;
+                $this->cartService->add($item, $id);
+            }else{
+                //dd('exit :'.$exist.', item :'. $item);
+                $this->cartService->increment($item, $id);
+            }
 
-        $this->cartService->increment($id);
-
+        }
+        //dd($cart);
         $this->addFlash('success', "Le produit a bien été ajouté au panier");
 
         if($request->query->get('returnToCart')){
@@ -262,7 +287,16 @@ class CartController extends AbstractController
             throw $this->createNotFoundException("Le produit portant l'identifiant $id n'existe pas et ne peut être diminué dans le panier.");
         }
 
-        $this->cartService->decrement($id);
+        $cart = $this->cartService->getCart();
+        $item = 0;
+        foreach ($cart as $c){
+            //dd($c['Product']);
+            if($c['Product'] == $id){
+                $item = $c['Item'];
+            }
+        }
+
+        $this->cartService->decrement($item, $id);
 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
 

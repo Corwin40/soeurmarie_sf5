@@ -16,7 +16,7 @@ class CartService
         $this->productRepository = $productRepository;
     }
 
-    protected function getCart() : array
+    public function getCart() : array
     {
         return $this->session->get('cart', []);
     }
@@ -34,32 +34,45 @@ class CartService
         $this->saveCart([]);
     }
 
-    public function increment(int $id){
+    public function add(int $item, int $id){
 
-        $cart = $this->getCart();                                       // récupération du panier par le service CartService
+        $cart = $this->getCart();                                      // récupération du panier par le service CartService
 
-        if(!array_key_exists($id, $cart)){                              // si dans le tableau panier si "Id" n'existe pas,
-            $cart[$id] = 0;                                             // alors le panier ajout 0 en quantité du panier,
+        if(!array_key_exists($item, $cart)){                            // si dans le tableau panier si "Item" n'existe pas,
+            $cart[$item]['Item'] = $item;
+            $cart[$item]['Qty'] = 1;                                   // alors le panier ajout 0 en quantité du panier,
+            $cart[$item]['Product'] = $id;
         }
-        $cart[$id]++;                                                   // et automatiquement, on incrémente de 1 le produit dans le panier.
 
         $this->setCart($cart);                                          // on insére en session le panier modifié
     }
 
-    public function decrement(int $id){
+    public function increment(int $item, int $id){
+
+        $cart = $this->getCart();                                      // récupération du panier par le service CartService
+
+        if(!array_key_exists($item, $cart)){                            // si dans le tableau panier si "Item" n'existe pas,
+            return;
+        }
+
+        $cart[$item]['Qty']++;                                   // alors le panier ajout 0 en quantité du panier,
+        $this->setCart($cart);                                          // on insére en session le panier modifié
+    }
+
+    public function decrement(int $item, int $id){
 
         // On chercher dans la session si le panier existe.
         // On creer si le panier n'existe pas.
         $cart = $this->getCart();
 
-        if(!array_key_exists($id, $cart)){                              // On teste si dans le tableau panier si "Id" existe,
+        if(!array_key_exists($item, $cart)){                              // On teste si dans le tableau panier si "Id" existe,
             return;                                                     // si c'est le cas ajoute la quantité,
         } else {
-            if($cart[$id] === 1) {                                      // sinon, on ajoute 1 à l'Id dans le panier.
-                $this->remove($id);
+            if($cart[$item]['Qty'] === 1) {                                      // sinon, on ajoute 1 à l'Id dans le panier.
+                $this->remove($item);
                 return;
             }
-            $cart[$id]--;
+            $cart[$item]['Qty']--;
         $this->session->set('cart', $cart);
         }
 
@@ -96,8 +109,10 @@ class CartService
     {
         $detailedCart = [];                                           // on prépare un tableau du futur panier détaillé
 
-        foreach($this->getCart() as $id => $qty)
+        foreach($this->getCart() as $item)
         {
+            $id = $item['Product'];
+            $qty = $item['Qty'];
             $product = $this->productRepository->find($id);
             if(!$product)
             {

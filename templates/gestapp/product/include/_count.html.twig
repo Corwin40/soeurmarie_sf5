@@ -32,7 +32,7 @@ Ajout du produit au panier et personnalisation
                         </div>
                         {% if i.product.isPersonalisable == 1 %}
                         <div class="col-sm-4">
-                            <input id="name" name="name" type="text" class="form-control form-control-sm" placeholder="Personnalisez votre produit, prénom, occasion...">
+                            <input id="name" name="name" type="text" class="form-control form-control-sm" value="{{ customizes.name }}" placeholder="Personnalisez votre produit, prénom, occasion...">
                         </div>
                         {% endif %}
                         <input id="sessid" name="sessid" type="hidden" value="{{ session }}">
