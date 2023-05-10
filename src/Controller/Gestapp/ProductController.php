@@ -648,32 +648,42 @@ class ProductController extends AbstractController
 
     /**
      * Mise à jor de la position du produit
-     * @Route("/gestapp/product/updateposition/{idcol}/{key}", name="op_gestapp_product_updateposition", methods={"POST"})
+     * @Route("/gestapp/product/updateposition/{idcategory}", name="op_gestapp_product_updateposition", methods={"POST"})
      */
     public function updateposition(
         ProductRepository $productRepository,
         ProductCategoryRepository $productCategoryRepository,
-        $idcol,
-        $key,
-        EntityManagerInterface $em
+        $idcategory,
+        EntityManagerInterface $em,
+        Request $request
     )
     {
-        // récupérer le produit correspondant à l'id
-        $product = $productRepository->findOneBy(['position' => $idcol]);
-        // Créer une position - Nat/Cat/pos
-        // on construit la position selon la nature et les catégories
-        $idnature = $product->getProductNature()->getId();
-        $idcat = $product->getProductCategory()->getId();
-
-        $position = $idnature.'-'.$idcat.'-'.$key;
-        // Fixation de la nouvelle position
-        $product->setPosition($position);
-        $em->persist($product);
+        // récupération des positions
+        $data = json_decode($request->getContent(), true);
+        //dd($idcategory);
+        foreach ($data as $d){
+            // récupérer le doc correspondant à la position
+            $prod = $em->getRepository(Product::class)->findOneBy(['position' => $d['idcol']]);
+            //dd($prod);
+            $idnature = $prod->getProductNature()->getId();
+            $idcat = $prod->getProductCategory()->getId();
+            $position = $d['key'];
+            // Fixation de la nouvelle position
+            $prod->setPosition($position);
+            // mettre à jour la bdd
+            $em->persist($prod);
+        }
         $em->flush();
+
+        $products = $em->getRepository(Product::class)->findBy(['ProductCategory' => $idcategory]);
+        //dd($products);
 
         return $this->json([
             'code'=> 200,
-            'message' => "Les produits ont été correctement déplacés."
+            'message' => "Les produits ont été correctement déplacés.",
+            'liste'         => $this->renderView('gestapp/product/include/_liste.html.twig', [
+                'products' => $products
+            ])
         ], 200);
     }
 }

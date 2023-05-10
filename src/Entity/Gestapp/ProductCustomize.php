@@ -38,6 +38,11 @@ class ProductCustomize
      */
     private $format;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $item;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -93,5 +98,17 @@ class ProductCustomize
 
     public function __toString(){
         return $this->name;
+    }
+
+    public function getItem(): ?int
+    {
+        return $this->item;
+    }
+
+    public function setItem(int $item): self
+    {
+        $this->item = $item;
+
+        return $this;
     }
 }

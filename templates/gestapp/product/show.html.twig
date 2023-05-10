@@ -21,13 +21,13 @@
             function BtnAddCart(event){
                 event.preventDefault()
                 const urladdcart = this.href
-                const url2 = document.getElementById('CustomizeProduct').action
+                const url2 = document.getElementById('CustomizeProduct').action                 // enregistrement de la personalisation ProductCustomize
                 const formdata = new FormData(document.getElementById('CustomizeProduct'))
                 const data =  JSON.stringify(Object.fromEntries(formdata));
+
+                // Soumettre l'ajout au panier du produit plus les personnalisations du produit
                 axios
-                    .post(url2, data)
-                axios
-                    .post(urladdcart)
+                    .post(urladdcart, data)
                     .then(function(response) {
                         const liste = document.getElementById('count').innerHTML=response.data.count;
                         const lipanier = document.getElementById('li_panier').innerHTML = response.data.lipanier

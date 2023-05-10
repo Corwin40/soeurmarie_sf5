@@ -170,24 +170,29 @@
                 // Called by any change to the list (add / update / remove)
                 onSort: function (event) {
                     let cols = sortablePhoto.children
+                    //console.log(cols)
+                    let data = Array()
+                    let idcategory = document.getElementById('category').value
                     // on boucle sur le résultat des enfants pour envoyer au controller la modification du positionnement des produits de la page
                     for(i = 0; i < cols.length; i++){
                         let idcol = cols[i].id
+                        //console.log(idcol)
                         let key = i + 1
-                        let url = "/gestapp/product/updateposition/" + idcol + "/" + key
-                        axios
-                            .post(url)
-                            .catch(function(error){
-                                console.log(error);
-                            })
+                        data.push({"key" : key, "idcol" : idcol})
                     }
-                    let urlfiltercategory = '/admin/product/oneCat/' + idcategory
+                    let url = "/gestapp/product/updateposition/" + idcategory
                     axios
-                        .get(urlfiltercategory)
+                        .post(url, data)
                         .then(function(response){
-                            // rafraichissement du tableau
-                            const liste = document.getElementById('liste').innerHTML = response.data.liste
-                            const category = document.getElementById('category').value = idcategory
+                            const liste = document.getElementById('liste').innerHTML = response.data.liste;
+                            // initialisation du toaster bootstrap
+                            var toastHTMLElement = document.getElementById("toaster");
+                            var message = response.data.message;
+                            var toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
+                            toastBody.textContent = message;
+                            var toastElement = new bootstrap.Toast(toastHTMLElement, {animation: true, autohide: true, delay: 3000});
+                            toastElement.show();
+
                             // Appel de la fonction de mise en ligne du produit lors d'un clic
                             document.querySelectorAll('a.js-online').forEach(function (link){
                                 link.addEventListener('click', onClickBtnOnLine);
@@ -204,6 +209,7 @@
                             document.querySelectorAll('a.filtercategory').forEach(function(link){
                                 link.addEventListener('click', filtercategory)
                             })
+
                         })
                         .catch(function(error){
                             console.log(error);
