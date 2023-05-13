@@ -206,6 +206,7 @@ class CartController extends AbstractController
             $cart->setproductCategory($product->getProductCategory());
             $cart->setProductQty($d->qty);
             $cart->setProductRef($product->getRef());
+            $cart->setCustomId($customization->getId());
             $cart->setCustomIdformat($customization->getFormat()->getId());
             $cart->setCustomFormat($customization->getFormat()->getName());
             $cart->setCustomName($customization->getName());

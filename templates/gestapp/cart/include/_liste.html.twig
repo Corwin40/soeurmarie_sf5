@@ -25,7 +25,7 @@
     {% endif %}
 
     <section id="listCart">
-        {% if QtySigMarq < 6 %}
+        {% if (QtySigMarq < 0) and (QtySigMarq < 6) %}
         <div class="row">
             <div class="col-12">
                 <p class="alert alert-warning">
@@ -68,7 +68,7 @@
                     <td>
                         {% set selected = 'selected' %}
                         {% set format = c.customFormat %}
-                        <form id="CustomizeProduct" action="{{ path('op_gestapp_product_customize_edit', {'id':c.productid}) }}?cart=true" class="row row-cols g-1 align-items-center">
+                        <form id="CustomizeProduct" action="{{ path('op_gestapp_product_customize_edit', {'id':c.customId}) }}?cart=true" class="row row-cols g-1 align-items-center">
                             <table class="table table-borderless" style="margin: 0;">
                                 <tr class="align-middle">
                                     <td class="col-5">
@@ -84,7 +84,7 @@
                                         {% endif %}
                                     </td>
                                     <td class="col-2">
-
+                                        <button class="btn btn-sm FormCustomization" data-bs-toggle="tooltip" data-bs-placement="top" title="Modifier les personnalisations"><i class="fa-solid fa-check"></i></button>
                                     </td>
                                 </tr>
                             </table>

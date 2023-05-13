@@ -34,6 +34,7 @@ class CartConfirmationType extends AbstractType
             ])
             ->add('complement', TextType::class, [
                 'label' => 'Adresse',
+                'required' => false,
                 'attr' => [
                     'placeholder' => 'Adresse de livraison',
                 ]
@@ -52,6 +53,7 @@ class CartConfirmationType extends AbstractType
             ])
             ->add('phoneContact', TextType::class, [
                 'label' => "Contact téléphonique en cas d'abscence",
+                'required' => false,
                 'attr' => [
                     'placeholder' => '00.00.00.00.00',
                 ]
