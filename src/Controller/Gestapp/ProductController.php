@@ -114,7 +114,7 @@ class ProductController extends AbstractController
      */
     public function show(Product $product, Request $request, EntityManagerInterface $em): Response
     {
-        $session = $request->getSession()->get('name_uuid');
+        $uuid = $this->get('session')->getId();
         // On teste si le panier existe en session
         $cart = $request->getSession()->get('cart');
 
@@ -122,42 +122,22 @@ class ProductController extends AbstractController
             //dd($cart);
             // récupération des items du panier
             $detailedCart = $this->cartService->getDetailedCartItem();
-            //dd($detailedCart);
-            $productCustomize = $em->getRepository(ProductCustomize::class)->findOneBy(array('product' => $product->getId()), array('id'=>'DESC'));
-            // Dans le cas ou le panier existe et contient un produit
-            if(!$productCustomize){
-                $lsformats = $product->getFormats();
-                $format = $lsformats[0];
-                // création d'une personnalisation du produit
-                $productCustomize = new ProductCustomize();
-                $productCustomize->setUuid($session);
-                $productCustomize->setName('');
-                $productCustomize->setProduct($product);
-                $productCustomize->setFormat($format);
-                $em->persist($productCustomize);
-                $em->flush();
 
-                return $this->render('gestapp/product/show.html.twig', [
-                    'product' => $product,
-                    'session' => $session,
-                    'items' => $detailedCart,
-                    'customizes' => $productCustomize
-                ]);
-            }
-
+            $productCustomizes = $em->getRepository(ProductCustomize::class)->findBy(array('product' => $product->getId()), array('id'=>'DESC'));
+            //dd($productCustomizes);
 
             // On retourne la vue du produit avec les éléments du panier
             return $this->render('gestapp/product/show.html.twig', [
                 'product' => $product,
                 'items' => $detailedCart,
-                'session' => $session,
-                'customizes' => $productCustomize
+                'session' => $uuid,
+                'customizes' => $productCustomizes
             ]);
         }
 
         return $this->render('gestapp/product/show.html.twig', [
             'product' => $product,
-            'session' => $session
+            'session' => $uuid
         ]);
     }
 

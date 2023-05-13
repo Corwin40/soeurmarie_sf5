@@ -23,11 +23,13 @@ class CartController extends AbstractController
 {
     protected $productRepository;
     protected $cartService;
+    private $customizeRepository;
 
-    public function __construct(ProductRepository $productRepository, CartService $cartService)
+    public function __construct(ProductRepository $productRepository, CartService $cartService, ProductCustomizeRepository $customizeRepository)
     {
         $this->productRepository = $productRepository;
         $this->cartService = $cartService;
+        $this->customizeRepository = $customizeRepository;
     }
 
     /**
@@ -35,6 +37,8 @@ class CartController extends AbstractController
      */
     public function cart($id, Request $request, EntityManagerInterface $em): Response
     {
+        $parametres = $request->query->all();
+
         // Récupération de l'objet produit
         $product = $this->productRepository->find($id);
         // teste si le produit existe dans la liste de produit.
@@ -44,49 +48,55 @@ class CartController extends AbstractController
 
         // Récupération des données du formulaire "ProductCustomize" et intégration dans la table
         $data = json_decode($request->getContent(), true);
-        $idformat = $data['format'];
-        $sessid = $this->get('session')->getId();
+        // On teste la présence du formulaire de personnalisation
+        if($data){
+            $idformat = $data['format'];
+            $sessid = $this->get('session')->getId();
 
-        if(isset($data['name'])){
-            $name = $data['name'];
-        }else{
-            $name = '';
+            if(isset($data['name'])){
+                $name = $data['name'];
+            }else{
+                $name = '';
+            }
+
+            $format = $em->getRepository(productFormat::class)->find($idformat);
+
+            // initialisation de la table ProductCustomize
+            $productCustomize = new ProductCustomize();
+
+            $productCustomize->setName($name);
+            $productCustomize->setFormat($format);
+            $productCustomize->setUuid($sessid);
+            $productCustomize->setProduct($product);
+
+            $CustomizeName = $productCustomize->getName();
+            $CustomizeFormat = $productCustomize->getFormat()->getId();
+            $CustomizeUuid = $productCustomize->getUuid();
         }
 
-        $format = $em->getRepository(productFormat::class)->find($idformat);
-
-        // initialisation de la table ProductCustomize
-        $productCustomize = new ProductCustomize();
-
-        $productCustomize->setName($name);
-        $productCustomize->setFormat($format);
-        $productCustomize->setUuid($sessid);
-        $productCustomize->setProduct($product);
-
-        $CustomizeName = $productCustomize->getName();
-        $CustomizeFormat = $productCustomize->getFormat()->getId();
-        $CustomizeUuid = $productCustomize->getUuid();
-
-
         $cart = $this->cartService->getCart();
+        // CONDITION :
+        // Si le panier est vide : item à 0 et on ajoute la personnalisation
+        // Sinon on boucle sur le panier pour identifier si un produit existe parmi les items.
         if(count($cart) == 0){
             $item = 0;
-            //dd($id);
             $productCustomize->setItem($item);
             $em->persist($productCustomize);
             $em->flush();
             $this->cartService->add($item, $product, $productCustomize);
-        } else {
+        }
+        else {
             $item = 0;
             $exist = 0;
             foreach ($cart as $c){
-                //dd($c['Product']);
                 if($c['ProductId'] == $id){
                     $exist = 1;
                     $item = $c['Item'];
                 }
             }
-            //dd($exist, $item);
+            // CONDITION :
+            // Si le produit est absent : on l'ajoute au panier avec sa personnalisation.
+            // Si le prdoduit existe : on récupère sa personnalisation et on incrémente la quantité
             if($exist == 0){
                 $item = array_key_last($cart)+1;
                 $productCustomize->setItem($item);
@@ -94,11 +104,23 @@ class CartController extends AbstractController
                 $em->flush();
                 $this->cartService->add($item, $product, $productCustomize);
             }else{
-                //dd('exit :'.$exist.', item :'. $item);
-                $productCustomize->setItem($item);
-                $em->persist($productCustomize);
-                $em->flush();
-                $this->cartService->increment($item, $product, $productCustomize);
+                if($request->query->has('item')){
+
+                    // Récupération de la personnalisation
+                    $uuid = $this->get('session')->getId();
+                    $parametres = $request->query->all();
+                    $Customize = $this->customizeRepository->findCart($id, $uuid, intval($parametres['item']));
+                    $CustomizeObject = $this->customizeRepository->find($Customize['id']);
+                    $this->cartService->increment(intval($parametres['item']), $product, $CustomizeObject);
+                }else{
+                    // Récupération de la personnalisation
+                    $uuid = $this->get('session')->getId();
+                    $Customize = $this->customizeRepository->findCart($id, $uuid, $item);
+                    $CustomizeObject = $this->customizeRepository->find($Customize['id']);
+                    //dd($CustomizeObject);
+                    $this->cartService->increment($item, $product, $CustomizeObject);
+                }
+
             }
 
         }
@@ -119,97 +141,27 @@ class CartController extends AbstractController
     }
 
     /**
-     * @Route("/gestapp/cart/dulicate/{id}", name="op_webapp_cart_duplicate", requirements={"id":"\d+"})
+     * @Route("/gestapp/cart/duplicate/{id}/{uuid}/{item}", name="op_webapp_cart_duplicate", requirements={"id":"\d+"})
      */
-    public function duplicate($id, Request $request, EntityManagerInterface $em, ProductCustomizeRepository $productCustomizeRepository, CartRepository $cartRepository): Response
+    public function duplicate($id, $uuid, $item, Request $request, EntityManagerInterface $em, ProductCustomizeRepository $productCustomizeRepository, CartRepository $cartRepository): Response
     {
-        // Récupération de l'objet produit
         $product = $this->productRepository->find($id);
-
-        // teste si le produit existe dans la liste de produit.
-        if(!$product){
-            throw $this->createNotFoundException("Le produit portant l'identifiant $id n'existe pas.");
-        }
-
+        // 1. Création dun nouvel item pour le panier
         $cart = $this->cartService->getCart();
-        $item = array_key_last($cart)+1;
-        $this->cartService->add($item, $id);
+        $newitem = array_key_last($cart)+1;
+        $Customize = $this->customizeRepository->findCart($id, $uuid, $item);
+        $CustomizeObject = $this->customizeRepository->find($Customize['id']);
+        // 2. Duplication de la personnalisation
+        $newCustomizeObject = Clone($CustomizeObject);
+        $newCustomizeObject->setName("");
+        $newCustomizeObject->setItem($newitem);
+        $em->persist($newCustomizeObject);
+        $em->flush();
 
-        /** Pour l'ajout de la livraison **/
-        $form = $this->createForm(CartConfirmationType::class);
+        // 4. On ajoute le produit dupliqué directement dans le panier
+        $this->cartService->add($newitem, $product, $CustomizeObject);
 
-        //Récupération de l'id de session et des personnalisation
-        $user = $this->getUser();
-        $session = $this->get('session')->getId();
-
-        $detailedCart = $this->cartService->getDetailedCartItem();
-
-        //dd($detailedCart);
-
-        foreach ($detailedCart as $d){
-            // Construction des éléments nécessaire au panier
-            $product = $d->product;
-            $customization = $productCustomizeRepository->findLastProductCustomize($product->getId());
-            $customidprod = $customization['uuid'];
-            $uuid = $cartRepository->findOneBy(['uuid'=> $session], ['id'=> 'DESC']);
-
-            if(!$uuid){
-                $cart = new Cart();
-                $cart->setProductId($product->getId());
-                $cart->setProduct($product);
-                $cart->setProductName($product->getName());
-                $cart->setProductNature($product->getProductNature());
-                $cart->setproductCategory($product->getProductCategory());
-                $cart->setProductQty($d->qty);
-                $cart->setProductRef($product->getRef());
-                $cart->setCustomIdformat($customization['idformat']);
-                $cart->setCustomFormat($customization['format']);
-                $cart->setCustomName($customization['name']);
-                $cart->setCustomPrice($customization['priceformat']);
-                $cart->setCustomWeight($customization['weight']);
-                $cart->setItem($d->item);
-                $cart->setUuid($session);
-                $em->persist($cart);
-                $em->flush();
-            }else{
-                $cartproduct = $uuid->getProductId();
-                if($customidprod != $cartproduct)
-                {
-                    $cart = new Cart();
-                    $cart->setProductId($product->getId());
-                    $cart->setProduct($product);
-                    $cart->setProductName($product->getName());
-                    $cart->setProductNature($product->getProductNature());
-                    $cart->setproductCategory($product->getProductCategory());
-                    $cart->setProductQty($d->qty);
-                    $cart->setProductRef($product->getRef());
-                    $cart->setCustomIdformat($customization['idformat']);
-                    $cart->setCustomFormat($customization['format']);
-                    $cart->setCustomName($customization['name']);
-                    $cart->setCustomPrice($customization['priceformat']);
-                    $cart->setCustomWeight($customization['weight']);
-                    $cart->setItem($d->item);
-                    $cart->setUuid($session);
-                    $em->persist($cart);
-                    $em->flush();
-                }
-            }
-        }
-        $carts = $cartRepository->findBy(['uuid'=> $session]);
-        $cartspanel = $carts;
-        foreach($carts as $cart){
-            $em->remove($cart);
-            $em->flush();
-        }
-
-        //dd($cartspanel);
-
-        return $this->render('gestapp/cart/index.html.twig', [
-            'carts' => $cartspanel,
-            'session' => $session,
-            'user' => $user,
-            'confirmationForm' => $form->createView()
-        ]);
+        return $this->redirectToRoute('op_webapp_cart_showcartjson');
     }
 
     /**
@@ -227,7 +179,7 @@ class CartController extends AbstractController
 
         $detailedCart = $this->cartService->getDetailedCartItem();
 
-        //dd($session);
+        //dd($detailedCart);
 
         foreach ($detailedCart as $d){
             //dd($d);
@@ -235,25 +187,34 @@ class CartController extends AbstractController
             $product = $d->product;
             $customization = $d->productCustomize;
 
-            if($session == $customization->getUuid()){
-                $cart = new Cart();
-                $cart->setProductId($product->getId());
-                $cart->setProduct($product);
-                $cart->setProductName($product->getName());
-                $cart->setProductNature($product->getProductNature());
-                $cart->setproductCategory($product->getProductCategory());
-                $cart->setProductQty($d->qty);
-                $cart->setProductRef($product->getRef());
-                $cart->setCustomIdformat($customization->getFormat()->getId());
-                $cart->setCustomFormat($customization->getFormat()->getName());
-                $cart->setCustomName($customization->getName());
-                $cart->setCustomPrice($customization->getFormat()->getPriceformat());
-                $cart->setCustomWeight($customization->getFormat()->getWeight());
-                $cart->setItem($d->item);
-                $cart->setUuid($customization->getUuid());
-                $em->persist($cart);
+            //dd($session, $customization->getUuid());
+
+            if($session != $customization->getUuid()){
+                $customization->setUuid($session);
+                $em->persist($customization);
                 $em->flush();
+                $this->cartService->updateUuid($d->item, $customization);
             }
+
+            //dd($session, $customization, $this->cartService->getCart());
+
+            $cart = new Cart();
+            $cart->setProductId($product->getId());
+            $cart->setProduct($product);
+            $cart->setProductName($product->getName());
+            $cart->setProductNature($product->getProductNature());
+            $cart->setproductCategory($product->getProductCategory());
+            $cart->setProductQty($d->qty);
+            $cart->setProductRef($product->getRef());
+            $cart->setCustomIdformat($customization->getFormat()->getId());
+            $cart->setCustomFormat($customization->getFormat()->getName());
+            $cart->setCustomName($customization->getName());
+            $cart->setCustomPrice($customization->getFormat()->getPriceformat());
+            $cart->setCustomWeight($customization->getFormat()->getWeight());
+            $cart->setItem($d->item);
+            $cart->setUuid($customization->getUuid());
+            $em->persist($cart);
+            $em->flush();
         }
         $carts = $cartRepository->findBy(['uuid'=> $session]);
         $cartspanel = $carts;
@@ -396,17 +357,20 @@ class CartController extends AbstractController
         }
 
         $cart = $this->cartService->getCart();
-        $item = 0;
-        foreach ($cart as $c){
-            //dd($c['Product']);
-            if($c['Product'] == $id){
-                $item = $c['Item'];
+
+        if($request->query->has('item')){
+            $parametres = $request->query->all();
+            $this->cartService->decrement(intval($parametres['item']), $id);
+        }else{
+            $item = 0;
+            foreach ($cart as $c){
+                //dd($c['Product']);
+                if($c['ProductId'] == $id){
+                    $item = $c['Item'];
+                }
             }
+            $this->cartService->decrement($item, $id);
         }
-
-        $this->cartService->decrement($item, $id);
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
 
         $this->addFlash('success', "Le produit a bien été diminué dans le panier.");
 
@@ -426,30 +390,18 @@ class CartController extends AbstractController
 
     /**
      * Supprime un produit du panier
-     * @Route("/webapp/cart/del/{id}/{item}", name="op_webapp_cart_delete", requirements={"id":"\d+"})
+     * @Route("/webapp/cart/del/{id}/{uuid}/{item}", name="op_webapp_cart_delete", requirements={"id":"\d+"})
      */
-    public function deleteProduct($id, $item, ProductRepository $productRepository, CartService $cartService, EntityManagerInterface $em, CartRepository $cartRepository)
+    public function deleteProduct($id, $item, $uuid, ProductRepository $productRepository, CartService $cartService, EntityManagerInterface $em)
     {
-        $product = $productRepository->find($id);
 
-        if(!$product){
-            throw $this->createNotFoundException("Le produit $id n'existe pas et ne peut pas être supprimé !");
-        }
+        $Customize = $this->customizeRepository->findCart($id, $uuid, $item);
+        $CustomizeObject = $this->customizeRepository->find($Customize['id']);
 
-        $listcustoms = $em->getRepository(ProductCustomize::class)->findBy(array('product'=>$id));
-        foreach ($listcustoms as $custom){
-            $em->remove($custom);
-            $em->flush();
-        }
+        $em->remove($CustomizeObject);
+        $em->flush();
 
-        $carts = $cartRepository->findBy(['productId'=>$id]);
-        foreach ($carts as $cart){
-            $em->remove($cart);
-            $em->flush();
-        }
-
-        $this->cartService->remove($item, $id);
-        $this->addFlash("success", "le produit a bien été supprimé du panier");
+        $this->cartService->remove($item, $id, $uuid);
 
         return $this->redirectToRoute("op_webapp_cart_showcart");
 

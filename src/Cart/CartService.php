@@ -83,10 +83,17 @@ class CartService
         $this->setCart($cart);
     }
 
-    public function remove(int $id)
+    public function updateUuid(int $item, $uuid)
     {
         $cart = $this->getCart();
-        unset($cart[$id]);
+        $cart[$item]['CustomizeUuid'] = $uuid->getUuid();
+        $this->setCart($cart);
+    }
+
+    public function remove(int $item, int $id, $uuid)
+    {
+        $cart = $this->getCart();
+        unset($cart[$item]);
 
         $this->setCart($cart);
     }
@@ -115,24 +122,23 @@ class CartService
 
         foreach($this->getCart() as $item)
         {
-            //dd(gettype($item['ProductId']));
             $id = $item['ProductId'];
             $uuid = $item['CustomizeUuid'];
             $qty = $item['Qty'];
             $item = $item['Item'];
 
             $product = $this->productRepository->find($id);
-            $Customize = $this->customizeRepository->findCart($id, $uuid, $item);
-            $productCustomize = $this->customizeRepository->find($Customize['id']);
             if(!$product)
             {
                 continue;
             }
+
+            $Customize = $this->customizeRepository->findCart($id, $uuid, $item);
+            $productCustomize = $this->customizeRepository->find($Customize['id']);
+
             $detailedCart[] = new CartItem($product, $qty, $item, $productCustomize);
+            //dd($detailedCart);
         }
         return $detailedCart;
     }
-
-
-
 }

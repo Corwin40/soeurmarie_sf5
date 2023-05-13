@@ -5,18 +5,13 @@ Ajout du produit au panier et personnalisation
 
 {# On test l'existence du panier et on affiche les informations concernant le produit sélectionné #}
 {% if app.session.get('cart') is not empty %}
-
+        <div class="row">
+            <div class="col-12">
+                <p>Plusieurs format sont disponibles, n'oubliez pas de préciser celui que vous souhaitez avant de cliquer sur "Ajouter au panier".</p>
+            </div>
+        </div>
     {# on filtre les occurences du panier sur les items ayant le même id produit #}
     {% for i in items|filter(i => i.product.id == product.id) %}
-
-    {% if i.product.formats|length > 1 %}
-    <div class="row">
-        <div class="col-12">
-            <p>Plusieurs format sont disponibles, n'oubliez pas de préciser celui que vous souhaitez avant de cliquer sur "Ajouter au panier".</p>
-        </div>
-    </div>
-    {% endif %}
-
     <div class="row justify-content-between align-items-center">
             <div class="col-9">
                 <form id="CustomizeProduct" action="{{ path('op_gestapp_product_customize_edit', {'id':i.product.id}) }}">
@@ -26,24 +21,25 @@ Ajout du produit au panier et personnalisation
                         <div class="col-sm-3">
                             <select class="form-select form-select-sm" name="format" id="formatedit">
                             {% for f in i.product.formats %}
-                                <option value="{{ f.id }}" {% if f.id == customizes.format.id %}selected="selected"{%endif%}>{{ f.name }}</option>
+                                <option value="{{ f.id }}" {% if f.id == i.productCustomize.format.id %}selected="selected"{%endif%}>{{ f.name }}</option>
                             {% endfor %}
                             </select>
                         </div>
                         {% if i.product.isPersonalisable == 1 %}
                         <div class="col-sm-4">
-                            <input id="name" name="name" type="text" class="form-control form-control-sm" value="{{ customizes.name }}" placeholder="Personnalisez votre produit, prénom, occasion...">
+                            <input id="name" name="name" type="text" class="form-control form-control-sm" value="{{ i.productCustomize.name }}" placeholder="Personnalisez votre produit, prénom, occasion...">
                         </div>
                         {% endif %}
                         <input id="sessid" name="sessid" type="hidden" value="{{ session }}">
                     </div>
+
                 </form>
             </div>
             <div class="col-3">
                 <div class="btn-group btn-group-sm" role="group" aria-label="Basic mixed styles example">
-                    <a type="button" class="js-increment btn btn-outline-sm" href="{{ path('op_webapp_cart_add', {'id': product.id}) }}?showproduct=true"><i class="bi bi-plus-circle"></i></a>
+                    <a type="button" class="js-increment btn btn-outline-sm" href="{{ path('op_webapp_cart_add', {'id': product.id}) }}?showproduct=true&item={{ i.item }}"><i class="bi bi-plus-circle"></i></a>
                     <button type="button" class="btn btn-outline-sm">&nbsp{{ i.qty }}&nbsp</button>
-                    <a type="button" class="js-decrement btn btn-outline-sm" href="{{ path('op_webapp_cart_decrement', {'id': product.id}) }}?showproduct=true"><i class="bi bi-dash-circle"></i></a>
+                    <a type="button" class="js-decrement btn btn-outline-sm" href="{{ path('op_webapp_cart_decrement', {'id': product.id}) }}?showproduct=true&item={{ i.item }}"><i class="bi bi-dash-circle"></i></a>
                 </div>
             </div>
             <div id="alert-commande" class="col-12 mt-2 d-none">

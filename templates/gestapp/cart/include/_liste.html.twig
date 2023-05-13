@@ -25,7 +25,6 @@
     {% endif %}
 
     <section id="listCart">
-        {% for c in carts|filter(carts => carts.customIdformat == 1 or carts.customFormat == 7) %}
         {% if QtySigMarq < 6 %}
         <div class="row">
             <div class="col-12">
@@ -35,7 +34,6 @@
             </div>
         </div>
         {% endif %}
-        {% endfor %}
         <table class="table align-middle">
             <thead>
             <tr>
@@ -98,14 +96,14 @@
                         {{ c.customPrice|number_format(2, ',', ' ') }} € /  {{ c.customFormat }}
                     </td>
                     <td>
-                        <a class="js-increment" href="{{ path('op_webapp_cart_add', {'id': c.productId}) }}?returnToCart=true"><i class="bi bi-plus-circle text-secondary"></i></a>
+                        <a class="js-increment" href="{{ path('op_webapp_cart_add', {'id': c.productId}) }}?returnToCart=true&item={{ c.item }}"><i class="bi bi-plus-circle text-secondary"></i></a>
                         {{ c.productQty }}
-                        <a class="js-decrement" href="{{ path('op_webapp_cart_decrement', {'id': c.productId}) }}?returnToCart=true"><i class="bi bi-dash-circle text-secondary"></i></a>
+                        <a class="js-decrement" href="{{ path('op_webapp_cart_decrement', {'id': c.productId}) }}?returnToCart=true&item={{ c.item }}"><i class="bi bi-dash-circle text-secondary"></i></a>
                     </td>
                     <td>{{ qtyPrice|number_format(2, ',', ' ') }} €</td>
                     <td>
-                        <a href="{{ path('op_webapp_cart_delete', {'id': c.productId, 'item': c.item}) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Supprimer la ligne"><i class="bi bi-bag-x-fill text-danger" style="font-size: 1rem;"></i></a>
-                        <a href="{{ path('op_webapp_cart_duplicate', {'id': c.productId}) }}" class="duplicate" style="font-size: 1rem;" data-bs-toggle="tooltip" data-bs-placement="top" title="Dupliquer votre carte"><i class="fa-duotone fa-clone"></i></a>
+                        <a href="{{ path('op_webapp_cart_delete', {'id': c.productId, 'uuid': c.uuid, 'item': c.item}) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Supprimer la ligne"><i class="bi bi-bag-x-fill text-danger" style="font-size: 1rem;"></i></a>
+                        <a href="{{ path('op_webapp_cart_duplicate', {'id': c.productId, 'uuid': c.uuid,'item': c.item}) }}" class="duplicate" style="font-size: 1rem;" data-bs-toggle="tooltip" data-bs-placement="top" title="Dupliquer votre carte"><i class="fa-duotone fa-clone"></i></a>
                     </td>
                 </tr>
             {% endfor %}
