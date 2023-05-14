@@ -98,6 +98,11 @@ class Cart
      */
     private $item;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $customId;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -291,6 +296,18 @@ class Cart
     public function setItem(int $item): self
     {
         $this->item = $item;
+
+        return $this;
+    }
+
+    public function getCustomId(): ?int
+    {
+        return $this->customId;
+    }
+
+    public function setCustomId(?int $customId): self
+    {
+        $this->customId = $customId;
 
         return $this;
     }

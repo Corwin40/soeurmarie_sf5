@@ -2,9 +2,10 @@
 
 namespace App\Controller\Gestapp;
 
-use App\Entity\Gestapp\Product;
 use App\Entity\Gestapp\ProductCustomize;
+use App\Entity\Gestapp\Product;
 use App\Entity\Gestapp\productFormat;
+use App\Repository\Gestapp\ProductCustomizeRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -57,11 +58,11 @@ class ProductCustomizeController extends AbstractController
      * Envoie en Json - Réponse en Json
      * @Route("/gestapp/product/customize/edit/{id}", name="op_gestapp_product_customize_edit")
      */
-    public function edit(Request $request, Product $product, EntityManagerInterface $em)
+    public function edit(ProductCustomize $productCustomize, Request $request)
     {
-        // récupération des données du formaulaire ProductCustomize et intégration dans la table
-        $data = json_decode($request->getContent(), true);
-        //dd($data);
+        dd($request->getContent());
+
+
         $idformat = $data['format'];
         $sessid = $this->get('session')->getId();
 

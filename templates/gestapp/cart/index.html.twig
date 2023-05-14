@@ -1,7 +1,5 @@
 {% extends 'base.html.twig' %}
 
-
-
 {% block javascripts %}
     {{ parent() }}
 <script type="text/javascript">
@@ -30,13 +28,37 @@
         };
 
         // Edition de la personnalisation d'un produit
-        function customEdit(){
-            let urlForm = document.getElementById('CustomizeProduct').action
-            let formdata = new FormData(document.getElementById('CustomizeProduct'))
-            let data =  JSON.stringify(Object.fromEntries(formdata));
+        function customEdit(event){
+            event.preventDefault()
+            let formCustom = this.parentElement.parentElement.parentElement.parentElement.parentElement
+            let urlCustom = formCustom.action
+            let formCustomdata = new FormData(formCustom)
             axios
-                .post(urlForm, data)
-            document.getElementById("formatedit").addEventListener("change", customEdit);
+                .post(urlCustom, formCustomdata)
+                .then(function(response){
+                    // Rafraichissement du tableau "liste"
+                    const liste = document.getElementById('liste').innerHTML = response.data.liste;
+                    // Appel de la fonction d'incrémentation d'un produit
+                    document.querySelectorAll('a.js-increment').forEach(function (link){
+                        link.addEventListener('click', onClickBtnIncrement);
+                    })
+                    // Appel de la fonction de décrementation d'un produit
+                    document.querySelectorAll('a.js-decrement').forEach(function (link){
+                        link.addEventListener('click', onClickBtnDecrement);
+                    })
+                    // Création de l'évènement pour la confirmation de la commande
+                    document.querySelectorAll('a.confPurchase').forEach(function (link){
+                        link.addEventListener('click', BtnConfPurchase);
+                    })
+                    // Appel de la fonction de duplication d'un produit
+                    document.querySelectorAll('a.duplicate').forEach(function (link){
+                        link.addEventListener('click', onClickDuplicate);
+                    })
+                    // Appel de la fonction de duplication d'un produit
+                    document.querySelectorAll('button.FormCustomization').forEach(function (link){
+                        link.addEventListener('click', customEdit);
+                    })
+                })
         }
 
         // Construction de la fonction de confirmation de la commande
@@ -58,25 +80,26 @@
                 .then(function(response) {
                     // Rafraichissement du tableau "liste"
                     const liste = document.getElementById('liste').innerHTML = response.data.liste;
-                    // Remise en place des évènements sur la page
+                    // Appel de la fonction d'incrémentation d'un produit
                     document.querySelectorAll('a.js-increment').forEach(function (link){
                         link.addEventListener('click', onClickBtnIncrement);
                     })
+                    // Appel de la fonction de décrementation d'un produit
                     document.querySelectorAll('a.js-decrement').forEach(function (link){
                         link.addEventListener('click', onClickBtnDecrement);
+                    })
+                    // Création de l'évènement pour la confirmation de la commande
+                    document.querySelectorAll('a.confPurchase').forEach(function (link){
+                        link.addEventListener('click', BtnConfPurchase);
                     })
                     // Appel de la fonction de duplication d'un produit
                     document.querySelectorAll('a.duplicate').forEach(function (link){
                         link.addEventListener('click', onClickDuplicate);
                     })
-                    // mise en place de l'alerte
-                    var alertHTMLElement = document.getElementById("alertMessage");
-                    console.log(alertHTMLElement);
-                    var message = response.data.message;
-                    var alertBody = alertHTMLElement.querySelector('.alert-content') // selection de l'élément possédant le message
-                    alertBody.textContent = message;
-                    var alertElement = new bootstrap.Alert(alertHTMLElement);
-                    alertElement.show();
+                    // Appel de la fonction de duplication d'un produit
+                    document.querySelectorAll('button.FormCustomization').forEach(function (link){
+                        link.addEventListener('click', customEdit);
+                    })
                 });
         }
 
@@ -90,25 +113,26 @@
                 .then(function(response) {
                     // Rafraichissement du tableau "liste"
                     const liste = document.getElementById('liste').innerHTML = response.data.liste;
-                    // Remise en place des évènements sur la page
+                    // Appel de la fonction d'incrémentation d'un produit
                     document.querySelectorAll('a.js-increment').forEach(function (link){
                         link.addEventListener('click', onClickBtnIncrement);
                     })
+                    // Appel de la fonction de décrementation d'un produit
                     document.querySelectorAll('a.js-decrement').forEach(function (link){
                         link.addEventListener('click', onClickBtnDecrement);
+                    })
+                    // Création de l'évènement pour la confirmation de la commande
+                    document.querySelectorAll('a.confPurchase').forEach(function (link){
+                        link.addEventListener('click', BtnConfPurchase);
                     })
                     // Appel de la fonction de duplication d'un produit
                     document.querySelectorAll('a.duplicate').forEach(function (link){
                         link.addEventListener('click', onClickDuplicate);
                     })
-                    // mise en place de l'alerte
-                    var alertHTMLElement = document.getElementById("alertMessage");
-                    console.log(alertHTMLElement);
-                    var message = response.data.message;
-                    var alertBody = alertHTMLElement.querySelector('.alert-content') // selection de l'élément possédant le message
-                    alertBody.textContent = message;
-                    var alertElement = new bootstrap.Alert(alertHTMLElement);
-                    alertElement.show();
+                    // Appel de la fonction de duplication d'un produit
+                    document.querySelectorAll('button.FormCustomization').forEach(function (link){
+                        link.addEventListener('click', customEdit);
+                    })
                 });
         }
 
@@ -121,25 +145,26 @@
                 .then(function(response) {
                     // Rafraichissement du tableau "liste"
                     const liste = document.getElementById('liste').innerHTML = response.data.liste;
-                    // Remise en place des évènements sur la page
+                    // Appel de la fonction d'incrémentation d'un produit
                     document.querySelectorAll('a.js-increment').forEach(function (link){
                         link.addEventListener('click', onClickBtnIncrement);
                     })
+                    // Appel de la fonction de décrementation d'un produit
                     document.querySelectorAll('a.js-decrement').forEach(function (link){
                         link.addEventListener('click', onClickBtnDecrement);
+                    })
+                    // Création de l'évènement pour la confirmation de la commande
+                    document.querySelectorAll('a.confPurchase').forEach(function (link){
+                        link.addEventListener('click', BtnConfPurchase);
                     })
                     // Appel de la fonction de duplication d'un produit
                     document.querySelectorAll('a.duplicate').forEach(function (link){
                         link.addEventListener('click', onClickDuplicate);
                     })
-                    // mise en place de l'alerte
-                    var alertHTMLElement = document.getElementById("alertMessage");
-                    console.log(alertHTMLElement);
-                    var message = response.data.message;
-                    var alertBody = alertHTMLElement.querySelector('.alert-content') // selection de l'élément possédant le message
-                    alertBody.textContent = message;
-                    var alertElement = new bootstrap.Alert(alertHTMLElement);
-                    alertElement.show();
+                    // Appel de la fonction de duplication d'un produit
+                    document.querySelectorAll('button.FormCustomization').forEach(function (link){
+                        link.addEventListener('click', customEdit);
+                    })
                 });
         }
 
@@ -147,24 +172,24 @@
         document.querySelectorAll('a.js-increment').forEach(function (link){
             link.addEventListener('click', onClickBtnIncrement);
         })
-
         // Appel de la fonction de décrementation d'un produit
         document.querySelectorAll('a.js-decrement').forEach(function (link){
             link.addEventListener('click', onClickBtnDecrement);
         })
-
         // Création de l'évènement pour la confirmation de la commande
         document.querySelectorAll('a.confPurchase').forEach(function (link){
             link.addEventListener('click', BtnConfPurchase);
         })
-
         // Appel de la fonction de duplication d'un produit
         document.querySelectorAll('a.duplicate').forEach(function (link){
             link.addEventListener('click', onClickDuplicate);
         })
+        // Appel de la fonction de duplication d'un produit
+        document.querySelectorAll('button.FormCustomization').forEach(function (link){
+            link.addEventListener('click', customEdit);
+        })
 
-        // Edition d'une personnalisation produit sur "change" Select : formatedit
-        document.getElementById("formatedit").addEventListener("change", customEdit);
+
     }
 </script>
 {% endblock %}
