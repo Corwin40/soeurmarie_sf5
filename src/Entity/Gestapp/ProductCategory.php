@@ -58,11 +58,6 @@ class ProductCategory
     private $parent;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Product::class, mappedBy="otherCategory")
-     */
-    private $otherProducts;
-
-    /**
      * Permet d'initialiser le slug !
      * Utilisation de slugify pour transformer une chaine de caractères en slug
      * @ORM\PrePersist
@@ -138,11 +133,6 @@ class ProductCategory
         return $this;
     }
 
-
-    public function __toString(){
-        return $this->name;
-    }
-
     /**
      * @return Collection|Section[]
      */
@@ -195,5 +185,9 @@ class ProductCategory
         $this->parent = $parent;
 
         return $this;
+    }
+
+    public function __toString(){
+        return $this->name;
     }
 }

@@ -21,13 +21,13 @@
             function BtnAddCart(event){
                 event.preventDefault()
                 const urladdcart = this.href
-                const url2 = document.getElementById('CustomizeProduct').action
+                const url2 = document.getElementById('CustomizeProduct').action                 // enregistrement de la personalisation ProductCustomize
                 const formdata = new FormData(document.getElementById('CustomizeProduct'))
                 const data =  JSON.stringify(Object.fromEntries(formdata));
+
+                // Soumettre l'ajout au panier du produit plus les personnalisations du produit
                 axios
-                    .post(url2, data)
-                axios
-                    .post(urladdcart)
+                    .post(urladdcart, data)
                     .then(function(response) {
                         const liste = document.getElementById('count').innerHTML=response.data.count;
                         const lipanier = document.getElementById('li_panier').innerHTML = response.data.lipanier
@@ -97,15 +97,7 @@
 
             // Affichage de la condition signet/marque-page minimum 6
             const selectFormat = document.getElementById('format');
-            if (selectFormat.value == 1){
-                console.log('Ok')
-                document.getElementById('alert-commande').classList.remove('d-none')
-            }else if(selectFormat.value == 7){
-                console.log('Ok')
-                document.getElementById('alert-commande').classList.remove('d-none')
-            }else{}
-            selectFormat.addEventListener('change', function(event){
-                console.log(selectFormat.value)
+            if(selectFormat){
                 if (selectFormat.value == 1){
                     console.log('Ok')
                     document.getElementById('alert-commande').classList.remove('d-none')
@@ -113,7 +105,18 @@
                     console.log('Ok')
                     document.getElementById('alert-commande').classList.remove('d-none')
                 }else{}
-            })
+                selectFormat.addEventListener('change', function(event){
+                    console.log(selectFormat.value)
+                    if (selectFormat.value == 1){
+                        console.log('Ok')
+                        document.getElementById('alert-commande').classList.remove('d-none')
+                    }else if(selectFormat.value == 7){
+                        console.log('Ok')
+                        document.getElementById('alert-commande').classList.remove('d-none')
+                    }else{}
+                })
+            }
+
 
             // Appel de la fonction d'incrémentation d'un produit
             document.querySelectorAll('a.jsonAddCart').forEach(function (link){

@@ -23,10 +23,8 @@
             {% set QtySigMarq = QtySigMarq  + c.productQty %}
         {% endfor %}
     {% endif %}
-
     <section id="listCart">
-        {% for c in carts|filter(carts => carts.customIdformat == 1 or carts.customFormat == 7) %}
-        {% if QtySigMarq < 6 %}
+        {% if QtySigMarq in [1, 2, 3, 4, 5] %}
         <div class="row">
             <div class="col-12">
                 <p class="alert alert-warning">
@@ -35,7 +33,6 @@
             </div>
         </div>
         {% endif %}
-        {% endfor %}
         <table class="table align-middle">
             <thead>
             <tr>
@@ -50,7 +47,7 @@
             <tbody id="bodyCart">
             {% set sstotal = 0 %}
             {% for c in carts %}
-                <tr id="rowCart" style="background: rgb(249, 249, 251);">
+                <tr id="rowCart" class="align-middle" style="background: rgb(249, 249, 251);">
                     {% set qtyPrice = c.productQty * c.customPrice %}
                     {% set sstotal = sstotal + qtyPrice %}
                     {% set weight = c.productQty * c.customWeight %}
@@ -70,18 +67,29 @@
                     <td>
                         {% set selected = 'selected' %}
                         {% set format = c.customFormat %}
-                        <form id="CustomizeProduct" action="{{ path('op_gestapp_product_customize_edit', {'id':c.productid}) }}?cart=true" class="row row-cols g-1 align-items-center">
-                            <table>
-                                <tr>
-                                    <td>
+                        <form id="CustomizeProduct" action="{{ path('op_gestapp_product_customize_edit', {'idCustom': c.customId}) }}?cartcustom=true" class="row row-cols g-1 align-items-center">
+                            <table class="table table-borderless" style="margin: 0;">
+                                <tr class="align-middle">
+                                    <td class="col-5">
                                         <select class="form-select form-select-sm" name="format" id="formatedit">
                                             {% for f in c.product.formats %}
                                                 <option value="{{ f.id }}" {{ f.name == format ? 'selected' : '' }}>{{ f.name }} - {{f.weight}}g</option>
                                             {% endfor %}
                                         </select>
                                     </td>
-                                    <td><input id="persona" type="text" class="form-control form-control-sm" placeholder="Inscrivez votre prénom pour personnaliser la carte" value="{{ c.customName }}">
+                                    {% if c.product.isPersonalisable == 1 %}
+                                    <td class="col-5">
+                                        <input id="persona" type="text" class="form-control form-control-sm" name="name" placeholder="Inscrivez votre prénom pour personnaliser la carte" value="{{ c.customName }}">
                                     </td>
+                                    <td class="col-2">
+                                        <button class="btn btn-sm FormCustomization" data-bs-toggle="tooltip" data-bs-placement="top" title="Modifier les personnalisations"><i class="fa-solid fa-check"></i></button>
+                                    </td>
+                                    {% else %}
+                                    <td class="col-1">
+                                        <button class="btn btn-sm FormCustomization" data-bs-toggle="tooltip" data-bs-placement="top" title="Modifier les personnalisations"><i class="fa-solid fa-check"></i></button>
+                                    </td>
+                                    <td class="col-6"></td>
+                                    {% endif %}
                                 </tr>
                             </table>
                             <input id="sessid" name="sessid" type="hidden" value="{{ session }}">
@@ -92,14 +100,14 @@
                         {{ c.customPrice|number_format(2, ',', ' ') }} € /  {{ c.customFormat }}
                     </td>
                     <td>
-                        <a class="js-increment" href="{{ path('op_webapp_cart_add', {'id': c.productId}) }}?returnToCart=true"><i class="bi bi-plus-circle text-secondary"></i></a>
+                        <a class="js-increment" href="{{ path('op_webapp_cart_add', {'id': c.productId}) }}?returnToCart=true&item={{ c.item }}"><i class="bi bi-plus-circle text-secondary"></i></a>
                         {{ c.productQty }}
-                        <a class="js-decrement" href="{{ path('op_webapp_cart_decrement', {'id': c.productId}) }}?returnToCart=true"><i class="bi bi-dash-circle text-secondary"></i></a>
+                        <a class="js-decrement" href="{{ path('op_webapp_cart_decrement', {'id': c.productId , 'uuid': c.uuid}) }}?returnToCart=true&item={{ c.item }}"><i class="bi bi-dash-circle text-secondary"></i></a>
                     </td>
                     <td>{{ qtyPrice|number_format(2, ',', ' ') }} €</td>
                     <td>
-                        <a href="{{ path('op_webapp_cart_delete', {'id': c.productId}) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Supprimer la ligne"><i class="bi bi-bag-x-fill text-danger" style="font-size: 1rem;"></i></a>
-                        <a href="" class="duplicate" style="font-size: 1rem;" data-bs-toggle="tooltip" data-bs-placement="top" title="Dupliquer votre carte"><i class="fa-duotone fa-clone"></i></a>
+                        <a href="{{ path('op_webapp_cart_delete', {'id': c.productId, 'uuid': c.uuid, 'item': c.item}) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Supprimer la ligne"><i class="bi bi-bag-x-fill text-danger" style="font-size: 1rem;"></i></a>
+                        <a href="{{ path('op_webapp_cart_duplicate', {'id': c.productId, 'uuid': c.uuid,'item': c.item}) }}" class="duplicate" style="font-size: 1rem;" data-bs-toggle="tooltip" data-bs-placement="top" title="Dupliquer votre carte"><i class="fa-duotone fa-clone"></i></a>
                     </td>
                 </tr>
             {% endfor %}

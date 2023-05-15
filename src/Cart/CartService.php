@@ -2,6 +2,7 @@
 
 namespace App\Cart;
 
+use App\Repository\Gestapp\ProductCustomizeRepository;
 use App\Repository\Gestapp\ProductRepository;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -9,14 +10,16 @@ class CartService
 {
     protected $session;
     protected $productRepository;
+    protected $customizeRepository;
 
-    public function __construct(SessionInterface $session, ProductRepository $productRepository)
+    public function __construct(SessionInterface $session, ProductRepository $productRepository, ProductCustomizeRepository $customizeRepository)
     {
         $this->session = $session;
         $this->productRepository = $productRepository;
+        $this->customizeRepository = $customizeRepository;
     }
 
-    protected function getCart() : array
+    public function getCart() : array
     {
         return $this->session->get('cart', []);
     }
@@ -34,42 +37,63 @@ class CartService
         $this->saveCart([]);
     }
 
-    public function increment(int $id){
+    public function add(int $item, $product, $productCustomize){
 
         $cart = $this->getCart();                                       // récupération du panier par le service CartService
 
-        if(!array_key_exists($id, $cart)){                              // si dans le tableau panier si "Id" n'existe pas,
-            $cart[$id] = 0;                                             // alors le panier ajout 0 en quantité du panier,
+        if(!array_key_exists($item, $cart)){                           // si dans le tableau panier si "Item" n'existe pas,
+            $cart[$item]['Item'] = $item;
+            $cart[$item]['ProductId'] = $product->getId();
+            $cart[$item]['Qty'] = 1;                                   // alors le panier ajout 0 en quantité du panier,
+            $cart[$item]['CustomizeUuid'] = $productCustomize->getUuid();
         }
-        $cart[$id]++;                                                   // et automatiquement, on incrémente de 1 le produit dans le panier.
 
+        $this->setCart($cart);                                         // on insére en session le panier modifié
+    }
+
+    public function increment(int $item, $product){
+
+        $cart = $this->getCart();                                      // récupération du panier par le service CartService
+
+        if(!array_key_exists($item, $cart)){                            // si dans le tableau panier si "Item" n'existe pas,
+            return;
+        }
+
+        $cart[$item]['Qty']++;                                   // alors le panier ajout 0 en quantité du panier,
         $this->setCart($cart);                                          // on insére en session le panier modifié
     }
 
-    public function decrement(int $id){
+    public function decrement(int $item, $id, $uuid){
 
         // On chercher dans la session si le panier existe.
         // On creer si le panier n'existe pas.
         $cart = $this->getCart();
 
-        if(!array_key_exists($id, $cart)){                              // On teste si dans le tableau panier si "Id" existe,
+        if(!array_key_exists($item, $cart)){                              // On teste si dans le tableau panier si "Id" existe,
             return;                                                     // si c'est le cas ajoute la quantité,
         } else {
-            if($cart[$id] === 1) {                                      // sinon, on ajoute 1 à l'Id dans le panier.
-                $this->remove($id);
+            if($cart[$item]['Qty'] === 1) {                                      // sinon, on ajoute 1 à l'Id dans le panier.
+                $this->remove($item, $id, $uuid);
                 return;
             }
-            $cart[$id]--;
+            $cart[$item]['Qty']--;
         $this->session->set('cart', $cart);
         }
 
         $this->setCart($cart);
     }
 
-    public function remove(int $id)
+    public function updateUuid(int $item, $uuid)
     {
         $cart = $this->getCart();
-        unset($cart[$id]);
+        $cart[$item]['CustomizeUuid'] = $uuid->getUuid();
+        $this->setCart($cart);
+    }
+
+    public function remove(int $item, int $id, $uuid)
+    {
+        $cart = $this->getCart();
+        unset($cart[$item]);
 
         $this->setCart($cart);
     }
@@ -96,18 +120,25 @@ class CartService
     {
         $detailedCart = [];                                           // on prépare un tableau du futur panier détaillé
 
-        foreach($this->getCart() as $id => $qty)
+        foreach($this->getCart() as $item)
         {
+            $id = $item['ProductId'];
+            $uuid = $item['CustomizeUuid'];
+            $qty = $item['Qty'];
+            $item = $item['Item'];
+
             $product = $this->productRepository->find($id);
             if(!$product)
             {
                 continue;
             }
-            $detailedCart[] = new CartItem($product, $qty);
+
+            $Customize = $this->customizeRepository->findCart($id, $uuid, $item);
+            $productCustomize = $this->customizeRepository->find($Customize['id']);
+
+            $detailedCart[] = new CartItem($product, $qty, $item, $productCustomize);
+            //dd($detailedCart);
         }
         return $detailedCart;
     }
-
-
-
 }
