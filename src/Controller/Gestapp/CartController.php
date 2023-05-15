@@ -249,54 +249,40 @@ class CartController extends AbstractController
         $detailedCart = $this->cartService->getDetailedCartItem();
 
         foreach ($detailedCart as $d){
+            //dd($d);
+            // Construction des éléments nécessaire au panier
             $product = $d->product;
-            $customization = $productCustomizeRepository->findOneBy(['product'=> $d->product]);
-            //dd($customization);
-            $customidprod = $customization->getUuid();
+            $customization = $d->productCustomize;
 
-            $uuid = $cartRepository->findOneBy(['uuid'=> $session], ['id'=> 'DESC']);
+            //dd($session, $customization->getUuid());
 
-            if(!$uuid){
-                $cart = new Cart();
-                $cart->setProductId($product->getId());
-                $cart->setProduct($product);
-                $cart->setProductName($product->getName());
-                $cart->setProductNature($product->getProductNature());
-                $cart->setproductCategory($product->getProductCategory());
-                $cart->setProductQty($d->qty);
-                $cart->setProductRef($product->getRef());
-                $cart->setCustomIdformat($customization->getFormat()->getId());
-                $cart->setCustomFormat($customization->getFormat()->getName());
-                $cart->setCustomName($customization->getName());
-                $cart->setCustomPrice($customization->getFormat()->getPriceformat());
-                $cart->setCustomWeight($customization->getFormat()->getWeight());
-                $cart->setItem($d->item);
-                $cart->setUuid($session);
-                $em->persist($cart);
+            if($session != $customization->getUuid()){
+                $customization->setUuid($session);
+                $em->persist($customization);
                 $em->flush();
-            }else{
-                $cartproduct = $uuid->getProductId();
-                if($customidprod != $cartproduct)
-                {
-                    $cart = new Cart();
-                    $cart->setProductId($product->getId());
-                    $cart->setProduct($product);
-                    $cart->setProductName($product->getName());
-                    $cart->setProductNature($product->getProductNature());
-                    $cart->setproductCategory($product->getProductCategory());
-                    $cart->setProductQty($d->qty);
-                    $cart->setProductRef($product->getRef());
-                    $cart->setCustomIdformat($customization->getFormat()->getId());
-                    $cart->setCustomFormat($customization->getFormat()->getName());
-                    $cart->setCustomName($customization->getName());
-                    $cart->setCustomPrice($customization->getFormat()->getPriceformat());
-                    $cart->setCustomWeight($customization->getFormat()->getWeight());
-                    $cart->setItem($d->item);
-                    $cart->setUuid($session);
-                    $em->persist($cart);
-                    $em->flush();
-                }
+                $this->cartService->updateUuid($d->item, $customization);
             }
+
+            //dd($session, $customization, $this->cartService->getCart());
+
+            $cart = new Cart();
+            $cart->setProductId($product->getId());
+            $cart->setProduct($product);
+            $cart->setProductName($product->getName());
+            $cart->setProductNature($product->getProductNature());
+            $cart->setproductCategory($product->getProductCategory());
+            $cart->setProductQty($d->qty);
+            $cart->setProductRef($product->getRef());
+            $cart->setCustomId($customization->getId());
+            $cart->setCustomIdformat($customization->getFormat()->getId());
+            $cart->setCustomFormat($customization->getFormat()->getName());
+            $cart->setCustomName($customization->getName());
+            $cart->setCustomPrice($customization->getFormat()->getPriceformat());
+            $cart->setCustomWeight($customization->getFormat()->getWeight());
+            $cart->setItem($d->item);
+            $cart->setUuid($customization->getUuid());
+            $em->persist($cart);
+            $em->flush();
         }
         $carts = $cartRepository->findBy(['uuid'=> $session]);
         $cartspanel = $carts;
@@ -346,9 +332,9 @@ class CartController extends AbstractController
     }
 
     /**
-     * @Route("/gestapp/cart/decrement/{id}", name="op_webapp_cart_decrement", requirements={"id":"\d+"})
+     * @Route("/gestapp/cart/decrement/{id}/{uuid}", name="op_webapp_cart_decrement", requirements={"id":"\d+"})
      */
-    public function decrementeCart($id, Request $request): Response
+    public function decrementeCart($id, $uuid,  Request $request): Response
     {
         $product = $this->productRepository->find($id);
 
@@ -361,7 +347,7 @@ class CartController extends AbstractController
 
         if($request->query->has('item')){
             $parametres = $request->query->all();
-            $this->cartService->decrement(intval($parametres['item']), $id);
+            $this->cartService->decrement(intval($parametres['item']), $id, $uuid);
         }else{
             $item = 0;
             foreach ($cart as $c){
@@ -370,7 +356,7 @@ class CartController extends AbstractController
                     $item = $c['Item'];
                 }
             }
-            $this->cartService->decrement($item, $id);
+            $this->cartService->decrement($item, $id, $uuid);
         }
 
         $this->addFlash('success', "Le produit a bien été diminué dans le panier.");

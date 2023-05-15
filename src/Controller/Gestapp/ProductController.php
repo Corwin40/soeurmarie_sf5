@@ -119,7 +119,7 @@ class ProductController extends AbstractController
         $cart = $request->getSession()->get('cart');
 
         if($cart){
-            //dd($cart);
+            // dd($cart);
             // récupération des items du panier
             $detailedCart = $this->cartService->getDetailedCartItem();
 

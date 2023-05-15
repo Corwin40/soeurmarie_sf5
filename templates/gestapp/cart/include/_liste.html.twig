@@ -23,9 +23,8 @@
             {% set QtySigMarq = QtySigMarq  + c.productQty %}
         {% endfor %}
     {% endif %}
-
     <section id="listCart">
-        {% if (QtySigMarq < 0) and (QtySigMarq < 6) %}
+        {% if QtySigMarq in [1, 2, 3, 4, 5] %}
         <div class="row">
             <div class="col-12">
                 <p class="alert alert-warning">
@@ -68,7 +67,7 @@
                     <td>
                         {% set selected = 'selected' %}
                         {% set format = c.customFormat %}
-                        <form id="CustomizeProduct" action="{{ path('op_gestapp_product_customize_edit', {'id':c.customId}) }}?cart=true" class="row row-cols g-1 align-items-center">
+                        <form id="CustomizeProduct" action="{{ path('op_gestapp_product_customize_edit', {'idCustom': c.customId}) }}?cartcustom=true" class="row row-cols g-1 align-items-center">
                             <table class="table table-borderless" style="margin: 0;">
                                 <tr class="align-middle">
                                     <td class="col-5">
@@ -78,14 +77,19 @@
                                             {% endfor %}
                                         </select>
                                     </td>
+                                    {% if c.product.isPersonalisable == 1 %}
                                     <td class="col-5">
-                                        {% if c.product.isPersonalisable == 1 %}
-                                        <input id="persona" type="text" class="form-control form-control-sm" placeholder="Inscrivez votre prénom pour personnaliser la carte" value="{{ c.customName }}">
-                                        {% endif %}
+                                        <input id="persona" type="text" class="form-control form-control-sm" name="name" placeholder="Inscrivez votre prénom pour personnaliser la carte" value="{{ c.customName }}">
                                     </td>
                                     <td class="col-2">
                                         <button class="btn btn-sm FormCustomization" data-bs-toggle="tooltip" data-bs-placement="top" title="Modifier les personnalisations"><i class="fa-solid fa-check"></i></button>
                                     </td>
+                                    {% else %}
+                                    <td class="col-1">
+                                        <button class="btn btn-sm FormCustomization" data-bs-toggle="tooltip" data-bs-placement="top" title="Modifier les personnalisations"><i class="fa-solid fa-check"></i></button>
+                                    </td>
+                                    <td class="col-6"></td>
+                                    {% endif %}
                                 </tr>
                             </table>
                             <input id="sessid" name="sessid" type="hidden" value="{{ session }}">
@@ -98,7 +102,7 @@
                     <td>
                         <a class="js-increment" href="{{ path('op_webapp_cart_add', {'id': c.productId}) }}?returnToCart=true&item={{ c.item }}"><i class="bi bi-plus-circle text-secondary"></i></a>
                         {{ c.productQty }}
-                        <a class="js-decrement" href="{{ path('op_webapp_cart_decrement', {'id': c.productId}) }}?returnToCart=true&item={{ c.item }}"><i class="bi bi-dash-circle text-secondary"></i></a>
+                        <a class="js-decrement" href="{{ path('op_webapp_cart_decrement', {'id': c.productId , 'uuid': c.uuid}) }}?returnToCart=true&item={{ c.item }}"><i class="bi bi-dash-circle text-secondary"></i></a>
                     </td>
                     <td>{{ qtyPrice|number_format(2, ',', ' ') }} €</td>
                     <td>

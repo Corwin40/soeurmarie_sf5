@@ -32,12 +32,24 @@
             event.preventDefault()
             let formCustom = this.parentElement.parentElement.parentElement.parentElement.parentElement
             let urlCustom = formCustom.action
-            let formCustomdata = new FormData(formCustom)
+            let data = new FormData(formCustom)
+            const formCustomdata =  JSON.stringify(Object.fromEntries(data));
             axios
                 .post(urlCustom, formCustomdata)
                 .then(function(response){
-                    // Rafraichissement du tableau "liste"
-                    const liste = document.getElementById('liste').innerHTML = response.data.liste;
+                    // préparation du toaster
+                    var option = {
+                        animation: true,
+                        autohide: true,
+                        delay: 3000,
+                    };
+                    // initialisation du toaster
+                    var toastHTMLElement = document.getElementById("toaster");
+                    var message = response.data.message;
+                    var toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
+                    toastBody.textContent = message;
+                    var toastElement = new bootstrap.Toast(toastHTMLElement, {animation: true, autohide: true, delay: 3000});
+                    toastElement.show();
                     // Appel de la fonction d'incrémentation d'un produit
                     document.querySelectorAll('a.js-increment').forEach(function (link){
                         link.addEventListener('click', onClickBtnIncrement);
@@ -238,4 +250,22 @@
         </div>
     </section>
 </div>
+{% endblock %}
+
+{% block modals %}
+    {# annonce toaster #}
+    <div aria-live="polite" aria-atomic="true" class="position-relative">
+        <div class="toast-container position-absolute top-50 end-0 p-3">
+            <div id="toaster" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <strong class="me-auto">Cartes de prières</strong>
+                    <small>à l'instant</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    Hello, world! This is a toast message.
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
