@@ -101,14 +101,16 @@ class CartService
     public function getTotal()
     {
         $total = 0;
-        foreach($this->getCart() as $id => $qty)
+        foreach($this->getCart() as $item)
         {
+            $id = $item['ProductId'];
             $product = $this->productRepository->find($id);
+            $qty = $item['Qty'];
             if(!$product)
             {
                 continue;                                           // ne force pas la boucle sur l'incrémentation du produit mais passe à l'item suivnat
             }
-            $total += $product->getPrice()*$qty;
+            $total += $product->getPrice() * $qty;
         }
         return $total;
     }

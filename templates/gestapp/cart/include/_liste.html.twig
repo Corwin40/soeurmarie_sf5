@@ -246,6 +246,8 @@
         </table>
     </section>
 
+
+
     {% if app.user %}
     {# Formulaire de commande si connecté #}
     <section id="adressCart" class="mb-5 d-none">
@@ -374,7 +376,7 @@
 {% endif %}
 {% if carts %}
     <div class="mb-5 d-flex justify-content-around">
-        <button id="previousStep" class="btn btn-sm btn-outline-secondary"> << Retour sur l'accueil</button>
-        <button id="nextStep" class="btn btn-sm btn-outline-secondary {% if QtySigMarq == 0 %}{% elseif QtySigMarq < 6%}disabled{% endif %}">Etape Suivante >> </button>
+        <a id="previousStep" class="btn btn-sm btn-outline-secondary"> << Retour sur l'accueil</a>
+        <a id="nextStep" class="btn btn-sm btn-outline-secondary{% if QtySigMarq == 0 %}{% elseif QtySigMarq < 6%}disabled{% endif %}">Etape Suivante >></a>
     </div>
 {% endif %}

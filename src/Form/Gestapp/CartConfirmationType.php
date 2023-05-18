@@ -53,7 +53,6 @@ class CartConfirmationType extends AbstractType
             ])
             ->add('phoneContact', TextType::class, [
                 'label' => "Contact téléphonique en cas d'abscence",
-                'required' => false,
                 'attr' => [
                     'placeholder' => '00.00.00.00.00',
                 ]
