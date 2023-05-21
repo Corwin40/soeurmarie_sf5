@@ -377,6 +377,6 @@
 {% if carts %}
     <div class="mb-5 d-flex justify-content-around">
         <a id="previousStep" class="btn btn-sm btn-outline-secondary"> << Retour sur l'accueil</a>
-        <a id="nextStep" class="btn btn-sm btn-outline-secondary{% if QtySigMarq == 0 %}{% elseif QtySigMarq < 6%}disabled{% endif %}">Etape Suivante >></a>
+        <a id="nextStep" class="btn btn-sm btn-outline-secondary" {% if QtySigMarq == 0 %}{% elseif QtySigMarq < 6%}disabled{% endif %}>Etape Suivante >></a>
     </div>
 {% endif %}
