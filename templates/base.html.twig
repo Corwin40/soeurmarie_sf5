@@ -11,14 +11,14 @@
 
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
-            <link rel="stylesheet" href="{{ asset('js/flixcity/flickity.css') }}" media="screen">
+            <link rel="stylesheet" href="{{ asset('js/flickity/flickity.css') }}" media="screen">
         {% endblock %}
 
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
             <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
             <script src="https://kit.fontawesome.com/3904e9974b.js" crossorigin="anonymous"></script>
-            <script src="{{ asset('js/flixcity/flickity.pkgd.js') }}"></script>
+            <script src="{{ asset('js/flickity/flickity.pkgd.js') }}"></script>
             <script src="{{ asset('js/ckeditor5/build/ckeditor.js') }}"></script>
         {% endblock %}
 

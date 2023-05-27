@@ -24,6 +24,7 @@
         {% endfor %}
     {% endif %}
     <section id="listCart">
+        <input type="hidden" id="inputQtySigMarq" value="{{ QtySigMarq }}">
         {% if QtySigMarq in [1, 2, 3, 4, 5] %}
         <div class="row">
             <div class="col-12">
@@ -301,7 +302,7 @@
                 <h3>Adresse de livraison :</h3>
                 <p>
                     Cette adresse sera utilisée pour l'envoie de vos produit par la poste.<br>
-                    Pour ce faire livré ailleur, n'hésitez pas à modifier l'adresse et de préciser un contact téléphonique.
+                    N'hésitez pas à modifier l'adresse et à préciser un contact téléphonique pour vous contacter en cas d'abscence.
                 </p>
                 {{ form_start(confirmationForm, {'action': path('op_webapp_purchase_confirm'), 'attr': {'id': 'cart_confirmation'}}) }}
                 <div class="row mb-1 mt-1 g-1">
@@ -345,9 +346,7 @@
                     </div>
                 </div>
                 {{ form_widget(confirmationForm) }}
-                {% if app.user %}
-                    <button type="submit" class="btn btn-sm btn-success" >Je confirme</button>
-                {% endif %}
+
                 {{ form_end(confirmationForm) }}
             </div>
         </div>
@@ -371,12 +370,13 @@
     </div>
     </section>
     {% endif %}
+    {% if carts %}
+        <div id="navPurchase" class="mb-5 d-flex justify-content-around">
+            <button id="previousStep" class="btn btn-sm btn-outline-secondary" disabled> << Retour sur l'accueil</button>
+            {% if app.user %}<button id="BtnConfPurchase" type="submit" class="btn btn-sm btn-success d-none" >Je confirme</button>{% endif %}
+            <button id="nextStep" class="btn btn-sm btn-outline-secondary" {% if QtySigMarq in [1, 2, 3, 4, 5] %}disabled{% endif %}>Etape Suivante >></button>
+        </div>
+    {% endif %}
 {% else %}
     <h2>Le panier est vide</h2>
-{% endif %}
-{% if carts %}
-    <div class="mb-5 d-flex justify-content-around">
-        <a id="previousStep" class="btn btn-sm btn-outline-secondary"> << Retour sur l'accueil</a>
-        <a id="nextStep" class="btn btn-sm btn-outline-secondary" {% if QtySigMarq in [1, 2, 3, 4, 5] %}disabled{% endif %}>Etape Suivante >></a>
-    </div>
 {% endif %}
