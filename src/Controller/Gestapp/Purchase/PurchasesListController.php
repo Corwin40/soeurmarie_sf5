@@ -18,6 +18,7 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Knp\Snappy\Pdf;
 use Twig\Environment;
+use Mpdf\Mpdf;
 
 class PurchasesListController extends abstractController
 {
@@ -71,7 +72,7 @@ class PurchasesListController extends abstractController
      * Fonction pour faire évoluer l'etat de paiement de la commande par le client
      * @Route("/opadmin/purchases/updateStatusPaid/{id}/{status}", name="op_admin_purchases_updateStatePaid")
      */
-    public function updateStatePaidPurchase(Purchase $purchase, $status, MailerInterface $mailer)
+    public function updateStatePaidPurchase(Purchase $purchase, $status, MailerInterface $mailer, EntityManagerInterface $em)
     {
         // récupération des variables
         $numPurchase = $purchase->getNumPurchase();
@@ -87,7 +88,7 @@ class PurchasesListController extends abstractController
         $entityManager->flush();
 
         // récupération de la liste de commandes pour son actualisation
-        $purchases = $this->getDoctrine()->getManager()->getRepository(Purchase::class)->findAll();
+        $purchases = $em->getRepository(Purchase::class)->findAll();
 
         // Envoi du mail de confirmation des fonds perçus pour la réalisation de la commande
         $email = (new TemplatedEmail())
@@ -225,6 +226,8 @@ class PurchasesListController extends abstractController
      */
     public function onePurchase($commande, PurchaseRepository $purchaseRepository, PurchaseItemRepository $purchaseItemRepository,Pdf $knpSnappyPdf) : Response
     {
+
+
         $purchase = $purchaseRepository->onePurchase($commande);
         $purchase2 = $purchaseRepository->findOneBy(array('numPurchase' => $commande));
         $num = $purchase2->getId();
@@ -232,22 +235,15 @@ class PurchasesListController extends abstractController
         $items = $purchaseItemRepository->itemsPurchase($num);
         //dd($items);
 
-        $html = $this->twig->render('pdf/purchases/onePurchaseFromCustomer.html.twig', array(
+        $mpdf = new Mpdf();
+        $html = $this->renderView('pdf/purchases/onePurchaseFromCustomer.html.twig', array(
             'purchase'  => $purchase,
             'items' => $items
         ));
-        //$this->pdf->setTimeout(120);
-        //$this->pdf->setOption('enable-local-file-access', true);
 
-        return new PdfResponse(
-            $knpSnappyPdf->getOutputFromHtml($html),
-            'files.pdf'
-        );
+        $mpdf->WriteHTML($html);
+        $mpdf->Output('fichier.pdf', 'D'); // Télécharger le fichier PDF
 
-        //return $this->render('pdf/purchases/onePurchaseFromCustomer.html.twig', [
-        //    'purchase'=>$purchase,
-        //    'items' => $items
-        //]);
     }
 
     /**

@@ -4,7 +4,6 @@
     {{ parent() }}
     <script>
         window.onload = function(){
-
             let Suppr = document.getElementById('Suppr')
             Suppr.addEventListener('show.bs.modal', function (event) {
                 // Button that triggered the modal
@@ -87,16 +86,11 @@
                             // recupération de la liste pour actualisation de la div
                             const liste = document.getElementById('liste').innerHTML = response.data.liste;
                             // initialisation du toaster
-                            let option = {
-                                animation : true,
-                                autohide: true,
-                                delay : 3000,
-                            };
                             let toastHTMLElement = document.getElementById("toaster");
                             let message = response.data.message;
                             let toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
                             toastBody.textContent = message;
-                            let toastElement = new bootstrap.Toast(toastHTMLElement, option);
+                            let toastElement = new bootstrap.Toast(toastHTMLElement, {animation : true, autohide: true, delay : 3000});
                             toastElement.show();
                             // rechargement des events
                             // Ajout d'un event sur Bouton de suppression de la ligne en cours
@@ -223,4 +217,22 @@
         </div>
     </section>
 </div>
+{% endblock %}
+
+{% block modals %}
+    {# annonce toaster #}
+    <div aria-live="polite" aria-atomic="true" class="position-relative">
+        <div class="toast-container position-absolute top-50 end-0 p-3">
+            <div id="toaster" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <strong class="me-auto">Cartes de prières</strong>
+                    <small>à l'instant</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    Hello, world! This is a toast message.
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

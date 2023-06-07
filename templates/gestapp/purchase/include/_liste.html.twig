@@ -1,7 +1,6 @@
-<div class="col-12">
     <table class="table">
         <thead>
-        <tr>
+        <tr class="align-middle">
             <th>Commande</th>
             {% if hide == 0 %}
             <th>Adresse de livraison</th>
@@ -42,7 +41,7 @@
                 {% if hide == 0 %}
                     {% if app.request.attributes.get('_route') == 'op_webapp_purchases_index' %}
                         <td>
-                            {% if p.statuspaid == 'PENDING' %}En attente de paiement{% endif %}
+                            {% if p.status == 'PENDING' %}En attente de paiement{% endif %}
                             {% if p.status == 'PAID' %}Commande réglée{% endif %}
                             {% if p.status == 'CANCELLED' %}Annulé{% endif %}
                         </td>
@@ -51,10 +50,9 @@
                             <form id="purchasepaid">
                                 <input id="idpurchasepaid" name="idpurchase" type="hidden" value="{{p.id}}">
                                 <select id="statePaid" class="form-select form-select-sm statusPaidPurchases" aria-label="Default select example">
-                                    <option value="PENDING" {% if p.statuspaid == 'PENDING' %}selected{% endif %}>En attente du paiement</option>
-                                    <option value="PAID" {% if p.statuspaid == 'PAID' %}selected{% endif %}>Paiement reçu</option>
-                                    <option value="CANCELLED" {% if p.statuspaid == 'CANCELLED' %}selected{% endif %}>Annulé</option>
-                                </select>
+                                    <option value="PENDING" {% if p.status is same as 'PENDING' %}selected="selected"{% endif %}>En attente du paiement</option>
+                                    <option value="PAID" {% if p.status is same as 'PAID' %}selected="selected"{% endif %}>Paiement reçu</option>
+                                    <option value="CANCELLED" {% if p.status is same as 'CANCELLED' %}selected="selected"{% endif %}>Annulé</option>                                </select>
                             </form>
                         </td>
                     {% endif %}
@@ -75,11 +73,11 @@
                     <form id="purchase">
                     <input id="idpurchase" name="idpurchase" type="hidden" value="{{p.id}}">
                     <select id="statusPurchases" class="form-select form-select-sm statusPurchases" aria-label="Default select example">
-                        <option value="PENDING" {% if p.status == 'PENDING' %}selected{% endif %}>En attente</option>
-                        <option value="PREPARED" {% if p.status == 'PREPARED' %}selected{% endif %}>En cours de préparation</option>
-                        <option value="FINALISED" {% if p.status == 'FINALISED' %}selected{% endif %}>Cartes finalisées</option>
-                        <option value="DELIVERED" {% if p.status == 'DELIVERED' %}selected{% endif %}>En cours de Livraison</option>
-                        <option value="CANCELLED" {% if p.status == 'CANCELLED' %}selected{% endif %}>Annulé</option>
+                        <option value="PENDING" {% if p.statuspaid == 'PENDING' %}selected{% endif %}>En attente</option>
+                        <option value="PREPARED" {% if p.statuspaid == 'PREPARED' %}selected{% endif %}>En cours de préparation</option>
+                        <option value="FINALISED" {% if p.statuspaid == 'FINALISED' %}selected{% endif %}>Cartes finalisées</option>
+                        <option value="DELIVERED" {% if p.statuspaid == 'DELIVERED' %}selected{% endif %}>En cours de Livraison</option>
+                        <option value="CANCELLED" {% if p.statuspaid == 'CANCELLED' %}selected{% endif %}>Annulé</option>
                     </select>
                     </form>
                 </td>
@@ -98,4 +96,3 @@
         </tbody>
 
     </table>
-</div>

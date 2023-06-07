@@ -35,8 +35,7 @@ if(btnConfPurchase != null){
             let formPurchase = document.getElementById("cart_confirmation")
             let urlPurchase = formPurchase.action
             let dataPurchase = new FormData(formPurchase)
-            axios
-                .post(urlPurchase, dataPurchase)
+            formPurchase.submit()
         }else{
             alert("Veuillez renseigner un Numéro de contact pour recevoir le colis en cas d'abscence.")
         }
@@ -93,24 +92,7 @@ function onClickBtnIncrement(event){
     axios
         .post(url)
         .then(function(response) {
-            // Rafraichissement du tableau "liste"
-            document.getElementById('liste').innerHTML = response.data.liste
-            // Appel de la fonction d'incrémentation d'un produit
-            document.querySelectorAll('a.js-increment').forEach(function (link){
-                link.addEventListener('click', onClickBtnIncrement);
-            })
-            // Appel de la fonction de décrementation d'un produit
-            document.querySelectorAll('a.js-decrement').forEach(function (link){
-                link.addEventListener('click', onClickBtnDecrement);
-            })
-            // Appel de la fonction de duplication d'un produit
-            document.querySelectorAll('a.duplicate').forEach(function (link){
-                link.addEventListener('click', onClickDuplicate);
-            })
-            // Appel de la fonction de duplication d'un produit
-            document.querySelectorAll('button.FormCustomization').forEach(function (link){
-                link.addEventListener('click', customEdit);
-            })
+            window.location.reload()
         })
 }
 
@@ -121,26 +103,8 @@ function onClickBtnDecrement(event){
     axios
         .post(url)
         .then(function(response) {
-            // Rafraichissement du tableau "liste"
-            document.getElementById('liste').innerHTML = response.data.liste;
-
-            // Appel de la fonction d'incrémentation d'un produit
-            document.querySelectorAll('a.js-increment').forEach(function (link){
-                link.addEventListener('click', onClickBtnIncrement);
-            })
-            // Appel de la fonction de décrementation d'un produit
-            document.querySelectorAll('a.js-decrement').forEach(function (link){
-                link.addEventListener('click', onClickBtnDecrement);
-            })
+            window.location.reload()
         })
-    // Appel de la fonction de duplication d'un produit
-    document.querySelectorAll('a.duplicate').forEach(function (link){
-        link.addEventListener('click', onClickDuplicate);
-    })
-    // Appel de la fonction de duplication d'un produit
-    document.querySelectorAll('button.FormCustomization').forEach(function (link){
-        link.addEventListener('click', customEdit);
-    })
 }
 
 
@@ -151,28 +115,7 @@ function onClickDuplicate(event){
     axios
         .post(url)
         .then(function(response) {
-            // Rafraichissement du tableau "liste"
-            document.getElementById('liste').innerHTML = response.data.liste;
-            // Appel de la fonction d'incrémentation d'un produit
-            document.querySelectorAll('a.js-increment').forEach(function (link){
-                link.addEventListener('click', onClickBtnIncrement);
-            })
-            // Appel de la fonction de décrementation d'un produit
-            document.querySelectorAll('a.js-decrement').forEach(function (link){
-                link.addEventListener('click', onClickBtnDecrement);
-            })
-            // Appel de la fonction de duplication d'un produit
-            document.querySelectorAll('a.duplicate').forEach(function (link){
-                link.addEventListener('click', onClickDuplicate);
-            })
-            // Appel de la fonction de duplication d'un produit
-            document.querySelectorAll('button.FormCustomization').forEach(function (link){
-                link.addEventListener('click', customEdit);
-            })
-            // Action sur le NextStep
-            btnNextStep.addEventListener('click', nextStep)
-            // Action sur le PreviousStep
-            btnPreviousStep.addEventListener('click', previousStep)
+            window.location.reload()
         });
 }
 

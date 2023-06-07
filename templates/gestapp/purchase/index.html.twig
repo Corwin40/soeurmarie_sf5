@@ -72,11 +72,39 @@
         </header>
         <section id="purchase-content" class="op-section">
             <div class="container-fluid">
-                <div id="alertMessage">
-                    {% include 'include/_alert.html.twig' with [{'app.flashes': app.flashes}] %}
-                </div>
-                <div id="liste">
-                    {{ include('gestapp/purchase/include/_liste.html.twig') }}
+
+                <div class="row">
+                    <div class="col-3">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Règlements de vos commandes</h4>
+                            </div>
+                            <div class="card-body">
+                                <p>
+                                    Tous les règlements de commandes sont à effectuer : <br>
+                                    - soit par chèques à l'ordre de : <br>
+                                    <b>M. Maria Bambina</b><br>
+                                    <b>8, rue du Midi</b><br>
+                                    <b>65100 LOURDES</b><br>
+                                    - soit par virement en me contactant par mail : <br>
+                                    soeur.marie@cartesdepriere.fr
+
+                                </p>
+                                <p>La commande ne sera exécutée qu'à la réception de votre règlement.</p>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-9" id="liste">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Liste des commandes</h4>
+                            </div>
+                            <div class="card-body">
+                                {{ include('gestapp/purchase/include/_liste.html.twig') }}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
