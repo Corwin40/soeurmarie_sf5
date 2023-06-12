@@ -202,7 +202,7 @@ class PurchasesListController extends abstractController
     }
 
     /**
-     * Voir la commande du client dasn l'administration
+     * Voir la commande du client dans l'administration
      * @Route("/op_gestapp/purchases/onePuchaseadmin/{commande}", name="op_gestapp_purchases_onepurchaseadmin", methods={"GET"})
      */
     public function onePurchaseAdmin($commande, PurchaseRepository $purchaseRepository, PurchaseItemRepository $purchaseItemRepository) : Response
@@ -215,6 +215,25 @@ class PurchasesListController extends abstractController
         //dd($items);
 
         return $this->render('gestapp/commande/show.html.twig', [
+            'purchase'=>$purchase,
+            'items' => $items
+        ]);
+    }
+
+    /**
+     * Voir la commande du client dans l'administration
+     * @Route("/op_gestapp/purchases/onePuchasepublic/{commande}", name="op_gestapp_purchases_onepurchasepublic", methods={"GET"})
+     */
+    public function onePurchasePublic($commande, PurchaseRepository $purchaseRepository, PurchaseItemRepository $purchaseItemRepository) : Response
+    {
+        $purchase = $purchaseRepository->onePurchase($commande);
+        $purchase2 = $purchaseRepository->findOneBy(array('numPurchase' => $commande));
+        $num = $purchase2->getId();
+        //dd($idpurchase);
+        $items = $purchaseItemRepository->itemsPurchase($num);
+        //dd($items);
+
+        return $this->render('gestapp/commande/showpublic.html.twig', [
             'purchase'=>$purchase,
             'items' => $items
         ]);

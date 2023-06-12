@@ -22,7 +22,7 @@
         <tbody>
         {% for p in purchases %}
             <tr>
-                <td><a href="{{ path('op_gestapp_purchases_onepurchaseadmin', {'commande': p.numPurchase}) }}">{{p.numPurchase}}</a></td>
+                <td><a href="{{ path('op_gestapp_purchases_onepurchasepublic', {'commande': p.numPurchase}) }}">{{p.numPurchase}}</a></td>
                 {% if hide == 0 %}
                 <td>{{p.address}}<br>{{p.zipcode}} {{p.city}}</td>
                 {% endif %}

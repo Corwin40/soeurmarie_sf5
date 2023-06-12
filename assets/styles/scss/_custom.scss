@@ -295,3 +295,27 @@ footer h3 {
     }
   }
 }
+
+#navPurchase .btn-outline-sm{
+  color: $sm-secondary-color;
+  border-color: $sm-secondary-color !important;
+  font-size: 0.8rem;
+}
+#navPurchase .btn-outline-sm:hover{
+  background-color: $sm-secondary-color !important;
+  color: #FFFFFF !important;
+  border-color: $sm-secondary-color;
+  font-size: 0.8rem;
+}
+
+#navPurchase .btn-outline-secondary{
+  color: $sm-primary-color;
+  border-color: $sm-primary-color !important;
+  font-size: 0.8rem;
+}
+#navPurchase .btn-outline-secondary:hover{
+  background-color: $sm-primary-color !important;
+  color: #FFFFFF !important;
+  border-color: $sm-primary-color;
+  font-size: 0.8rem;
+}

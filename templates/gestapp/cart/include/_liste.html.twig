@@ -373,7 +373,7 @@
     {% if carts %}
         <div id="navPurchase" class="mb-5 d-flex justify-content-around">
             <button id="previousStep" class="btn btn-sm btn-outline-secondary" disabled> << Retour sur l'accueil</button>
-            {% if app.user %}<button id="BtnConfPurchase" type="submit" class="btn btn-sm btn-success d-none" >Je confirme</button>{% endif %}
+            {% if app.user %}<button id="BtnConfPurchase" type="submit" class="btn btn-sm btn-outline-sm d-none" >Je confirme</button>{% endif %}
             <button id="nextStep" class="btn btn-sm btn-outline-secondary" {% if QtySigMarq in [1, 2, 3, 4, 5] %}disabled{% endif %}>Etape Suivante >></button>
         </div>
     {% endif %}

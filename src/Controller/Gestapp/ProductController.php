@@ -641,9 +641,10 @@ class ProductController extends AbstractController
         // récupération des positions
         $data = json_decode($request->getContent(), true);
         //dd($idcategory);
+        //dd($data);
         foreach ($data as $d){
             // récupérer le doc correspondant à la position
-            $prod = $em->getRepository(Product::class)->findOneBy(['position' => $d['idcol']]);
+            $prod = $em->getRepository(Product::class)->find($d['id']);
             //dd($prod);
             $idnature = $prod->getProductNature()->getId();
             $idcat = $prod->getProductCategory()->getId();

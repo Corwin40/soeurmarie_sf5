@@ -175,10 +175,12 @@
                     let idcategory = document.getElementById('category').value
                     // on boucle sur le résultat des enfants pour envoyer au controller la modification du positionnement des produits de la page
                     for(i = 0; i < cols.length; i++){
-                        let idcol = cols[i].id
-                        //console.log(idcol)
+                        console.log(cols[i])
+                        let idcol = parseInt(cols[i].id)
+                        let idprod = parseInt(cols[i].getAttribute('name'))
+                        console.log(idprod)
                         let key = i + 1
-                        data.push({"key" : key, "idcol" : idcol})
+                        data.push({"key" : key, "id": idprod,"idcol" : idcol})
                     }
                     let url = "/gestapp/product/updateposition/" + idcategory
                     axios

@@ -105,6 +105,7 @@ class PurchaseRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->join('p.customer', 'm')
             ->addSelect('
+                p.status as status,
                 p.firstName AS firstNameL,
                 p.lastName AS lastNameL,
                 p.address AS addressL,
