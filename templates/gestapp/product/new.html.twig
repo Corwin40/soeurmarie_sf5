@@ -7,6 +7,37 @@
     <script>
         window.onload = function(){
 
+            const selectNature = document.getElementById('product_productNature')
+            const selectCategory = document.getElementById('product_productCategory')
+
+            function removeOptions(selectElement) {
+                var i, L = selectElement.options.length - 1;
+                for(i = L; i >= 0; i--) {
+                    selectElement.remove(i);
+                }
+            }
+
+            // Opération sur changement du select Nature
+            selectNature.addEventListener('change', function(event){
+                let NatValue = parseInt(this.value)
+                axios
+                    .get('/opadmin/product/selectcategories/' + NatValue)
+                    .then(function(response){
+                        let categoriesValues = response.data.categories
+                        // suppression des options du select
+                        removeOptions(selectCategory);
+                        categoriesValues.forEach((element) => {
+                            if (element.id === parseInt(categoriesValues)){
+                                let newOption = new Option (element.nameCat, element.categoryId, false, true);
+                                selectCategory.options.add (newOption);
+                            }else{
+                                let newOption = new Option (element.nameCat, element.categoryId);
+                                selectCategory.options.add (newOption);
+                            }
+                        })
+                    })
+            })
+
             function onClickaddCategory(event){
                 event.preventDefault();
                 const name = document.getElementById('product_category_name').value;

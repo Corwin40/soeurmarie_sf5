@@ -185,11 +185,24 @@ class ProductNatureController extends AbstractController
     {
         $natures = $productNatureRepository->findAll();
 
-        $categories = $productCategoryRepository->findAll();
+        $categories = $productCategoryRepository->CatByNat();
 
         return $this->render('gestapp/product_nature/listnatures.html.twig',[
             'natures' => $natures,
             'categories' => $categories
         ]);
+    }
+
+    /**
+     * Liste les categories selon la nature pour les "select"
+     * @Route("/opadmin/product/selectcategories/{id}", name="op_gestapp_product_category_selectcategories", methods={"GET"})
+     */
+    public function SelectCategories(ProductNature $nature, ProductCategoryRepository $productCategoryRepository, )
+    {
+        $categories = $productCategoryRepository->SelectCategories($nature->getId());
+        return $this->json([
+            'code' => 200,
+            'categories' => $categories,
+        ], 200);
     }
 }

@@ -40,4 +40,45 @@ class ProductCategoryRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * Liste les catégories selon la nature
+     */
+    public function CatByNat()
+    {
+        return $this->createQueryBuilder('c')
+            ->leftJoin('c.Nature', 'n')
+            ->leftJoin('c.parent', 'p')
+            ->select('
+                p.id as parentCat,
+                n.name as natureName,
+                n.id as natureId,
+                c.name as nameCat,
+                c.id as categoryId
+            ')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+     * Liste les catégories selon la nature pour select
+     */
+    public function SelectCategories($nature)
+    {
+        return $this->createQueryBuilder('c')
+            ->leftJoin('c.Nature', 'n')
+            ->leftJoin('c.parent', 'p')
+            ->select('
+                p.id as parentCat,
+                n.name as natureName,
+                n.id as natureId,
+                c.name as nameCat,
+                c.id as categoryId
+            ')
+            ->andWhere('n.id = :idnat')
+            ->setParameter('idnat', $nature)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

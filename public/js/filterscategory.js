@@ -11,7 +11,6 @@ document.querySelectorAll('#filters input').forEach(input => {
         })
 
         const url = '/gestapp/product/oneCat/filtercategory';
-
         axios
             .get(url + "?" + Params.toString())
             .then(response => {

@@ -8,26 +8,29 @@
         </h4>
         <div id="collapse{{ nature.id }}" class="accordion-collapse collapse {% if loop.first %}show{% else %}{% endif %}" aria-labelledby="nature-{{ nature.id }}" data-bs-parent="#accordionExample">
             <div class="accordion-body">
-                <ul>
                 {% set parents = [] %}
-                {% for category in categories|filter(category => category.parent is null ) %}
-                    {% set parents = parents|merge([{id: category.id, name : category.name, nature: category.nature}]) %}
+                {% set childs = [] %}
+                {% for category in categories|filter(category => category.parentCat is null ) %}
+                    {% set parents = parents|merge([{categoryId: category.categoryId, nameCat : category.nameCat, natureId: category.natureId, natureName: category.natureName, parentCat: category.parentCat }]) %}
                 {% endfor %}
-
-                {% for parent in parents|filter(parent => parent.nature == nature.name) %}
+                {% for category in categories|filter(category => category.parentCat is not null ) %}
+                    {% set childs = childs|merge([{categoryId: category.categoryId, nameCat : category.nameCat, natureId: category.natureId, natureName: category.natureName, parentCat: category.parentCat }]) %}
+                {% endfor %}
+                <ul>
+                {% for parent in parents|filter(parent => parent.natureName == nature.name) %}
                     {% set count = 0 %}
-                    {% for category in categories|filter(category => category.parent == parent.name ) %}
+                    {% for category in categories|filter(category => category.parentCat == parent.nameCat ) %}
                         {% set count = count + 1 %}
                     {% endfor %}
                     <li>
                         {% if count == 0 %}
-                        <a id="{{ parent.id|upper }}" href="" class="filtercategory">{{ parent.name }}</a>
+                        <a id="{{ parent.categoryId|upper }}" href="" class="filtercategory">{{ parent.nameCat }} - {{ parent.categoryId }}</a>
                         {% else %}
-                        <a id="{{ parent.id|upper }}" class="nolink">{{ parent.name }}</a>
+                        <a id="{{ parent.categoryId|upper }}" class="nolink">{{ parent.nameCat }} - {{ parent.categoryId }}</a>
                         {% endif%}
                         <ul>
-                            {% for category in categories|filter(category => category.parent == parent.name ) %}
-                                <li><a id="{{ category.id }}" href="" class="filtercategory">{{ category.name }}</a></li>
+                            {% for child in childs|filter(child => child.parentCat == parent.categoryId ) %}
+                                <li><a id="{{ child.categoryId }}" href="" class="filtercategory">{{ child.nameCat }} - {{ child.categoryId }}</a></li>
                             {% endfor %}
                         </ul>
                     </li>

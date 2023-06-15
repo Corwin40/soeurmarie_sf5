@@ -61,7 +61,7 @@
                             {{ form_label(form.productNature, 'Nature', {'label_attr': {'class':'form-label'}}) }}
                         </div>
                         <div class="col-3">
-                            {{ form_widget(form.productNature) }}
+                            {{ form_widget(form.productNature, {'attr': {'class': 'form-select form-select-sm'}}) }}
                         </div>
                         <div class="col-1">
                             <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#addProductNature"><i class="bi bi-plus-circle"></i></button>
@@ -70,7 +70,7 @@
                             {{ form_label(form.productCategory, 'Catégorie', {'label_attr': {'class':'form-label'}}) }}
                         </div>
                         <div class="col-3">
-                            {{ form_widget(form.productCategory) }}
+                            {{ form_widget(form.productCategory, {'attr': {'class': 'form-select form-select-sm'}}) }}
                         </div>
                         <div class="col-1">
                             <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#addProductCategory"><i class="bi bi-plus-circle"></i></button>

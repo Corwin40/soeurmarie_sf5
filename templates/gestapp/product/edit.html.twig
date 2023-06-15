@@ -7,6 +7,37 @@
     <script>
         window.onload = function(){
 
+            const selectNature = document.getElementById('product_productNature')
+            const selectCategory = document.getElementById('product_productCategory')
+
+            function removeOptions(selectElement) {
+                var i, L = selectElement.options.length - 1;
+                for(i = L; i >= 0; i--) {
+                    selectElement.remove(i);
+                }
+            }
+
+            // Opération sur changement du select Nature
+            selectNature.addEventListener('change', function(event){
+                let NatValue = parseInt(this.value)
+                axios
+                    .get('/opadmin/product/selectcategories/' + NatValue)
+                    .then(function(response){
+                        let categoriesValues = response.data.categories
+                        // suppression des options du select
+                        removeOptions(selectCategory);
+                        categoriesValues.forEach((element) => {
+                            if (element.id === parseInt(categoriesValues)){
+                                let newOption = new Option (element.nameCat, element.categoryId, false, true);
+                                selectCategory.options.add (newOption);
+                            }else{
+                                let newOption = new Option (element.nameCat, element.categoryId);
+                                selectCategory.options.add (newOption);
+                            }
+                        })
+                    })
+            })
+
             function onClickaddCategory(event){
                 event.preventDefault();
                 const name = document.getElementById('product_category_name').value;
@@ -129,46 +160,6 @@
             // Select Producteur
             new TomSelect("#product_producer",{
                 plugins: ['remove_button'],
-                create: true,
-                onItemAdd:function(){
-                    this.setTextboxValue('');
-                    this.refreshOptions();
-                },
-                render:{
-                    option:function(data,escape){
-                        return '<div class="d-flex"><span>' + escape(data.data) + '</span><span class="ms-auto text-muted">' + escape(data.value) + '</span></div>';
-                    },
-                    item:function(data,escape){
-                        return '<div>' + escape(data.data) + '</div>';
-                    }
-                }
-            });
-
-            // TomSelect
-            // ---------------------------------------
-            // Select Nature
-            new TomSelect("#product_productNature",{
-                plugins: ['remove_button'],
-                create: true,
-                onItemAdd:function(){
-                    this.setTextboxValue('');
-                    this.refreshOptions();
-                },
-                render:{
-                    option:function(data,escape){
-                        return '<div class="d-flex"><span>' + escape(data.data) + '</span><span class="ms-auto text-muted">' + escape(data.value) + '</span></div>';
-                    },
-                    item:function(data,escape){
-                        return '<div>' + escape(data.data) + '</div>';
-                    }
-                }
-            });
-
-            // TomSelect
-            // ---------------------------------------
-            // Select Nature
-            new TomSelect("#product_productCategory",{
-                plugins: ['remove_button', 'dropdown_input'],
                 create: true,
                 onItemAdd:function(){
                     this.setTextboxValue('');
