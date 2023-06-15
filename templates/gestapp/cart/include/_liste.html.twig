@@ -291,7 +291,7 @@
                     </div>
                 </div>
                 <div class="row mb-1 mt-1 g-1">
-                    <label for="staticEmail" class="col-sm-7">Contact téléphonique en cas d'abscence :</label>
+                    <label for="staticEmail" class="col-sm-7">Contact téléphonique en cas d'absence :</label>
                     <div class="col-3">
                         <input class="form-control form-control-sm" type="text" value="{{ user.phoneGsm }}" aria-label="Disabled input example" disabled readonly>
                     </div>
@@ -301,8 +301,8 @@
             <div class="col-6">
                 <h3>Adresse de livraison :</h3>
                 <p>
-                    Cette adresse sera utilisée pour l'envoie de vos produit par la poste.<br>
-                    N'hésitez pas à modifier l'adresse et à préciser un contact téléphonique pour vous contacter en cas d'abscence.
+                    Cette adresse sera utilisée pour l'envoi de vos produits par la poste.<br>
+                    N'hésitez pas à modifier l'adresse et à préciser un contact téléphonique pour vous contacter en cas d'absence.
                 </p>
                 {{ form_start(confirmationForm, {'action': path('op_webapp_purchase_confirm'), 'attr': {'id': 'cart_confirmation'}}) }}
                 <div class="row mb-1 mt-1 g-1">
@@ -339,7 +339,7 @@
                 </div>
                 <div class="row mb-1 mt-1 g-1">
                     <div class="col-7">
-                        {{ form_label(confirmationForm.phoneContact, "Contact téléphonique en cas d'abscence :", {'label_attr': {'class':'form-label'}}) }}
+                        {{ form_label(confirmationForm.phoneContact, "Contact téléphonique en cas d'absence :", {'label_attr': {'class':'form-label'}}) }}
                     </div>
                     <div class="col-3">
                         {{ form_widget(confirmationForm.phoneContact, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'00.00.00.00.00'}}) }}

@@ -1,5 +1,5 @@
 <div class="row" id="footer_bottom">
-    <div class="col"><p>&copy; {{ "now"|date("Y") }}{% if parameter%}{{ parameter.nameSite }}{% else %}OpenGaia{% endif%} | Propulsé par Symfony 5.2 & bootstrap 5 - créé par <a href="https://www.openpixl.fr">OpenPixl</a></p></div>
+    <div class="col"><p>&copy; {{ "now"|date("Y") }}&nbsp;{% if parameter%}{{ parameter.nameSite }}{% else %}OpenGaia{% endif%} | Propulsé par Symfony 5.2 & bootstrap 5 - créé par <a href="https://www.openpixl.fr">OpenPixl</a></p></div>
     <div class="col">
         {% if app.request.get('_route') == 'op_admin_dashboard_index' %}
             <p>Version : 2.0.3</p>

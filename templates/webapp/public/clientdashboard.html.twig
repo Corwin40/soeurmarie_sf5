@@ -12,7 +12,7 @@
         <section class="container">
         <h1>Bienvenue {{ user.firstname }} sur votre espace Client.</h1>
 
-        <div class="alert alert-info">
+        <div>
             <p>Vous avez actuellement : {{ cartService.detailedCartItem|length }}
                 {% if cartService.detailedCartItem|length <= 1 %}
                     produit
