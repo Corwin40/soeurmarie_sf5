@@ -122,11 +122,6 @@
                     })
             }
 
-            function changeCategory(){
-                const idnat = document.querySelector('.selectNat').value
-                console.log(idnat)
-            }
-
             // déclaration de l'event sur js-add-unit
             document.querySelectorAll('a.js-add-unit').forEach(function(link){
                 link.addEventListener('click', onClickaddUnit)
@@ -142,14 +137,16 @@
                 link.addEventListener('click', onClickaddCategory)
             })
 
-            // déclaration de l'envent sur selectCat pour changer les catégories dynamiquement
-            document.querySelector('.selectNat').addEventListener('change', changeCategory)
-
             ClassicEditor
                 .create(document.querySelector('#product_description'), {
                     toolbar: [ 'heading','bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote' ],
                     height: 50
                 })
+                .catch(error => {
+                    console.error(error);
+                });
+
+            ClassicEditor
                 .create(document.querySelector('#product_details'), {
                     toolbar: [ 'heading','bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote' ],
                     height: 50
@@ -157,6 +154,68 @@
                 .catch(error => {
                     console.error(error);
                 });
+
+            // TomSelect
+            // ---------------------------------------
+            // Select Producteur
+            new TomSelect("#product_producer",{
+                plugins: ['remove_button'],
+                create: true,
+                onItemAdd:function(){
+                    this.setTextboxValue('');
+                    this.refreshOptions();
+                },
+                render:{
+                    option:function(data,escape){
+                        return '<div class="d-flex"><span>' + escape(data.data) + '</span><span class="ms-auto text-muted">' + escape(data.value) + '</span></div>';
+                    },
+                    item:function(data,escape){
+                        return '<div>' + escape(data.data) + '</div>';
+                    }
+                }
+            });
+
+            // TomSelect
+            // ---------------------------------------
+            // Select Format multiple
+            new TomSelect("#product_formats",{
+                plugins: ['remove_button'],
+                create: true,
+                onItemAdd:function(){
+                    this.setTextboxValue('');
+                    this.refreshOptions();
+                },
+                render:{
+                    option:function(data,escape){
+                        return '<div class="d-flex"><span>' + escape(data.data) + '</span><span class="ms-auto text-muted">' + escape(data.value) + '</span></div>';
+                    },
+                    item:function(data,escape){
+                        return '<div>' + escape(data.data) + '</div>';
+                    }
+                }
+            });
+
+            // TomSelect
+            // ---------------------------------------
+            // Select autre catégorie
+            new TomSelect("#product_otherCategory",{
+                plugins: ['remove_button', 'dropdown_input'],
+                create: true,
+                onItemAdd:function(){
+                    this.setTextboxValue('');
+                    this.refreshOptions();
+                },
+                render:{
+                    option:function(data,escape){
+                        return '<div class="d-flex"><span>' + escape(data.data) + '</span><span class="ms-auto text-muted">' + escape(data.value) + '</span></div>';
+                    },
+                    item:function(data,escape){
+                        return '<div>' + escape(data.data) + '</div>';
+                    }
+                }
+            });
+
+
         }
     </script>
 {%  endblock %}
@@ -171,7 +230,7 @@
             </div>
             <div class="col-10">
                 <div class="card" id="addProduct">
-                    {{ include('gestapp/product_format/_form.html.twig') }}
+                    {{ include('gestapp/product/_form.html.twig') }}
                 </div>
             </div>
         </div>

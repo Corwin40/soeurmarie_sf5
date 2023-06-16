@@ -188,7 +188,9 @@
 </div>
 <div class="card-footer">
     <a class="btn btn-sm btn-secondary" href="{{ path('op_gestapp_product_index') }}"><i class="fas fa-angle-double-left"></i> Retour à la liste</a>
+    {% if app.request.attributes.get('_route' == 'op_gestapp_product_edit') %}
     <a class="btn btn-sm btn-secondary" href="{{ path('op_gestapp_product_duplicate', {'id': product.id })}}">Dupliquer</a>
+    {% endif %}
     <button class="btn btn-sm btn-primary">{{ button_label|default('Save') }}</button>
 </div>
 {{ form_end(form) }}
