@@ -30,7 +30,6 @@ class ProductType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-
             ->add('name', TextType::class, [
                 'constraints' => new NotBlank(['message' => 'veuillez entrer un nom de produit.'])
             ])
@@ -65,8 +64,12 @@ class ProductType extends AbstractType
                 'class' => ProductCategory::class,
                 'required' => false,
                 'choice_label' => 'name',
-                'query_builder' => function (ProductCategoryRepository $productCategoryRepository) {
-                    return $productCategoryRepository->createQueryBuilder('pc')->orderBy('pc.name', 'ASC');
+                'query_builder' => function (EntityRepository $er) use ($options) {
+                    $nature = $options['data']->getProductNature();
+                    return $er->createQueryBuilder('pc')
+                        ->where('pc.Nature = :nature')
+                        ->setParameter('nature', $nature)
+                        ->orderBy('pc.name', 'ASC');
                 },
                 'choice_attr' => function (ProductCategory $product, $key, $index) {
                     return ['data-data' => $product->getName()];
