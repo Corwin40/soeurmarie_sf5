@@ -58,7 +58,7 @@
 
     <div id="printFacture" class="container">
 
-        <div id="printFactureMain" class="row gutters">
+        <div id="printFactureMain" class="row">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                 <div class="invoice-container">
                 {# entête de facture #}
@@ -66,7 +66,7 @@
                     <!-- Row start -->
                     <div>
                         <div class="logo_sm">
-                            <img src="{{ absolute_url(asset('./images/home_front/LOGO-fondblanc.png')) }}" alt="" height="120px">
+                            <img src="{{ absolute_url(asset('images/home_front/LOGO-fondblanc.png')) }}" alt="" height="120px">
                         </div>
                         <div class="adress_sm">
                             <address class="text-right">
@@ -79,7 +79,7 @@
                     </div>
                     <div class="row gutters mt-3">
                         <div class="col-lg-6 col-md-6 col-sm-6">
-                            <h5>FACTURE n° 001</h5>
+                            <h5>FACTURE n° {{purchase.numPurchase}}</h5>
                         </div>
                     </div>
                     <!-- Row end -->

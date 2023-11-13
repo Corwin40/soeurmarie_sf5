@@ -158,25 +158,29 @@
                             {% if product.productName is null %}
                                 <img class="img-fluid bp" src="{{ asset('images/jpg/Fond_product.jpg') }}" alt="image_replace">
                             {% else %}
-                                <img class="card-img-top bp" src="{{ vich_uploader_asset(product) }}" alt="{{ product.productName }}">
+                                <img class="card-img-top bp" src="{{ vich_uploader_asset(product, 'productName','App\\Entity\\Gestapp\\product') }}" alt="{{ product.productName }}">
                             {% endif %}
                         </div>
                         <div class="row mb-1">
                             <div class="col-3">
                                 {% if product.versoName is null %}
                                 {% else %}
-                                    <img class="img-fluid" src="{{ vich_uploader_asset(product) }}" alt="{{ product.versoName }}">
+                                    <img class="img-fluid" src="{{ vich_uploader_asset(product, 'versoName', 'App\\Entity\\Gestapp\\product') }}" alt="{{ product.versoName }}">
                                 {% endif %}
                             </div>
                         </div>
                     </div>
                     <div id="product-info" class="col-12 col-md-8">
                         <div id="content" class="mb-2">
-                            <p><strong>Informations</strong></p>
+                            <p>
+                                <strong>Informations</strong>
+                            </p>
                             {{ product.description|raw }}
                             {% if product.details is null %}
                             {% else %}
-                            <p><strong>Détails :</strong></p>
+                            <p>
+                                <strong>Détails :</strong>
+                            </p>
                             {{ product.details|raw }}
                             {% endif %}
                             <p class="mt-2 mb-2">
