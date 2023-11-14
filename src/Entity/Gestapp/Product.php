@@ -189,7 +189,7 @@ class Product
     private $carts;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $position;
 
@@ -680,12 +680,12 @@ class Product
         return $this;
     }
 
-    public function getPosition(): ?string
+    public function getPosition(): ?int
     {
         return $this->position;
     }
 
-    public function setPosition(?string $position): self
+    public function setPosition(?int $position): self
     {
         $this->position = $position;
 

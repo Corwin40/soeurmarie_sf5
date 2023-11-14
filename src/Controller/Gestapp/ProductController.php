@@ -292,6 +292,7 @@ class ProductController extends AbstractController
     {
         $data = $em->getRepository(Product::class)->onenature($idnat);
 
+        dd($data);
         $nature = $em->getRepository(ProductNature::class)->find($idnat);
         $categories = $em->getRepository(ProductCategory::class)->findBy(array('Nature'=> $idnat));
 
@@ -301,6 +302,8 @@ class ProductController extends AbstractController
             $request->query->getInt('page', 1),
             8
         );
+
+
 
         return $this->render('gestapp/product/listonenatproduct.html.twig',[
             'products' => $products,

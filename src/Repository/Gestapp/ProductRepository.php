@@ -128,7 +128,7 @@ class ProductRepository extends ServiceEntityRepository
             ->leftJoin('p.ProductCategory', 'c')
             ->leftJoin('p.productUnit', 'pu')
             ->Select('
-                p.position as position,
+                p.position as pos,
                 p.id AS id,
                 p.name AS name, 
                 p.description AS description,
@@ -151,7 +151,7 @@ class ProductRepository extends ServiceEntityRepository
             ->andWhere('p.isOnLine = :isOnLine')
             ->setParameter('idnat', $idnat)
             ->setParameter('isOnLine', 1)
-            ->orderBy('p.id', 'ASC')
+            ->orderBy('p.position', 'ASC')
             ->getQuery()
             ->getResult()
         ;

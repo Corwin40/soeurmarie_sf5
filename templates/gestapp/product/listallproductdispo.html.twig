@@ -13,8 +13,9 @@
         #}
     </div>
     <div class="col-9">
-        {% for product in products %}
+        {% for product in products|sort((a,b) => a.position <=> b.position) %}
             <div class="col-4">
+                <p>test</p>
                 {# Card Produit #}
                 <div class="card lift lift-lg mb-6 mb-xl-0 shadow-light-lg">
                     {# Card image du produit #}

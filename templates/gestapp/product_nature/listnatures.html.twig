@@ -24,13 +24,13 @@
                     {% endfor %}
                     <li>
                         {% if count == 0 %}
-                        <a id="{{ parent.categoryId|upper }}" href="" class="filtercategory">{{ parent.nameCat }} - {{ parent.categoryId }}</a>
+                        <a id="{{ parent.categoryId|upper }}" href="" class="filtercategory">{{ parent.nameCat }}</a>
                         {% else %}
-                        <a id="{{ parent.categoryId|upper }}" class="nolink">{{ parent.nameCat }} - {{ parent.categoryId }}</a>
+                        <a id="{{ parent.categoryId|upper }}" class="nolink">{{ parent.nameCat }}</a>
                         {% endif%}
                         <ul>
                             {% for child in childs|filter(child => child.parentCat == parent.categoryId ) %}
-                                <li><a id="{{ child.categoryId }}" href="" class="filtercategory">{{ child.nameCat }} - {{ child.categoryId }}</a></li>
+                                <li><a id="{{ child.categoryId }}" href="" class="filtercategory">{{ child.nameCat }}</a></li>
                             {% endfor %}
                         </ul>
                     </li>

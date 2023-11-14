@@ -158,14 +158,14 @@
                             {% if product.productName is null %}
                                 <img class="img-fluid bp" src="{{ asset('images/jpg/Fond_product.jpg') }}" alt="image_replace">
                             {% else %}
-                                <img class="card-img-top bp" src="{{ vich_uploader_asset(product, 'productName','App\\Entity\\Gestapp\\product') }}" alt="{{ product.productName }}">
+                                <img class="card-img-top bp" src="{{ vich_uploader_asset(product, 'productFile','App\\Entity\\Gestapp\\product') }}" alt="{{ product.productName }}">
                             {% endif %}
                         </div>
                         <div class="row mb-1">
                             <div class="col-3">
                                 {% if product.versoName is null %}
                                 {% else %}
-                                    <img class="img-fluid" src="{{ vich_uploader_asset(product, 'versoName', 'App\\Entity\\Gestapp\\product') }}" alt="{{ product.versoName }}">
+                                    <img class="img-fluid" src="{{ vich_uploader_asset(product, 'versoFile', 'App\\Entity\\Gestapp\\product') }}" alt="{{ product.versoName }}">
                                 {% endif %}
                             </div>
                         </div>
