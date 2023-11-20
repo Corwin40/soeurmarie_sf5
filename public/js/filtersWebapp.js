@@ -1,12 +1,11 @@
 const FiltersForms = document.getElementById('filters');
 document.querySelectorAll('#filters input').forEach(input => {
     input.addEventListener('change', () => {
-
         // Détection si nature ou catégorie et son name
         const NatorCat = document.getElementById('liste')
         let type = NatorCat.dataset.type
         let name = NatorCat.dataset.name
-
+        console.log(type, name)
         // j'intercepte les clics et ses données.
         const Form = new FormData(FiltersForms);
         // construction de la "QueryString"

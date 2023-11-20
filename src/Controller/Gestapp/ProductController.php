@@ -460,22 +460,21 @@ class ProductController extends AbstractController
         $nat = $request->get('nature');          // issu de la requete : filtrera les produits selon la nat donnée
         $page = $request->get('page');              // transmet la page pour l'affichage
 
-        //dd($filters);
+        //dd($filters, $cat, $nat, $page);
         if($filters){
             $data = $productRepository->ListFilterscategories($filters);
-            if($nat){
+            if($nat ){
                 // on recupère l'entité lié au nom de la nat
                 $nature = $em->getRepository(ProductNature::class)->findBy(array('name'=> $nat));
                 // On récupére toute les catégories parentes classés dans la nat
                 $childs = $em->getRepository(ProductCategory::class)->findBy(array('Nature'=> $nature));
-
             }
             if($cat){
                 // on recupère l'entité lié au nom de la catégorie parente
-                $category = $em->getRepository(ProductCategory::class)->findBy(array('name'=> $cat));
+                $category = $em->getRepository(ProductCategory::class)->findOneBy(array('name'=> $cat));
                 //dd($category);
                 // On récupére toute les catégories parentes classés dans la nat
-                $childs = $em->getRepository(ProductCategory::class)->findChilds($category);
+                $childs = $em->getRepository(ProductCategory::class)->findChilds($category->getId());
                 //dd($childs);
             }
         }else{
@@ -488,9 +487,9 @@ class ProductController extends AbstractController
             }else{
                 //dd($cat);
                 // on recupère l'entité lié au nom de la catégorie parente
-                $category = $em->getRepository(ProductCategory::class)->findBy(array('name'=> $cat));
+                $category = $em->getRepository(ProductCategory::class)->findOneBy(array('name'=> $cat));
                 //dd($category);
-                $childs = $em->getRepository(ProductCategory::class)->findChilds($category);
+                $childs = $em->getRepository(ProductCategory::class)->findChilds($category->getId());
                 //dd($childs);
                 if (!$childs){
                     $category = $em->getRepository(ProductCategory::class)->findOneBy(['name' => $cat]);
