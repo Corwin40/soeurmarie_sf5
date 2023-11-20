@@ -70,6 +70,195 @@
     {% endif %}
 {% endif %}
 
+<div id="printFacture" class="container">
+    <div class="row">
+        <div class="invoice-container">
+            <div class="invoice-header">
+                <div class="row align-items-center">
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3" style="max-height: 330px;">
+                        <img class="img-fluid"src="./img/LOGO-fondblanc-v2.png" alt="" height="306px">
+                    </div>
+                    <div class="col-3 offset-6" style="max-height: 330px;">
+                        <div class="adress_sm">
+                            <address class="text-right">
+                                <strong>Maria Bambina</strong><br>
+                                Marie THIBAULT<br>
+                                8 rue du Midi<br>
+                                65100 LOURDES
+                            </address>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div>
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <h5>FACTURE n° test</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="invoice-container">
+            {# entête de facture #}
+            <div class="invoice-header">
+
+                <div class="row gutters mt-3">
+
+                </div>
+                <!-- Row end -->
+                <!-- Row start -->
+                <div id="adress_facturation" class="row">
+                    <div class="col-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <p class="mb-0"> <strong>Adresse de facturation</strong></p>
+                            </div>
+                            <div class="card-body">
+                                <div class="invoice-details">
+                                    <address class="mb-0">
+                                        <strong>Maria Bambina</strong><br>
+                                        Marie THIBAULT<br>
+                                        8 rue du Midi<br>
+                                        65100 LOURDES
+                                    </address>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <p class="mb-0"><strong>Adresse de livraison</strong></p>
+                            </div>
+                            <div class="card-body">
+                                <div class="invoice-details">
+                                    <address class="mb-0">
+                                        <strong>Maria Bambina</strong><br>
+                                        Marie THIBAULT<br>
+                                        8 rue du Midi<br>
+                                        65100 LOURDES
+                                    </address>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4"></div>
+                </div>
+                <!-- Row end -->
+                <!-- Row start -->
+                <div class="row gutters" id="num_commande">
+                    <div class="offset-8 col-4">
+                        <div class="invoice-details">
+                            <div class="invoice-num">
+                                <div><b>Commande :</b> #test</div>
+                                <div><b>Date de Facturation :</b> 18/11/2023</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Row end -->
+            </div>
+            {# Corps de facture #}
+            <div class="invoice-body">
+                <div class="card">
+                    <div class="card-body">
+                        <!-- Row start -->
+                        <div class="row gutters">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="table-responsive">
+
+                                    <table class="table custom-table m-0">
+                                        <thead>
+                                        <tr>
+                                            <th>Produit</th>
+                                            <th>Quantité</th>
+                                            <th>Prix</th>
+                                            <th>Poids</th>
+                                            <th>Somme</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+
+                                        <tr>
+                                            <td>louis</td>
+                                            <td>3</td>
+                                            <td>4.50 €</td>
+                                            <td>15 g</td>
+                                            <td>13.50 €</td>
+                                        </tr>
+
+                                        </tbody>
+                                        <tfooter>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td>Total</td>
+                                                <td></td>
+                                                <td>13.5 €</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+
+
+                                                <td>Remise (10%)</td>
+                                                <td>
+                                                    3 cartes
+                                                </td>
+                                                <td>
+                                                    - 0.00 €
+                                                </td>
+
+                                            </tr>
+
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td>Frais de port</td>
+                                                <td>poids: 0.5 g</td>
+                                                <td>
+                                                    1.50 €
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                                <th>Total de la commande</th>
+                                                <th></th>
+                                                <th>
+                                                    15.00
+                                                </th>
+                                            </tr>
+                                        </tfooter>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Row end -->
+                    </div>
+                </div>
+            </div>
+            {# Pied de facture #}
+            <div class="invoice-footer">
+                <div class="row">
+                    <div class="col-12">
+                        <hr>
+                        <p class="text-center">
+                            Cartes de Prières - Maria Bambina - 8, rue du Midi
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
     <div id="printFacture" class="container">
 
         <div id="printFactureMain" class="row">
