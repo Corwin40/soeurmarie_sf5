@@ -292,7 +292,7 @@ class ProductController extends AbstractController
     {
         $data = $em->getRepository(Product::class)->onenature($idnat);
 
-        dd($data);
+        //dd($data);
         $nature = $em->getRepository(ProductNature::class)->find($idnat);
         $categories = $em->getRepository(ProductCategory::class)->findBy(array('Nature'=> $idnat));
 
