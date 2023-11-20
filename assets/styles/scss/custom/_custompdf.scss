@@ -1,0 +1,96 @@
+/* **
+* REGLES GENERALES
+** */
+@media print {
+  .new-page {
+    page-break-before: always;
+  }
+}
+
+body {
+  width: 1080px;
+  /* to centre page on screen*/
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  max-width: 100%;
+}
+
+.div-align-center{
+  align-items: center;
+  justify-content: space-between;
+}
+
+.container p{
+  text-align: right;
+  font-family: "CerebriSans-light", sans-serif;
+  font-size : 12px;
+  color : #069697;
+}
+
+/*** classes .PAGES ***/
+.page {
+  margin: 1rem;
+  padding: 0.5rem;
+  border: #009698 solid 1px;
+  border-radius: 0.5rem;
+  min-height: 1400px;
+  max-height: 1400px;
+  .row{
+    display: flex;
+    flex-direction: row;
+    min-width: 100%;
+    max-width: 100%;
+    .col-20{
+      min-width: 20%;
+      max-width: 20%;
+    }
+    .col-25{
+      min-width: 25%;
+      max-width: 25%;
+    }
+    .col-30{
+      min-width: 20%;
+      max-width: 20%;
+    }
+    .col-33{
+      min-width: 33%;
+      max-width: 33%;
+    }
+    .col-50{
+      min-width: 50%;
+      max-width: 50%;
+    }
+    .col-66{
+      min-width: 66%;
+      max-width: 66%;
+    }
+    .col-75{
+      min-width: 75%;
+      max-width: 75%;
+    }
+    .col-100{
+      min-width: 100%;
+      max-width: 100%;
+    }
+  }
+  h1, h2, h3, h4, h5, h6{
+    font-family: "CerebriSans-light", sans-serif;
+  }
+  p{
+    font-family: "CerebriSans-light", sans-serif;
+    font-size: 14px;
+    text-align: left;
+  }
+  table{
+    tr{
+      th, td{
+        font-size: 0.8rem;
+      }
+    }
+  }
+}

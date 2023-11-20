@@ -1,0 +1,11 @@
+$op-primary: darken(#428bca, 20%);
+$admin-color : linear-gradient(90deg, rgba(28,113,216,1) 0%, rgba(48,200,119,1) 100%);
+//*** ------------- Import Variables of bootstrap ---------------- ***//
+@import "node_modules/bootstrap/scss/bootstrap";
+@import "node_modules/bootstrap/scss/variables";
+//*** ------------- Import Variables of my theme ---------------- ***//
+@import "scss/custom/custompdf";
+//*** ------------- Import Variables of icons ---------------- ***//
+//*** ------------- Import mixins ---------------- ***//
+@import "scss/mixins/fontface";
+@include fontface('CerebriSans-light', '../../fonts/Cerebri-Sans/CerebriSans-Light', 300, normal);
