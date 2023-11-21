@@ -47,6 +47,7 @@ class PurchaseConfirmationController extends AbstractController
 
         $user = $this->getUser();
         $lastPurchase = $purchaseRepository->findLastRef();
+        dd($lastPurchase);
         $lastRef = $lastPurchase['numPurchase'];
 
         $cartItems = $this->cartService->getDetailedCartItem();
