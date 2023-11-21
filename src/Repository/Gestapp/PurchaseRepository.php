@@ -58,6 +58,17 @@ class PurchaseRepository extends ServiceEntityRepository
             ;
     }
 
+    public function findLastRef()
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.property = :property')
+            ->orderBy('p.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
     /**
      * @param $user
      * @return int|mixed|string

@@ -7,6 +7,7 @@ use App\Entity\Gestapp\ProductCustomize;
 use App\Entity\Gestapp\Purchase;
 use App\Entity\Gestapp\PurchaseItem;
 use App\Form\Gestapp\CartConfirmationType;
+use App\Repository\Gestapp\PurchaseRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -34,7 +35,7 @@ class PurchaseConfirmationController extends AbstractController
      * @Route("/webapp/purchase/confirm", name="op_webapp_purchase_confirm")
      * @IsGranted("ROLE_USER", message="Vous devez être inscrit sur la plateforme pour confirmer votre commande")
      */
-    public function confirm(Request $request, EntityManagerInterface $em)
+    public function confirm(Request $request, EntityManagerInterface $em, PurchaseRepository $purchaseRepository)
     {
         $form = $this->createForm(CartConfirmationType::class);
         $form->handleRequest($request);
@@ -45,6 +46,8 @@ class PurchaseConfirmationController extends AbstractController
         }
 
         $user = $this->getUser();
+        $lastPurchase = $purchaseRepository->findLastRef();
+        $lastRef = $lastPurchase['numPurchase'];
 
         $cartItems = $this->cartService->getDetailedCartItem();
         if(count($cartItems) === 0){
@@ -55,11 +58,14 @@ class PurchaseConfirmationController extends AbstractController
         /** @var Purchase */
         $purchase = $form->getData();
         //dd($this->cartService->getTotal());
+        // contruction du numero de commande
+        $date = new \DateTime();
+        $numDate = $date->format('Y').'/'.$date->format('m');
+        $ref = $numDate."-".$lastRef;
 
-        $uuid = substr($this->requestStack->getSession()->getId(), 0, 8);
         $purchase
             ->setCustomer($user)
-            ->setNumPurchase($uuid)
+            ->setNumPurchase($ref)
             ->setStatus("PENDING")
             ->setStatuspaid("PENDING")
             ->setPurchasedAt(new DateTime())
