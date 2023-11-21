@@ -60,7 +60,7 @@ class PurchaseConfirmationController extends AbstractController
         //dd($this->cartService->getTotal());
         // contruction du numero de commande
         $date = new \DateTime();
-        $numDate = $date->format('Y').'/'.$date->format('m');
+        $numDate = $date->format('Y').'|'.$date->format('m');
         $ref = $numDate."-".$lastRef;
 
         $purchase
