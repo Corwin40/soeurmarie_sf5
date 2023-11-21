@@ -48,8 +48,9 @@ class PurchaseConfirmationController extends AbstractController
         $user = $this->getUser();
         $lastPurchase = $purchaseRepository->findLastRef();
         //dd($lastPurchase);
-        $lastRef = $lastPurchase->getNumPurchase();
-
+        $NumPurchase = explode('-', $lastPurchase->getNumPurchase());
+        $lastRef = $NumPurchase[1]++;
+        
         $cartItems = $this->cartService->getDetailedCartItem();
         if(count($cartItems) === 0){
             $this->addFlash('warning', 'le panier est vide, impossible de commander');
