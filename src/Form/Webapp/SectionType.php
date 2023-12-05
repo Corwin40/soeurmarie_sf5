@@ -93,7 +93,8 @@ class SectionType extends AbstractType
                         ->orderBy('pc.name', 'ASC')
                         ;
                 },
-                'choice_label' => 'name',
+                'choice_label' => function (ProductCategory $customer) {
+                    return $customer->getName() . ' dans ' . $customer->getNature();}
             ])
             ->add('favorites')
             ->add('isSectionFluid')

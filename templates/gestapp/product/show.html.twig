@@ -14,7 +14,7 @@
                 let data =  JSON.stringify(Object.fromEntries(formdata));
                 axios
                     .post(urlForm, data)
-                document.getElementById("format").addEventListener("change", customEdit);
+                document.getElementById("formatedit").addEventListener("change", customEdit);
             }
 
             // Construction de la fonction d'envoi du produit dans le panier
@@ -42,7 +42,11 @@
                         document.querySelectorAll('a.js-decrement').forEach(function (link) {
                             link.addEventListener('click', onClickBtnDecrement);
                         })
-                        document.getElementById("format").addEventListener("change", customEdit);
+                        // Appel de la fonction de duplication d'un produit
+                        document.querySelectorAll('a.duplicate').forEach(function (link){
+                            link.addEventListener('click', onClickDuplicate);
+                        })
+                        document.getElementById("formatedit").addEventListener("change", customEdit);
                     })
             }
 
@@ -66,7 +70,11 @@
                         document.querySelectorAll('a.js-decrement').forEach(function (link){
                             link.addEventListener('click', onClickBtnDecrement);
                         })
-                        document.getElementById("format").addEventListener("change", customEdit);
+                        // Appel de la fonction de duplication d'un produit
+                        document.querySelectorAll('a.duplicate').forEach(function (link){
+                            link.addEventListener('click', onClickDuplicate);
+                        })
+                        document.getElementById("formatedit").addEventListener("change", customEdit);
                     });
             }
 
@@ -91,7 +99,21 @@
                         document.querySelectorAll('a.js-decrement').forEach(function (link){
                             link.addEventListener('click', onClickBtnDecrement);
                         })
-                        document.getElementById("format").addEventListener("change", customEdit);
+                        // Appel de la fonction de duplication d'un produit
+                        document.querySelectorAll('a.duplicate').forEach(function (link){
+                            link.addEventListener('click', onClickDuplicate);
+                        })
+                        document.getElementById("formatedit").addEventListener("change", customEdit);
+                    });
+            }
+
+            function onClickDuplicate(event){
+                event.preventDefault();
+                const url = this.href;
+                axios
+                    .post(url)
+                    .then(function(response) {
+                        window.location.reload()
                     });
             }
 
@@ -132,8 +154,12 @@
             document.querySelectorAll('a.js-decrement').forEach(function (link){
                 link.addEventListener('click', onClickBtnDecrement);
             })
+            // Appel de la fonction de duplication d'un produit
+            document.querySelectorAll('a.duplicate').forEach(function (link){
+                link.addEventListener('click', onClickDuplicate);
+            })
             // Edition d'une personnalisation produit sur "change" Select : formatedit
-            document.getElementById("format").addEventListener("change", customEdit);
+            document.getElementById("formatedit").addEventListener("change", customEdit);
         }
     </script>
 {% endblock %}

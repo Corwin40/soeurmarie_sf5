@@ -41,6 +41,8 @@ Ajout du produit au panier et personnalisation
                     <button type="button" class="btn btn-outline-sm">&nbsp{{ i.qty }}&nbsp</button>
                     <a type="button" class="js-decrement btn btn-outline-sm" href="{{ path('op_webapp_cart_decrement', {'id': product.id, 'uuid': i.productCustomize.uuid}) }}?showproduct=true&item={{ i.item }}"><i class="bi bi-dash-circle"></i></a>
                 </div>
+                <a href="{{ path('op_webapp_cart_duplicate', {'id': i.product.id, 'uuid': session,'item': i.item}) }}" class="btn btn-sm btn-outline-sm duplicate" style="font-size: 1rem;" data-bs-toggle="tooltip" data-bs-placement="top" title="Dupliquer votre carte"><i class="fa-duotone fa-clone"></i></a>
+
             </div>
             <div id="alert-commande" class="col-12 mt-2 d-none">
                 <div class="alert alert-warning">
