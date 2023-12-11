@@ -485,7 +485,6 @@ class ProductController extends AbstractController
                 // On récupére toute les catégories parentes classés dans la nat
                 $childs = $em->getRepository(ProductCategory::class)->findBy(array('Nature'=> $nature));
             }else{
-                //dd($cat);
                 // on recupère l'entité lié au nom de la catégorie parente
                 $category = $em->getRepository(ProductCategory::class)->findOneBy(array('name'=> $cat));
                 //dd($category);

@@ -15,6 +15,8 @@ document.querySelectorAll('#filters input').forEach(input => {
             Params.append(key, value);
         })
 
+
+
         // Construction de l'adresse url pour le controlleur et transmission des paramètres
         const url = '/gestapp/product/filterwebapp';
         axios

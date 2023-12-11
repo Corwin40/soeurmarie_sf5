@@ -45,6 +45,7 @@ class ProductRepository extends ServiceEntityRepository
                     s.logoStructureName AS logoStructureName
                 ')
                 ->andWhere('p.ProductCategory IN(:cats)')
+                ->orderBy('p.position', 'ASC')
                 ->setParameter(':cats', array_values($filters));
         }else{
 
@@ -191,7 +192,7 @@ class ProductRepository extends ServiceEntityRepository
             ->andWhere('p.isOnLine = :isOnLine')
             ->setParameter('nat', $nature)
             ->setParameter('isOnLine', 1)
-            ->orderBy('p.id', 'ASC')
+            ->orderBy('p.position', 'ASC')
             ->getQuery()
             ->getResult()
             ;
@@ -210,7 +211,6 @@ class ProductRepository extends ServiceEntityRepository
             ->leftJoin('p.productUnit', 'pu')
             ->leftJoin('p.productNature', 'n')
             ->Select('
-                
                 p.position as position,
                 p.id AS id,
                 p.name AS name, 
@@ -234,7 +234,7 @@ class ProductRepository extends ServiceEntityRepository
             ->andWhere('p.isOnLine = :isOnLine')
             ->setParameter('idcat', $idcat)
             ->setParameter('isOnLine', 1)
-            ->orderBy('p.id', 'ASC')
+            ->orderBy('p.position', 'ASC')
             ->getQuery()
             ->getResult()
             ;
@@ -313,7 +313,7 @@ class ProductRepository extends ServiceEntityRepository
             ->andWhere('p.isOnLine = :isOnLine')
             ->setParameter('childs', $findchild)
             ->setParameter('isOnLine', 1)
-            ->orderBy('p.id', 'ASC')
+            ->orderBy('p.position', 'ASC')
             ->getQuery()
             ->getResult()
             ;
