@@ -4,11 +4,13 @@ namespace App\Form\Admin;
 
 use App\Entity\Admin\Member;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Vich\UploaderBundle\Form\Type\VichImageType;
@@ -52,6 +54,15 @@ class ClientType extends AbstractType
             ->add('city')
             ->add('phoneDesk')
             ->add('phoneGsm')
+            ->add('agreeTerms', CheckboxType::class, [
+                'label' => 'En cochant la case, je consens au traitement des informations saisies afin de réaliser des achats sur le site "cartesdeprieres.com". Je peux me désinscrire à tout moment en suivant la procédure décrite sur le lien disponible dans les mentions légales.',
+                'mapped' => false,
+                'constraints' => [
+                    new IsTrue([
+                        'message' => 'Je consens au traitement des informations saisies afin de réaliser des achats sur le site "cartesdeprieres.com". Je peux me désinscrire à tout moment en suivant la procédure décrite sur le lien disponible dans les mentions légales.',
+                    ]),
+                ],
+            ])
         ;
     }
 

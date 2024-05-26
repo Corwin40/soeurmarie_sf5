@@ -115,14 +115,21 @@
                         {{ form_widget(registrationForm.password.second, {'attr': {'class': 'form-control form-control-sm'}} ) }}
                     </div>
                 </div>
+                <div class="row mb-1 mt-1 g-1 justify-content-center align-items-center">
+                    <div class="col-1">
+                        {{ form_widget(registrationForm.agreeTerms) }}
+                    </div>
+                    <div class="col-11" style="font-size: 14px;">
+                        {{ form_label(registrationForm.agreeTerms) }}
+                    </div>
+
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <button type="submit" class="btn btn-primary">Valider</button>
+                </div>
             </div>
         </div>
-
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn btn-primary">Valider</button>
         {{ form_end(registrationForm) }}
-
     </div>
     <div class="col-md-6 col-lg-6 col-xl-8 d-none d-lg-block">
         <!-- Image -->

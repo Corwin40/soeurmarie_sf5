@@ -53,27 +53,28 @@ class ClientController extends AbstractController
                     $form->get('password')->getData()
                 )
             );
+            $client->setIsVerified(1);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($client);
             $entityManager->flush();
 
             // partie de code pour envoyer un email au client
-            $email = (new Email())
-                ->from('postmaster@openpixl.fr')
-                ->to($client->getEmail())
+            //$email = (new Email())
+            //    ->from('postmaster@openpixl.fr')
+            //    ->to($client->getEmail())
                 //->cc('cc@example.com')
                 //->bcc('bcc@example.com')
                 //->replyTo('fabien@example.com')
                 //->priority(Email::PRIORITY_HIGH)
-                ->subject('JUSTàFaire - Inscription')
+            //    ->subject('JUSTàFaire - Inscription')
                 //->text('Sending emails is fun again!')
-                ->html('
-                    <h1>Cartes de prières<small> - Création de votre compte client</small></h1>
-                    <hr>
-                    <p>Bienvenue, '. $client->getFirstName() .' '.$client->getLastName().'</p>
-                    <p>Vous venez de créer votre compte client sur notre site. Nous vous remercions de votre confiance ezt de l\'interet que vous manifestez à nos produits artisanals.</p>
-                    ');
-            $mailer->send($email);
+            //    ->html('
+            //        <h1>Cartes de prières<small> - Création de votre compte client</small></h1>
+            //        <hr>
+            //        <p>Bienvenue, '. $client->getFirstName() .' '.$client->getLastName().'</p>
+            //        <p>Vous venez de créer votre compte client sur notre site. Nous vous remercions de votre confiance ezt de l\'interet que vous manifestez à nos produits artisanals.</p>
+            //        ');
+            //$mailer->send($email);
 
             return $this->redirectToRoute('op_admin_client_liste_index');
         }
