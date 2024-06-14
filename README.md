@@ -1,5 +1,8 @@
-# OpenPixl - Projet Cartes de Prières - Soeur Marie
-<small>pour la production de site Symfony5 et Symfony6</small>
+# OpenGAIA - Projet Cartes de Prières
+<small>CMS de ECommerce sous la licence Creative Commons Attribution-NoDerivs (CC BY-ND), développé par OpenPixl.</small>
+**Réutilisation** : Vous pouvez réutiliser l'œuvre à des fins personnelles et commerciales.
+**Crédit** : Vous devez créditer l'auteur original de manière appropriée.
+**Pas de modifications** : Vous n'avez pas le droit de modifier, adapter ou créer des œuvres dérivées de l'œuvre originale.
 
 ### AVANT LA PROCEDURE DE DEPLOIEMENT DU PROJET
 
