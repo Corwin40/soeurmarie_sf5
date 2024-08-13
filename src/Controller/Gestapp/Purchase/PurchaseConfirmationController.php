@@ -49,7 +49,9 @@ class PurchaseConfirmationController extends AbstractController
         $lastPurchase = $purchaseRepository->findLastRef();
         //dd($lastPurchase);
         $NumPurchase = explode('-', $lastPurchase->getNumPurchase());
-        $lastRef = $NumPurchase[1]++;
+        $lastRef = intval($NumPurchase[1]);
+
+        //dd($lastRef);
         
         $cartItems = $this->cartService->getDetailedCartItem();
         if(count($cartItems) === 0){
@@ -63,7 +65,7 @@ class PurchaseConfirmationController extends AbstractController
         // contruction du numero de commande
         $date = new \DateTime();
         $numDate = $date->format('Y').'|'.$date->format('m');
-        $ref = $numDate."-".$lastRef;
+        $ref = $numDate."-".$lastRef+1;
 
         $purchase
             ->setCustomer($user)
